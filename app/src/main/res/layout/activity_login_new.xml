@@ -51,7 +51,8 @@
             android:layout_marginTop="@dimen/loginViewsMargin">
 
             <EditText
-                android:id="@+id/editTextEmail"
+                android:textSize="20sp"
+                android:id="@+id/editTextName"
                 style="@style/modifiedEditText"
                 android:hint="@string/login_email_hint"
                 android:inputType="textEmailAddress"
@@ -64,6 +65,8 @@
             android:layout_marginTop="@dimen/loginViewsMargin">
 
             <EditText
+                android:textSize="20sp"
+
                 android:id="@+id/editTextPassword"
                 style="@style/modifiedEditText"
                 android:hint="@string/login_password_hint"
@@ -72,6 +75,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+
             style="@style/viewParent"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
@@ -79,16 +83,15 @@
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/newsMoreTextSize" />
 
-<!--        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton-->
-<!--            android:id="@+id/cirLoginButton"-->
-<!--            style="@style/loginButton"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_marginTop="@dimen/loginViewsMargin"-->
-<!--            android:text="Login"-->
-<!--            app:initialCornerAngle="27dp"-->
-<!--            app:spinning_bar_color="#FFF"-->
-<!--            app:spinning_bar_padding="6dp"-->
-<!--            app:spinning_bar_width="4dp" />-->
+        <Button
+            android:id="@+id/cirLoginButton"
+            style="@style/loginButton"
+            android:onClick="processLogin"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/loginViewsMargin"
+            android:text="Login"
+            app:backgroundTint="#11CFC5"
+            />
 
         <TextView
             style="@style/parent"
@@ -152,12 +155,12 @@
     </LinearLayout>
 
     <View
-        android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:layout_width="11dp"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_side_bg"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_side_bg" />
 
     <ImageView
         android:layout_width="wrap_content"

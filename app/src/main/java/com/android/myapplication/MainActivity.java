@@ -10,12 +10,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity
 //
 //        SimpleDateFormat dinhDangGio = new SimpleDateFormat("hh:mm:ss ");
 //        txtTime.append(dinhDangGio.format(calendar.getTime()));
+
         xuLySchool();
 
     }
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        // set up hình ảnh và username
+        getDataFromLogin(navigationView);
+        //
         navigationView.setNavigationItemSelectedListener(this);
 
         bottomNavigationView = findViewById(R.id.navigation);
@@ -76,6 +82,10 @@ public class MainActivity extends AppCompatActivity
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         bottomNavigationView.setSelectedItemId(R.id.navigationHome);
+
+
+
+//        ivHeaderPhoto.setImageResource(R.drawable.anh_user1);
     }
     //school
 
@@ -165,6 +175,23 @@ public class MainActivity extends AppCompatActivity
             if(mode==1){
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
+        }
+    }
+    public void getDataFromLogin(NavigationView navigationView)
+    {
+        View headerView =navigationView.getHeaderView(0);
+        ImageView ivHeaderPhoto = headerView.findViewById(R.id.imageViewAvatar);
+        ivHeaderPhoto.setImageResource(R.drawable.anh_user1);
+        TextView textHeader = headerView.findViewById(R.id.textviewtitleHeader);
+
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("dulieubundle");
+        if(bundle!=null)
+        {
+            String ten = bundle.getString("username");
+
+            textHeader.setText("Hello " + ten );
         }
     }
 }

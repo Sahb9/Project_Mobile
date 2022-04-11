@@ -18,7 +18,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:text="School Education"
+                android:text="Tracking Habit"
                 style="@style/viewParent.headerText" />
 
             <TextView
@@ -39,24 +39,24 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:minHeight="100dp"
                     android:background="@drawable/home_gradient_schedule"
+                    android:minHeight="100dp"
                     android:padding="10dp">
 
                     <TextView
                         android:id="@+id/textViewSub1Title"
-                        android:text="Schedule"
-                        style="@style/viewParent.headerText.HomeCardTitle" />
+                        style="@style/viewParent.headerText.HomeCardTitle"
+                        android:text="Schedule" />
 
                     <TextView
                         style="@style/viewParent.headerText.homeCardContent"
                         android:layout_below="@id/textViewSub1Title"
-                        android:text="Study nature, love nature,\nclose to nature" />
+                        android:text="Managing time is  Flexible and easier" />
 
                     <ImageView
+                        style="@style/homeCardImage"
                         android:maxHeight="90dp"
-                        android:src="@drawable/home_ic_maths"
-                        style="@style/homeCardImage" />
+                        android:src="@drawable/home_ic_maths" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -77,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:minHeight="100dp"
-                    android:background="@drawable/home_gradient_schedule"
+                    android:background="@drawable/fitness_gradient_schedule"
                     android:padding="10dp">
 
                     <TextView
@@ -88,12 +88,12 @@
                     <TextView
                         style="@style/viewParent.headerText.homeCardContent"
                         android:layout_below="@id/textViewSub2Title"
-                        android:text="Study nature, love nature,\nclose to nature" />
+                        android:text="Fitness will make you \n stronger and heathier" />
 
                     <ImageView
+                        style="@style/homeCardImage"
                         android:maxHeight="90dp"
-                        android:src="@drawable/home_ic_physics"
-                        style="@style/homeCardImage" />
+                        android:src="@drawable/home_ic_physics" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -110,18 +110,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:minHeight="100dp"
-                    android:background="@drawable/home_gradient_schedule"
+                    android:background="@drawable/timeManagement_gradient_schedule"
                     android:padding="10dp">
 
                     <TextView
                         android:id="@+id/textViewSub3Title"
-                        android:text="Eating"
+                        android:text="Time Management"
                         style="@style/viewParent.headerText.HomeCardTitle" />
 
                     <TextView
-                        android:text="Study nature, love nature,\nclose to nature"
                         style="@style/viewParent.headerText.homeCardContent"
-                        android:layout_below="@id/textViewSub3Title"/>
+                        android:layout_below="@id/textViewSub3Title"
+                        android:text="Managing time is one of factors \nleading  to succeed" />
 
                     <ImageView
                         style="@style/homeCardImage"
