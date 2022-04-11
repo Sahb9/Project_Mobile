@@ -7,6 +7,12 @@
 
     <!--colors for dark mode-->
     <color name="contentTextColor">#fff</color>
-
+<!--    School-->
+    <!--colors for dark mode-->
+    <color name="contentBodyColor">#000</color>
+<!--    <color name="contentTextColor">#fff</color>-->
+    <color name="bottomNavigationBackground">#000</color>
+    <color name="miniTitleColor">#fff</color>
+    <!--    School-->
 
 </resources>

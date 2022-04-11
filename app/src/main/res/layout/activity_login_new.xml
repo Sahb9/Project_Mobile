@@ -77,18 +77,18 @@
             android:layout_marginTop="10dp"
             android:text="Forgot Password?"
             android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/newsMoreTextSize" />x
+            android:textSize="@dimen/newsMoreTextSize" />
 
-        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-            android:id="@+id/cirLoginButton"
-            style="@style/loginButton"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/loginViewsMargin"
-            android:text="Login"
-            app:initialCornerAngle="27dp"
-            app:spinning_bar_color="#FFF"
-            app:spinning_bar_padding="6dp"
-            app:spinning_bar_width="4dp" />
+<!--        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton-->
+<!--            android:id="@+id/cirLoginButton"-->
+<!--            style="@style/loginButton"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="@dimen/loginViewsMargin"-->
+<!--            android:text="Login"-->
+<!--            app:initialCornerAngle="27dp"-->
+<!--            app:spinning_bar_color="#FFF"-->
+<!--            app:spinning_bar_padding="6dp"-->
+<!--            app:spinning_bar_width="4dp" />-->
 
         <TextView
             style="@style/parent"
@@ -158,13 +158,14 @@
         android:layout_width="11dp"
         android:layout_height="match_parent"
         android:background="@drawable/ic_side_bg"/>
+
     <ImageView
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_img"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="11dp"
         android:layout_marginBottom="30dp"
-        android:onClick="onLoginClick"/>
+        android:onClick="onLoginClick"
+        android:src="@drawable/ic_add_img" />
 </RelativeLayout>
