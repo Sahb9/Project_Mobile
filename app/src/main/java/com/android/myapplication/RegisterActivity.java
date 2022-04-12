@@ -1,6 +1,5 @@
 package com.android.myapplication;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -15,11 +14,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.myapplication.Models.Database;
+
 
 public class RegisterActivity extends AppCompatActivity {
     Button btnRegister;
     Database database;
-    EditText edtName,edtEmail,edtPhoneNumber,edtPassword;
+    EditText edtUSerName,edtEmail,edtPhoneNumber,edtPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,10 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                addUSer();
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(intent);
+
 
             }
         });
@@ -46,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void addControl()
     {
         btnRegister = findViewById(R.id.RegisterButton);
-        edtName = findViewById(R.id.editTextName);
+        edtUSerName = findViewById(R.id.editTextName);
         edtEmail = findViewById(R.id.editTextEmail);
         edtPhoneNumber = findViewById(R.id.editTextMobile);
         edtPassword = findViewById(R.id.editTextPassword);
@@ -66,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
     private  void addUSer()
     {
-        String username = edtName.getText().toString();
+        String username = edtUSerName.getText().toString();
         //Hình
         //
         String email = edtEmail.getText().toString();
@@ -78,18 +83,21 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-    private void GetData(String username , String password)
+    private void checkLogin(String username , String password)
     {
         Cursor dataCongViec = database.GetData("SELECT * FROM Account WHERE userName = '"+ username+ "' and passWord= '"+password+"'");
         //arrayCongViec.clear();//Xóa mãng trc khi cập nhật dữ liệu
-        while (dataCongViec.moveToNext())
+
+//        if(dataCongViec.moveToNext())// đúng
+//        {
+//            dataCongViec.getCount();
+//            //Toast.makeText(RegisterActivity.this, "đăng ký thành công", Toast.LENGTH_SHORT).show();
+//        }
+        if(dataCongViec.getCount()>0)
         {
-            int id = dataCongViec.getInt(0);
-            String ten = dataCongViec.getString(1);
-            //Toast.makeText(this,ten,Toast.LENGTH_SHORT).show();
-            //arrayCongViec.add( new CongViec(id,ten) );
+            Toast.makeText(RegisterActivity.this, "đăng ký thành công", Toast.LENGTH_SHORT).show();
+
         }
-        //adapter.notifyDataSetChanged();
     }
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

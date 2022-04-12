@@ -1,4 +1,4 @@
-package com.android.myapplication;
+package com.android.myapplication.Models;
 
 import android.content.Context;
 import android.database.Cursor;
