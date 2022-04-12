@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigationMyCourses"
         android:icon="@drawable/ic_effort"
-        android:title="Courses" />
+        android:title="History" />
 
     <item
         android:id="@+id/navigationHome"

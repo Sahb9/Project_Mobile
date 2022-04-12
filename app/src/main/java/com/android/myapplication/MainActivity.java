@@ -18,7 +18,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -29,7 +31,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView txtTime;
-
+    RelativeLayout layoutschedule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,15 @@ public class MainActivity extends AppCompatActivity
         setDarkMode(getWindow());
 
         setContentView(R.layout.activity_main);
+
+        layoutschedule = findViewById(R.id.layout_schedule);
+        layoutschedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Schedule", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 //        txtTime = findViewById(R.id.textViewTime);
 //        Calendar calendar = Calendar.getInstance();
 //        txtTime.setText(calendar.getTime() + "\n");
@@ -68,13 +79,13 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        //thanh bên trái
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         // set up hình ảnh và username
         getDataFromLogin(navigationView);
         //
         navigationView.setNavigationItemSelectedListener(this);
-
+        // thanh bên dưới
         bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 //
