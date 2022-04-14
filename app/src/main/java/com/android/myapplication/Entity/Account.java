@@ -1,4 +1,4 @@
-package com.android.myapplication.Models;
+package com.android.myapplication.Entity;
 
 public class Account {
     private int Id;

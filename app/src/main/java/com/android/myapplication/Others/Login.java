@@ -1,16 +1,18 @@
-package com.android.myapplication;
+package com.android.myapplication.Others;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.android.myapplication.DatePicker;
+import com.android.myapplication.R;
 
 public class Login extends AppCompatActivity {
     EditText txtName,txtPassword;
@@ -42,7 +44,7 @@ public class Login extends AppCompatActivity {
                 if(username.equals("anhtuan") && password.equals("1234"))
                 {
 
-                    Intent intent = new Intent(Login.this,DatePicker.class);
+                    Intent intent = new Intent(Login.this, DatePicker.class);
                     if(checkResult.isChecked())
                     {
                         Toast.makeText(Login.this,"Dăng nhập thành công",Toast.LENGTH_LONG).show();

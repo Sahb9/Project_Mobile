@@ -86,13 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void checkLogin(String username , String password)
     {
         Cursor dataCongViec = database.GetData("SELECT * FROM Account WHERE userName = '"+ username+ "' and passWord= '"+password+"'");
-        //arrayCongViec.clear();//Xóa mãng trc khi cập nhật dữ liệu
 
-//        if(dataCongViec.moveToNext())// đúng
-//        {
-//            dataCongViec.getCount();
-//            //Toast.makeText(RegisterActivity.this, "đăng ký thành công", Toast.LENGTH_SHORT).show();
-//        }
         if(dataCongViec.getCount()>0)
         {
             Toast.makeText(RegisterActivity.this, "đăng ký thành công", Toast.LENGTH_SHORT).show();
