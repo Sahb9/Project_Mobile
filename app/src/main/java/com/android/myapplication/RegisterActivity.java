@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.myapplication.DAO.AccountDAO;
 import com.android.myapplication.Models.Database;
 
 
@@ -21,14 +22,14 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnRegister;
     Database database;
     EditText edtUSerName,edtEmail,edtPhoneNumber,edtPassword;
-
+    AccountDAO accountDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         changeStatusBarColor();
         addControl();
-        processDatabase();
+       // processDatabase();
 //        database.QueryData("DROP TABLE Account ");
         addEvent();
 
@@ -39,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 addUSer();
                 Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                 startActivity(intent);
@@ -77,9 +79,9 @@ public class RegisterActivity extends AppCompatActivity {
         String email = edtEmail.getText().toString();
         String phoneNumber = edtPhoneNumber.getText().toString();
         String password = edtPassword.getText().toString();
-        database.QueryData("INSERT INTO Account VALUES(null,'"+username+"','"+password+"',null,'"+phoneNumber+"','"+email+"')");
-
-
+        //database.QueryData("INSERT INTO Account VALUES(null,'"+username+"','"+password+"',null,'"+phoneNumber+"','"+email+"')");
+       // accountDAO.ADD_User(username,password,phoneNumber,email);
+        accountDAO.ADD_User2(username,password,phoneNumber,email);
 
 
     }

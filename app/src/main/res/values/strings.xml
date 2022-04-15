@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">Tracking Habit</string>
 <!--    <string name="app_name">ModernLogin</string>-->
     <string name="login_email_hint">Name</string>
     <string name="register_email_hint">Email</string>
