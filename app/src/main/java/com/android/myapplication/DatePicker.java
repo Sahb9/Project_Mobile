@@ -25,7 +25,7 @@ public class DatePicker extends AppCompatActivity {
         editText = findViewById(R.id.editTextDate);
         btnBack = findViewById(R.id.buttonBack);
 
-        //events
+        //events test
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
