@@ -1,7 +1,6 @@
-package com.android.myapplication;
+package com.android.myapplication.Activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -15,24 +14,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.myapplication.DAO.AccountDAO;
-import com.android.myapplication.Models.Database;
+import com.android.myapplication.R;
 
 
 public class RegisterActivity extends AppCompatActivity {
     Button btnRegister;
-    Database database;
     EditText edtUSerName,edtEmail,edtPhoneNumber,edtPassword;
-    AccountDAO accountDAO;
+    AccountDAO accountDAO = new AccountDAO();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        accountDAO=new AccountDAO(this,null,null,1);
-        accountDAO.processDatabase(this);
         changeStatusBarColor();
         addControl();
-       // processDatabase();
-//        database.QueryData("DROP TABLE Account ");
+
         addEvent();
 
 
@@ -43,8 +39,16 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                addUSer();
-                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                String username = edtUSerName.getText().toString();
+                //Hình
+                //
+                String email = edtEmail.getText().toString();
+                String phoneNumber = edtPhoneNumber.getText().toString();
+                String password = edtPassword.getText().toString();
+                accountDAO.ADD_User2(RegisterActivity.this,username,password,phoneNumber,email);
+
+                Toast.makeText(RegisterActivity.this, "Dang ky thanh cong", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
 
 
@@ -60,43 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
         edtPhoneNumber = findViewById(R.id.editTextMobile);
         edtPassword = findViewById(R.id.editTextPassword);
     }
-    public void processDatabase()
-    {
-        database = new Database(this,"Project.sqlite",null,1);
-
-        database.QueryData("CREATE TABLE IF NOT EXISTS Account(\n" +
-                "Id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "userName varchar(200),\n" +
-                "passWord varchar(200),\n" +
-                "Hinh BLOB,\n"+
-                "phone int,\n"+
-                "email varchar(200)\n" +
-                ")");
-    }
-    private  void addUSer()
-    {
-        String username = edtUSerName.getText().toString();
-        //Hình
-        //
-        String email = edtEmail.getText().toString();
-        String phoneNumber = edtPhoneNumber.getText().toString();
-        String password = edtPassword.getText().toString();
-        //database.QueryData("INSERT INTO Account VALUES(null,'"+username+"','"+password+"',null,'"+phoneNumber+"','"+email+"')");
-       // accountDAO.ADD_User(username,password,phoneNumber,email);
-        accountDAO.ADD_User2(username,password,phoneNumber,email);
 
 
-    }
-    private void checkLogin(String username , String password)
-    {
-        Cursor dataCongViec = database.GetData("SELECT * FROM Account WHERE userName = '"+ username+ "' and passWord= '"+password+"'");
 
-        if(dataCongViec.getCount()>0)
-        {
-            Toast.makeText(RegisterActivity.this, "đăng ký thành công", Toast.LENGTH_SHORT).show();
 
-        }
-    }
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
