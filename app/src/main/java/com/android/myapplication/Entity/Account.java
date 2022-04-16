@@ -1,16 +1,22 @@
 package com.android.myapplication.Entity;
 
 public class Account {
-    private int Id;
 
-    private byte[] Hinh;
+    private String phone;
     private String email;
     private String userName;
     private String passWord;
 
-    public Account(int id, byte[] hinh, String email, String userName, String passWord) {
-        Id = id;
-        Hinh = hinh;
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Account(String phone, String email, String userName, String passWord) {
+        this.phone = phone;
         this.email = email;
         this.userName = userName;
         this.passWord = passWord;
@@ -24,23 +30,7 @@ public class Account {
         this.email = email;
     }
 
-    public int getId() {
-        return Id;
-    }
 
-    public void setId(int id) {
-        Id = id;
-    }
-
-
-
-    public byte[] getHinh() {
-        return Hinh;
-    }
-
-    public void setHinh(byte[] hinh) {
-        Hinh = hinh;
-    }
 
     public String getUserName() {
         return userName;

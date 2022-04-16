@@ -27,6 +27,7 @@ import com.android.myapplication.Others.DarkModePrefManager;
 import com.android.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,7 +59,9 @@ public class MainActivity extends AppCompatActivity
         layout_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
                 Toast.makeText(MainActivity.this, "Schedule", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
         });
         layout_BMI.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +165,15 @@ public class MainActivity extends AppCompatActivity
             recreate();
 
         }
+        else if(id == R.id.nav_signOut)
+        {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent =new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+            Toast.makeText(MainActivity.this, "Dang xuat thanh cong", Toast.LENGTH_SHORT).show();
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -202,7 +214,7 @@ public class MainActivity extends AppCompatActivity
         {
             String ten = bundle.getString("username");
 
-            textHeader.setText("Hello " + ten );
+            textHeader.setText("Hello swan4567890@gmail.com"   );
         }
     }
     public void DungChoCalendar()

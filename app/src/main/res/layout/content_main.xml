@@ -119,7 +119,7 @@
                     <TextView
                         android:id="@+id/textViewSub3Title"
                         style="@style/viewParent.headerText.HomeCardTitle"
-                        android:text="Time Management" />
+                        android:text="Sleeping" />
 
                     <TextView
                         style="@style/viewParent.headerText.homeCardContent"

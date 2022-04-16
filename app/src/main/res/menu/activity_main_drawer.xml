@@ -32,6 +32,10 @@
                 android:id="@+id/nav_dark_mode"
                 android:icon="@android:drawable/ic_menu_day"
                 android:title="Toggle Theme" />
+            <item
+                android:id="@+id/nav_signOut"
+                android:icon="@drawable/logout"
+                android:title="Sign Out" />
         </menu>
     </item>
 

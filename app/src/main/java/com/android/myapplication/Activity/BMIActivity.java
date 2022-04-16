@@ -1,25 +1,16 @@
 package com.android.myapplication.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.myapplication.DatePicker;
-import com.android.myapplication.Others.DarkModePrefManager;
-import com.android.myapplication.Others.Login;
 import com.android.myapplication.R;
-import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,6 +23,12 @@ public class BMIActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bmiactivity);
+        //
+//        DarkModePrefManager darkModePrefManager = new DarkModePrefManager(this);
+//        darkModePrefManager.setDarkMode(!darkModePrefManager.isNightMode());
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        recreate();
+        //
         addControl();
         addEvent();
 
@@ -105,14 +102,18 @@ public class BMIActivity extends AppCompatActivity{
     }
     double TinhBMI(double cannang,double chieucao)
     {
-        return  cannang / ((chieucao/100)*2) ;
+        double rate =  cannang / ((chieucao/100)*2);
+        return Math.round(rate * 10) / 10 ;
     }
     double TinhFat(double cannang,double chieucao,int tuoi)
     {
-        return (1.2* TinhBMI(cannang,chieucao)) + (0.23*tuoi) -10.8- 5.4;
+        double rate = (1.2* TinhBMI(cannang,chieucao)) + (0.23*tuoi) -10.8- 5.4;
+        return Math.round(rate * 10) / 10;
     }
     double tinhChieuCaoLyTuong(double chieucao)
     {
-        return ((chieucao-100)*9)/10;
+        double rate = ((chieucao-100)*9)/10;
+
+        return Math.round(rate * 10) / 10;
     }
 }

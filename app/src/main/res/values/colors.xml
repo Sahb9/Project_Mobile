@@ -59,5 +59,8 @@
     <color name="gradientLightGreen">#21E8AC</color>
 
     <!--    School-->
+<!--Calendar -->
+    <color name="gray">#888</color>
+    <color name="blue">#0000FF</color>
 
 </resources>

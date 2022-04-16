@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.myapplication.DatePicker;
 import com.android.myapplication.R;
 
 public class Login extends AppCompatActivity {

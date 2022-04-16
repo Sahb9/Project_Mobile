@@ -1,5 +1,6 @@
 package com.android.myapplication.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,10 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.myapplication.DAO.AccountDAO;
 import com.android.myapplication.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -38,13 +44,18 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String username = edtUSerName.getText().toString();
+                String username = edtUSerName.getText().toString().trim();
                 //Hình
                 //
-                String email = edtEmail.getText().toString();
-                String phoneNumber = edtPhoneNumber.getText().toString();
-                String password = edtPassword.getText().toString();
-                accountDAO.ADD_User2(RegisterActivity.this,username,password,phoneNumber,email);
+                String email = edtEmail.getText().toString().trim();
+                String phoneNumber = edtPhoneNumber.getText().toString().trim() ;
+                String password = edtPassword.getText().toString().trim();
+                //
+                AddUserAuth(email,password);
+                //AddUserAuth
+                accountDAO.addInforUser(phoneNumber,email,username,password);
+                //registerUser(email,password);
+                //accountDAO.addUser(RegisterActivity.this,username,password,phoneNumber,email);
 
                 Toast.makeText(RegisterActivity.this, "Dang ky thanh cong", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -81,7 +92,50 @@ public class RegisterActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
 
     }
+    public void AddUserAuth( String email, String password)
+    {
+        FirebaseAuth auth =  FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener( this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(RegisterActivity.this, "Authentication success",
+                                    Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+
+    }
+    void registerUser( String email,String password)
+    {
+        FirebaseAuth auth =  FirebaseAuth.getInstance();
 
 
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+//                            Toast.makeText(MainActivity.this, "Authentication success",
+//                                    Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+//                            Toast.makeText(MainActivity.this, "Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+    }
 
 }
