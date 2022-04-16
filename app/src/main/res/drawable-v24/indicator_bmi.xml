@@ -6,14 +6,15 @@
     <gradient
         android:angle="0"
         android:centerX="0%"
-        android:startColor="#FF416C"
-        
-        android:endColor="#8A52E9"
+        android:startColor="#D91C24"
+        android:centerColor="#F7B200"
+        android:endColor="#1CD924"
         android:type="linear"
+
         />
 
     <size
-        android:width="334dp"
-        android:height="100dp"
+        android:width="50dp"
+        android:height="10dp"
         />
 </shape>

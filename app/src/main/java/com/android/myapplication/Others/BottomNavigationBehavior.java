@@ -1,4 +1,4 @@
-package com.android.myapplication;
+package com.android.myapplication.Others;
 
 /**
  * Created by kapil on 05/10/18.

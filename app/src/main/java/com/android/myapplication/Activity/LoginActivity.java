@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.myapplication.DAO.AccountDAO;
-import com.android.myapplication.MainActivity;
 import com.android.myapplication.R;
 
 
@@ -44,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     Toast.makeText(LoginActivity.this,"Dăng nhập thành công",Toast.LENGTH_LONG).show();
-
                     startActivity(intent);
                 }
                 else
@@ -52,8 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Dăng nhập thất bại ",Toast.LENGTH_LONG).show();
 
                 }
-
-
             }
         });
     }
@@ -63,5 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
 
     }
+
 
 }

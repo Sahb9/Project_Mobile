@@ -9,18 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-<!--        <activity-->
-<!--            android:name=".Login"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".Activity.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.EatingActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Login" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".Activity.RegisterActivity"
             android:exported="false" />
-
-         <activity
-         android:name=".DatePicker"
-         android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".DatePicker"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.BMIActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.LoginActivity"

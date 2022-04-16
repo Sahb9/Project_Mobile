@@ -1,4 +1,4 @@
-package com.android.myapplication;
+package com.android.myapplication.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,58 +22,58 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.myapplication.Others.BottomNavigationBehavior;
+import com.android.myapplication.Others.DarkModePrefManager;
+import com.android.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView txtTime;
-    RelativeLayout layoutschedule;
+    RelativeLayout layout_schedule,layout_fitness,layout_timeManagement,layout_Eating,layout_BMI,layout_reading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // bật dark mode
         setDarkMode(getWindow());
-
         setContentView(R.layout.activity_main);
+        addControl();
+        addEvent();
 
-        layoutschedule = findViewById(R.id.layout_schedule);
-        layoutschedule.setOnClickListener(new View.OnClickListener() {
+        xuLySchool();
+
+    }
+    void addControl()
+    {
+        layout_schedule = findViewById(R.id.layout_schedule);
+        layout_fitness = findViewById(R.id.layout_fitness);
+        layout_timeManagement=findViewById(R.id.layout_timeManagement);
+        layout_Eating = findViewById(R.id.layout_eating);
+        layout_BMI = findViewById(R.id.layout_BMI);
+        layout_reading = findViewById(R.id.layout_reading);
+    }
+    void addEvent()
+    {
+        layout_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Schedule", Toast.LENGTH_SHORT).show();
             }
         });
-
-//        txtTime = findViewById(R.id.textViewTime);
-//        Calendar calendar = Calendar.getInstance();
-//        txtTime.setText(calendar.getTime() + "\n");
-//        txtTime.append(calendar.get(Calendar.DATE)+"\n");
-//        txtTime.append(calendar.get(Calendar.MONTH)+"\n");// tháng đúng phải +1
-//        txtTime.append(calendar.get(Calendar.YEAR)+"\n");//
-//
-//        //format ngày tháng năm
-//        SimpleDateFormat dinhDangNgay = new SimpleDateFormat("dd/MM/yyyy");
-//        txtTime.append(dinhDangNgay.format(calendar.getTime()));
-//
-//        txtTime.append(calendar.get(Calendar.HOUR)+"\n");// định dạng 12h
-//        txtTime.append(calendar.get(Calendar.HOUR_OF_DAY)+"\n");// định dạng 24h
-//
-//        SimpleDateFormat dinhDangGio = new SimpleDateFormat("hh:mm:ss ");
-//        txtTime.append(dinhDangGio.format(calendar.getTime()));
-
-        xuLySchool();
-
+        layout_BMI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, BMIActivity.class);
+                Toast.makeText(MainActivity.this,"Dăng nhập thành công",Toast.LENGTH_LONG).show();
+                startActivity(intent);
+            }
+        });
     }
     void xuLySchool()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
   //      setSupportActionBar(toolbar);
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-//        ivHeaderPhoto.setImageResource(R.drawable.anh_user1);
+
     }
     //school
 
@@ -204,5 +204,25 @@ public class MainActivity extends AppCompatActivity
 
             textHeader.setText("Hello " + ten );
         }
+    }
+    public void DungChoCalendar()
+    {
+
+//        txtTime = findViewById(R.id.textViewTime);
+//        Calendar calendar = Calendar.getInstance();
+//        txtTime.setText(calendar.getTime() + "\n");
+//        txtTime.append(calendar.get(Calendar.DATE)+"\n");
+//        txtTime.append(calendar.get(Calendar.MONTH)+"\n");// tháng đúng phải +1
+//        txtTime.append(calendar.get(Calendar.YEAR)+"\n");//
+//
+//        //format ngày tháng năm
+//        SimpleDateFormat dinhDangNgay = new SimpleDateFormat("dd/MM/yyyy");
+//        txtTime.append(dinhDangNgay.format(calendar.getTime()));
+//
+//        txtTime.append(calendar.get(Calendar.HOUR)+"\n");// định dạng 12h
+//        txtTime.append(calendar.get(Calendar.HOUR_OF_DAY)+"\n");// định dạng 24h
+//
+//        SimpleDateFormat dinhDangGio = new SimpleDateFormat("hh:mm:ss ");
+//        txtTime.append(dinhDangGio.format(calendar.getTime()));
     }
 }
