@@ -37,6 +37,7 @@
                 android:layout_marginTop="10dp">
 
                 <RelativeLayout
+                    android:id="@+id/layout_schedule"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/home_gradient_schedule"
@@ -115,8 +116,8 @@
 
                     <TextView
                         android:id="@+id/textViewSub3Title"
-                        android:text="Time Management"
-                        style="@style/viewParent.headerText.HomeCardTitle" />
+                        style="@style/viewParent.headerText.HomeCardTitle"
+                        android:text="Time Management" />
 
                     <TextView
                         style="@style/viewParent.headerText.homeCardContent"
@@ -143,23 +144,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:minHeight="100dp"
-                    android:background="@drawable/home_gradient_schedule"
+                    android:background="@drawable/eating_gradient_schedule"
                     android:padding="10dp">
 
                     <TextView
                         android:id="@+id/textViewSub4Title"
-                        android:text="Biology"
+                        android:text="Eating"
                         style="@style/viewParent.headerText.HomeCardTitle" />
 
                     <TextView
-                        android:text="Study nature, love nature,\nclose to nature"
                         style="@style/viewParent.headerText.homeCardContent"
-                        android:layout_below="@id/textViewSub4Title"/>
+                        android:layout_below="@id/textViewSub4Title"
+                        android:text="Study nature, love nature,\nclose to nature" />
 
                     <ImageView
+                        style="@style/homeCardImage"
                         android:maxHeight="90dp"
-                        android:src="@drawable/home_ic_biology"
-                        style="@style/homeCardImage" />
+                        android:src="@drawable/home_ic_biology" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -175,13 +176,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:minHeight="100dp"
-                    android:background="@drawable/home_gradient_schedule"
+                    android:background="@drawable/bmi_gradient_schedule"
                     android:padding="10dp">
 
                     <TextView
                         android:id="@+id/textViewSub5Title"
-                        android:text="Geography"
-                        style="@style/viewParent.headerText.HomeCardTitle" />
+                        style="@style/viewParent.headerText.HomeCardTitle"
+                        android:text="BMI" />
 
                     <TextView
                         android:text="Study nature, love nature,\nclose to nature"
@@ -212,8 +213,8 @@
 
                     <TextView
                         android:id="@+id/textViewSub6Title"
-                        android:text="Politics"
-                        style="@style/viewParent.headerText.HomeCardTitle" />
+                        style="@style/viewParent.headerText.HomeCardTitle"
+                        android:text="Reading" />
 
                     <TextView
                         android:text="Study nature, love nature,\nclose to nature"

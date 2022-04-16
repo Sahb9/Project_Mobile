@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity"
+    tools:context=".Activity.RegisterActivity"
     android:background="@color/register_bk_color"
     android:focusableInTouchMode="true"
     android:gravity="center"
@@ -59,7 +59,7 @@
                             style="@style/modifiedEditText"
                             android:inputType="textPersonName"
                             android:maxLines="1"
-                            android:hint="Name"/>
+                            android:hint="User Name"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +71,7 @@
                             style="@style/modifiedEditText"
                             android:inputType="textEmailAddress"
                             android:maxLines="1"
-                            android:hint="@string/login_email_hint"/>
+                            android:hint="@string/register_email_hint"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputMobile"
@@ -82,7 +82,7 @@
                             style="@style/modifiedEditText"
                             android:inputType="phone"
                             android:maxLines="1"
-                            android:hint="Mobile Number"/>
+                            android:hint="Phone Number"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -97,16 +97,14 @@
                             android:inputType="textPassword"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-<!--                    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton-->
-<!--                        android:id="@+id/cirRegisterButton"-->
-<!--                        style="@style/loginButton"-->
-<!--                        app:spinning_bar_width="4dp"-->
-<!--                        app:spinning_bar_color="#FFF"-->
-<!--                        android:text="Register"-->
-<!--                        android:layout_gravity="center_horizontal"-->
-<!--                        android:layout_marginTop="@dimen/loginViewsMargin"-->
-<!--                        app:initialCornerAngle="27dp"-->
-<!--                        app:spinning_bar_padding="6dp"/>-->
+                    <Button
+                        android:id="@+id/RegisterButton"
+                        style="@style/loginButton"
+                        app:backgroundTint="#11CFC5"
+                        android:text="Register"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                   />
 
                     <TextView
                         style="@style/parent"

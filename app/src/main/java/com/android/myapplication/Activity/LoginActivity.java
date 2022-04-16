@@ -1,4 +1,4 @@
-package com.android.myapplication;
+package com.android.myapplication.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,19 +8,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.navigation.NavigationView;
+import com.android.myapplication.DAO.AccountDAO;
+import com.android.myapplication.MainActivity;
+import com.android.myapplication.R;
 
 
 public class LoginActivity extends AppCompatActivity {
-
+    //
     SharedPreferences sharedPreferences;
     EditText txtName,txtPassword;
     Button btnLogin;
+
+    AccountDAO accountDAO = new AccountDAO();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,45 +32,35 @@ public class LoginActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
         setContentView(R.layout.activity_login_new);
-        txtName = (EditText) findViewById(R.id.editTextName);
-        txtPassword = (EditText) findViewById(R.id.editTextPassword);
+        txtName = findViewById(R.id.editTextName);
+        txtPassword = findViewById(R.id.editTextPassword);
         btnLogin = findViewById(R.id.cirLoginButton);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username= txtName.getText().toString().trim();
                 String password= txtPassword.getText().toString().trim();
-                if(username.equals("anhtuan") && password.equals("1234"))
+                if(accountDAO.checkLogin(LoginActivity.this,username,password))
                 {
-
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     Toast.makeText(LoginActivity.this,"Dăng nhập thành công",Toast.LENGTH_LONG).show();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("username",username);
-                    intent.putExtra("dulieubundle",bundle);
-
-//                    SharedPreferences.Editor editor =  sharedPreferences.edit();
-//                    editor.putString("taikhoan",username);
-//                    editor.putString("matkhau",password);
-//                    editor.putBoolean("checked",true);
-//                    editor.commit();
-
 
                     startActivity(intent);
                 }
                 else
                 {
-                    Toast.makeText(LoginActivity.this, "Account or Password is not correct ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"Dăng nhập thất bại ",Toast.LENGTH_LONG).show();
 
                 }
+
+
             }
         });
     }
 
     public void onLoginClick(View View){
-        startActivity(new Intent(this,RegisterActivity.class));
-        //overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+        startActivity(new Intent(this, RegisterActivity.class));
+        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
 
     }
 
