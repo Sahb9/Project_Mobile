@@ -13,9 +13,9 @@ import com.android.myapplication.Models.Database;
 import com.android.myapplication.Models.Database2;
 
 public class AccountDAO extends SQLiteOpenHelper {
-    public static Database database;
+    Database database;
 
-    public AccountDAO(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public AccountDAO(@Nullable Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -75,7 +75,7 @@ public class AccountDAO extends SQLiteOpenHelper {
     public void ADD_User2(String username,String password,String phoneNumber,String email)
     {
         // gọi db
-        Database2 database2 = null;
+        Database2 database2 = new Database2();
         database2.processCopy();
         ContentValues row = new ContentValues();
         row.put("userName",username);
