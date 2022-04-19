@@ -23,17 +23,17 @@ public class DarkModePrefManager {
 
     public DarkModePrefManager(Context context) {
         this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        pref = _context.getSharedPreferences("education-dark-mode", 0);
         editor = pref.edit();
     }
 
     public void setDarkMode(boolean isFirstTime) {
-        editor.putBoolean(IS_NIGHT_MODE, isFirstTime);
+        editor.putBoolean("IsNightMode", isFirstTime);
         editor.commit();
     }
 
     public boolean isNightMode() {
-        return pref.getBoolean(IS_NIGHT_MODE, true);
+        return pref.getBoolean("IsNightMode", true);
     }
 
 }

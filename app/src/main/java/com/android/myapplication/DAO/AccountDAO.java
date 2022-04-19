@@ -5,18 +5,29 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.myapplication.Activity.LoginActivity;
+import com.android.myapplication.Activity.MainActivity;
 import com.android.myapplication.Entity.Account;
 import com.android.myapplication.Models.DatabaseActivity;
 import com.android.myapplication.Models.Database;
+import com.android.myapplication.R;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,37 +37,36 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.Executor;
 
-public class AccountDAO {
+public class AccountDAO extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
-    public boolean checkLogin(Activity activity,String username , String password)
-    {
-        DatabaseActivity.sqLiteDatabase= Database.initDatabase(activity,DatabaseActivity.DBName);
-        Cursor cursor = DatabaseActivity.sqLiteDatabase.rawQuery("SELECT * FROM Account WHERE userName = ? and passWord= ?",new String[]{username,password});
-        if(cursor.getCount() !=0)
-        {
-            return true;
-        }
-        return false;
-    }
-    public void addUser(Activity activity, String username, String password, String phoneNumber, String email)
-    {
-        // cach 3
-        DatabaseActivity.sqLiteDatabase= Database.initDatabase(activity,DatabaseActivity.DBName);
-        ContentValues row = new ContentValues();
-        row.put("userName",username);
-        row.put("passWord",password);
-        row.put("phone",phoneNumber);
-        row.put("email",email);
-
-        DatabaseActivity.sqLiteDatabase.insert("Account","userName,passWord,phone,email",row);
-        // insert("Account","userName,passWord,phone,email",row);
-
-    }
+//    public boolean checkLogin(Activity activity,String username , String password)
+//    {
+//        DatabaseActivity.sqLiteDatabase= Database.initDatabase(activity,DatabaseActivity.DBName);
+//        Cursor cursor = DatabaseActivity.sqLiteDatabase.rawQuery("SELECT * FROM Account WHERE userName = ? and passWord= ?",new String[]{username,password});
+//        if(cursor.getCount() !=0)
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+//    public void addUser(Activity activity, String username, String password, String phoneNumber, String email)
+//    {
+//        // cach 3
+//        DatabaseActivity.sqLiteDatabase= Database.initDatabase(activity,DatabaseActivity.DBName);
+//        ContentValues row = new ContentValues();
+//        row.put("userName",username);
+//        row.put("passWord",password);
+//        row.put("phone",phoneNumber);
+//        row.put("email",email);
+//
+//        DatabaseActivity.sqLiteDatabase.insert("Account","userName,passWord,phone,email",row);
+//        // insert("Account","userName,passWord,phone,email",row);
+//
+//    }
 
     public void AddUserAuth( String email, String password)
     {
-        FirebaseUser user;
         FirebaseAuth auth;
         auth =  FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(email, password);
@@ -126,14 +136,74 @@ public class AccountDAO {
 
             }
         });
-//        user = auth.getInstance().getCurrentUser();
-//
-//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                .setDisplayName(username)
-//                .build();
-//
-//        user.updateProfile(profileUpdates);
     }
+    public boolean SignIn(String email,String password) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+         mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+
+
+                            //finishAffinity();
+                        } else {
+
+                        }
+                    }
+                });
+        return true;
+    }
+    public void sendNewPasswordbyEmail(String email)
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String emailAddress = email;
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Log.d(TAG, "Email sent.");
+                        }
+                    }
+                });
+    }
+    public void getInforUserHeader(NavigationView navigationView,Context context)
+    {
+        View headerView =navigationView.getHeaderView(0);
+        ImageView ivHeaderPhoto = headerView.findViewById(R.id.imageViewAvatar);
+     //   ivHeaderPhoto.setImageResource(R.drawable.anh_user1);
+        TextView textName = headerView.findViewById(R.id.textviewtitleHeader);
+        TextView textEmail = headerView.findViewById(R.id.textviewtitleEmail);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+
+            // Check if user's email is verified
+            boolean emailVerified = user.isEmailVerified();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            String uid = user.getUid();
+            if(name ==null)
+            {
+                textName.setVisibility(View.GONE);
+            }
+            else
+                textName.setVisibility(View.VISIBLE);
+
+            textName.setText("Name: "+name);
+            textEmail.setText("Email: "+ email);
+            Glide.with(context).load(photoUrl).error(R.drawable.user1).into(ivHeaderPhoto);
+        }
+    }
 
 }
