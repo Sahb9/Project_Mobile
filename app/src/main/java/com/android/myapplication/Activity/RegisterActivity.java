@@ -51,8 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String phoneNumber = edtPhoneNumber.getText().toString().trim() ;
                 String password = edtPassword.getText().toString().trim();
                 //
-                AddUserAuth(email,password);
-                //AddUserAuth
+                accountDAO.AddUserAuth(email,password);
                 accountDAO.addInforUser(phoneNumber,email,username,password);
                 //registerUser(email,password);
                 //accountDAO.addUser(RegisterActivity.this,username,password,phoneNumber,email);
@@ -92,50 +91,6 @@ public class RegisterActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
 
     }
-    public void AddUserAuth( String email, String password)
-    {
-        FirebaseAuth auth =  FirebaseAuth.getInstance();
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener( this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(RegisterActivity.this, "Authentication success",
-                                    Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
-
-    }
-    void registerUser( String email,String password)
-    {
-        FirebaseAuth auth =  FirebaseAuth.getInstance();
-
-
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-//                            Toast.makeText(MainActivity.this, "Authentication success",
-//                                    Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-//                            Toast.makeText(MainActivity.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
-    }
 
 }

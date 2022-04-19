@@ -8,7 +8,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-<!--    Calendar-->
+    <!--    Calendar-->
     <string name="back"><![CDATA[<-]]></string>
     <string name="forward"><![CDATA[->]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_user">User</string>
+    <string name="menu_history">History</string>
 </resources>

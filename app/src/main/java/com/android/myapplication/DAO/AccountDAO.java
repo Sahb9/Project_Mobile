@@ -56,7 +56,6 @@ public class AccountDAO {
 
     public void AddUserAuth( String email, String password)
     {
-        FirebaseUser user;
         FirebaseAuth auth;
         auth =  FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(email, password);

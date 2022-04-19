@@ -47,25 +47,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username= txtName.getText().toString().trim();
                 String password= txtPassword.getText().toString().trim();
-//                if(accountDAO.checkLogin(LoginActivity.this,username,password))
-//                {
-//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                    Toast.makeText(LoginActivity.this,"Dăng nhập thành công",Toast.LENGTH_LONG).show();
-//                    startActivity(intent);
-//                }
-//                else
-//                {
-//                    Toast.makeText(LoginActivity.this,"Dăng nhập thất bại ",Toast.LENGTH_LONG).show();
-//
-//                }
+
                 if(SignIn(username,password))
                 {
-                    //sendVerificationByEmail();
-                    Toast.makeText(LoginActivity.this,"Dăng nhập thành công",Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(LoginActivity.this,"Đăng nhập thành công",Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    Toast.makeText(LoginActivity.this,"Dăng nhập không thành công",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,"Đăng nhập không thành công",Toast.LENGTH_LONG).show();
 
                 }
             }

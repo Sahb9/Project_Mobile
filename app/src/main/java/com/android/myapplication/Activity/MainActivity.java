@@ -9,6 +9,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Build;
@@ -22,6 +23,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.myapplication.Fragment.HistoryFragment;
+import com.android.myapplication.Fragment.HomeFragment;
+import com.android.myapplication.Fragment.SearchFragment;
+import com.android.myapplication.Fragment.UserFragment;
 import com.android.myapplication.Others.BottomNavigationBehavior;
 import com.android.myapplication.Others.DarkModePrefManager;
 import com.android.myapplication.R;
@@ -40,8 +45,8 @@ public class MainActivity extends AppCompatActivity
         setDarkMode(getWindow());
         setContentView(R.layout.activity_main);
         addControl();
-        addEvent();
-
+        //addEvent();
+        replaceFragment(new HomeFragment(this));
         xuLySchool();
 
     }
@@ -111,15 +116,19 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
+
             switch (item.getItemId()) {
                 case R.id.navigationMyProfile:
+                    replaceFragment(new UserFragment());
                     return true;
                 case R.id.navigationMyCourses:
+                    replaceFragment(new HistoryFragment());
                     return true;
                 case R.id.navigationHome:
+                    replaceFragment(new HomeFragment());
                     return true;
                 case  R.id.navigationSearch:
+                    replaceFragment(new SearchFragment());
                     return true;
                 case  R.id.navigationMenu:
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -171,7 +180,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent =new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
-            Toast.makeText(MainActivity.this, "Dang xuat thanh cong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -216,6 +225,12 @@ public class MainActivity extends AppCompatActivity
 
             textHeader.setText("Hello swan4567890@gmail.com"   );
         }
+    }
+    private void replaceFragment(Fragment fragment)
+    {
+        FragmentTransaction fragmentTransaction =  getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_main,fragment);
+        fragmentTransaction.commit();
     }
     public void DungChoCalendar()
     {
