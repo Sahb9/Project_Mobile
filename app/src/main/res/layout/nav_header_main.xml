@@ -14,21 +14,25 @@
 
     <ImageView
         android:id="@+id/imageViewAvatar"
-
         android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-         />
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        />
 
     <TextView
         android:id="@+id/textviewtitleHeader"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Hello "
+        android:text="Name: "
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
+    <TextView
+        android:id="@+id/textviewtitleEmail"
+        android:textSize="15sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
 </LinearLayout>

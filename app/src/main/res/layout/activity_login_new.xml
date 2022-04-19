@@ -75,7 +75,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-
+            android:id="@+id/textViewForgotPassWord"
             style="@style/viewParent"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
@@ -86,7 +86,7 @@
         <Button
             android:id="@+id/cirLoginButton"
             style="@style/loginButton"
-            android:onClick="processLogin"
+
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/loginViewsMargin"
             android:text="Login"

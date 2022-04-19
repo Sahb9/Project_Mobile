@@ -1,5 +1,9 @@
 package com.android.myapplication.Activity;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,10 +13,18 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.PathPermission;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -22,26 +34,45 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.myapplication.DAO.AccountDAO;
+import com.android.myapplication.Fragment.HistoryFragment;
+import com.android.myapplication.Fragment.HomeFragment;
+import com.android.myapplication.Fragment.SearchFragment;
+import com.android.myapplication.Fragment.UserFragment;
 import com.android.myapplication.Others.BottomNavigationBehavior;
+import com.android.myapplication.Others.ChangeDarkMode;
 import com.android.myapplication.Others.DarkModePrefManager;
 import com.android.myapplication.R;
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView txtTime;
+    AccountDAO accountDAO = new AccountDAO();
+    ChangeDarkMode changeDarkMode;
+    private UserFragment userFragment = new UserFragment(this);
     RelativeLayout layout_schedule,layout_fitness,layout_timeManagement,layout_Eating,layout_BMI,layout_reading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // bật dark mode
-        setDarkMode(getWindow());
-        setContentView(R.layout.activity_main);
-        addControl();
-        addEvent();
+        //setDarkMode(getWindow());
+        //
+        changeDarkMode = new ChangeDarkMode(this);
+        changeDarkMode.setModeScreen();
 
+        //
+        setContentView(R.layout.activity_main);
+        //addControl();
+        //addEvent();
+        replaceFragment(new HomeFragment(this));
         xuLySchool();
 
     }
@@ -73,7 +104,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-    void xuLySchool()
+    public void xuLySchool()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
   //      setSupportActionBar(toolbar);
@@ -85,7 +116,8 @@ public class MainActivity extends AppCompatActivity
         //thanh bên trái
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         // set up hình ảnh và username
-        getDataFromLogin(navigationView);
+        //accountDAO.getInforUserHeader(navigationView,this);
+        getInforUserHeader(navigationView,this);
         //
         navigationView.setNavigationItemSelectedListener(this);
         // thanh bên dưới
@@ -96,9 +128,6 @@ public class MainActivity extends AppCompatActivity
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         bottomNavigationView.setSelectedItemId(R.id.navigationHome);
-
-
-
 
     }
     //school
@@ -111,15 +140,20 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
+
             switch (item.getItemId()) {
                 case R.id.navigationMyProfile:
+                    replaceFragment(userFragment);
                     return true;
                 case R.id.navigationMyCourses:
+                    replaceFragment(new HistoryFragment(MainActivity.this));
                     return true;
                 case R.id.navigationHome:
+                    replaceFragment(new HomeFragment(MainActivity.this));
+
                     return true;
                 case  R.id.navigationSearch:
+                    replaceFragment(new SearchFragment());
                     return true;
                 case  R.id.navigationMenu:
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -159,19 +193,40 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_dark_mode) {
             //code for setting dark mode
             //true for dark mode, false for day mode, currently toggling on each click
-            DarkModePrefManager darkModePrefManager = new DarkModePrefManager(this);
-            darkModePrefManager.setDarkMode(!darkModePrefManager.isNightMode());
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            recreate();
+//            DarkModePrefManager darkModePrefManager = new DarkModePrefManager(this);
+//            darkModePrefManager.setDarkMode(!darkModePrefManager.isNightMode());
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//            recreate();
+            if(changeDarkMode.PRIVATE_MODE) // nếu đang là chế độ tối
+            {
+                // thì chuyển sang chế độ sáng
+                changeDarkMode.PRIVATE_MODE=false;
+                changeDarkMode.modeNight();
+            }// nếu đang là chế độ sáng
+            else
+            {
+                // thì chuyển sang chế độ tối
+                changeDarkMode.PRIVATE_MODE=true;
+                changeDarkMode.modeDark();
+            }
+
 
         }
         else if(id == R.id.nav_signOut)
         {
+            if(changeDarkMode.PRIVATE_MODE) // nếu đang là chế độ tối
+            {
+                // nhưng đây là trg hợp đặc biệt nên cho cố định là nền tối
+                changeDarkMode.PRIVATE_MODE=false;
+                // thì chuyển sang chế độ sáng
+                changeDarkMode.modeNight();
+
+            }// nếu đang là chế độ sáng
             FirebaseAuth.getInstance().signOut();
             Intent intent =new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
-            Toast.makeText(MainActivity.this, "Dang xuat thanh cong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -200,22 +255,12 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-    public void getDataFromLogin(NavigationView navigationView)
+
+    private void replaceFragment(Fragment fragment)
     {
-        View headerView =navigationView.getHeaderView(0);
-        ImageView ivHeaderPhoto = headerView.findViewById(R.id.imageViewAvatar);
-        ivHeaderPhoto.setImageResource(R.drawable.anh_user1);
-        TextView textHeader = headerView.findViewById(R.id.textviewtitleHeader);
-
-
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("dulieubundle");
-        if(bundle!=null)
-        {
-            String ten = bundle.getString("username");
-
-            textHeader.setText("Hello swan4567890@gmail.com"   );
-        }
+        FragmentTransaction fragmentTransaction =  getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_main,fragment);
+        fragmentTransaction.commit();
     }
     public void DungChoCalendar()
     {
@@ -236,5 +281,82 @@ public class MainActivity extends AppCompatActivity
 //
 //        SimpleDateFormat dinhDangGio = new SimpleDateFormat("hh:mm:ss ");
 //        txtTime.append(dinhDangGio.format(calendar.getTime()));
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+                if(grantResults.length>0 && grantResults[0]== PackageManager.PERMISSION_GRANTED)//Nếu có sự cho phép
+                {
+                    openGallery();
+
+                    Intent intent =  new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
+                    activityOpenFolder.launch(intent);
+                }else {
+                    Toast.makeText(this, "Bạn không đồng ý cho mở folder", Toast.LENGTH_SHORT).show();
+                }
+
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+    public void openGallery()
+    {
+        Intent intent =new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        activityOpenFolder.launch(Intent.createChooser(intent,"Select Picture"));
+    }
+    ActivityResultLauncher<Intent> activityOpenFolder  = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Intent intent = result.getData();
+                    if(intent!=null)
+                    {
+                        Uri uri = intent.getData();
+                        userFragment.setUri(uri);
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                            userFragment.setBitmapImageView(bitmap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            });
+    public void getInforUserHeader(NavigationView navigationView, Context context)
+    {
+        View headerView =navigationView.getHeaderView(0);
+        ImageView ivHeaderPhoto = headerView.findViewById(R.id.imageViewAvatar);
+        //   ivHeaderPhoto.setImageResource(R.drawable.anh_user1);
+        TextView textName = headerView.findViewById(R.id.textviewtitleHeader);
+        TextView textEmail = headerView.findViewById(R.id.textviewtitleEmail);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+
+            // Check if user's email is verified
+            boolean emailVerified = user.isEmailVerified();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            String uid = user.getUid();
+            if(name ==null)
+            {
+                textName.setVisibility(View.GONE);
+            }
+            else
+                textName.setVisibility(View.VISIBLE);
+
+            textName.setText("Name: "+name);
+            textEmail.setText("Email: "+ email);
+            Glide.with(context).load(photoUrl).error(R.drawable.user1).into(ivHeaderPhoto);
+        }
     }
 }

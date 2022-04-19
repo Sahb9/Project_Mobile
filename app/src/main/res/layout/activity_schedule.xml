@@ -15,18 +15,34 @@
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp">
-        <Button
-            android:backgroundTint="#E2C4B6"
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@null"-->
+
+<!--            android:backgroundTint="#E2C4B6"-->
+<!--            android:onClick="previousMonthAction"-->
+<!--            android:text="@string/back"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:icon="@drawable/right_arrow"-->
+<!--            app:iconTint="@color/black" />-->
+
+        <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/back"
-            android:textColor="@color/blue"
-            android:background="@null"
-            android:textStyle="bold"
+            app:iconTint="@color/black"
+            android:backgroundTint="#E2C4B6"
             android:onClick="previousMonthAction"
-            android:textSize="20sp"/>
-
+            app:icon="@drawable/left_arrow"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp" />
         <TextView
             android:id="@+id/monthYearTV"
             android:layout_width="0dp"
@@ -42,12 +58,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/forward"
+
             android:textColor="@color/blue"
             android:background="@null"
             android:textStyle="bold"
             android:onClick="nextMonthAction"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:icon="@drawable/right_arrow"
+            app:iconTint="@color/black"
+
+            />
 
     </LinearLayout>
 
@@ -126,8 +148,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="300dp"/>
 
+    <TextView
+        android:text="dsadasdasdsadasd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>
