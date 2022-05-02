@@ -150,11 +150,6 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"/>
 
-    <TextView
-        android:text="dsadasdasdsadasd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 
 </LinearLayout>
 

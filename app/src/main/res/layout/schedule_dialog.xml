@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/title_habit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Add Habit"
+        android:textSize="34sp"
+        android:textColor="#4FB6D6"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/label_name_habit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/title_habit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Name"
+        android:textSize="26sp"
+        android:textColor="#807F7F" />
+
+    <EditText
+        android:id="@+id/edit_name_habit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/label_name_habit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Name"
+        android:textSize="34sp"
+        android:textColor="#131313"/>
+
+    <TextView
+        android:id="@+id/label_context_habit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/edit_name_habit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="context"
+        android:textSize="28sp"
+        android:textColor="#807F7F"
+        android:layout_marginTop="26dp" />
+
+    <EditText
+        android:id="@+id/edit_context_habit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/label_context_habit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Context"
+        android:textSize="34sp"
+        android:textColor="#131313" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/edit_context_habit"
+        app:layout_constraintRight_toLeftOf="@+id/btn_save"
+        android:text="Cancel"
+        android:textSize="22sp"
+        android:textColor="#4FB6D6"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/edit_context_habit"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="save"
+        android:textSize="22sp"
+        android:textColor="#4FB6D6"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginTop="20dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
