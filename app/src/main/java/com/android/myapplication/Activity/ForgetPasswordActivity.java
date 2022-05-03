@@ -41,7 +41,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email= txtemail.getText().toString().trim();
                 accountDAO.sendNewPasswordbyEmail(email);
-                Toast.makeText(ForgetPasswordActivity.this, "Đã gửi mk reset thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ForgetPasswordActivity.this, "Your Password has been sent", Toast.LENGTH_SHORT).show();
 
             }
         });

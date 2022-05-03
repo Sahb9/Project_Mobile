@@ -288,7 +288,6 @@ public class MainActivity extends AppCompatActivity
                 if(grantResults.length>0 && grantResults[0]== PackageManager.PERMISSION_GRANTED)//Nếu có sự cho phép
                 {
                     openGallery();
-
                     Intent intent =  new Intent(Intent.ACTION_PICK);
                     intent.setType("image/*");
                     activityOpenFolder.launch(intent);
@@ -325,6 +324,48 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             });
+    public static final int KITKAT_VALUE = 1002;
+    public void openMediaDocuments()
+    {
+        Intent intent;
+        if (Build.VERSION.SDK_INT < 19) {
+            intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            startActivityForResult(intent, KITKAT_VALUE);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+            startActivityForResult(intent, KITKAT_VALUE);
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == KITKAT_VALUE) {
+
+        }
+    }
+//    ActivityResultLauncher<Intent> activityOpenFolder  = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//            new ActivityResultCallback<ActivityResult>() {
+//                @Override
+//                public void onActivityResult(ActivityResult result) {
+//                    Intent intent = result.getData();
+//                    if(intent!=null)
+//                    {
+//                        Uri uri = intent.getData();
+//                        userFragment.setUri(uri);
+//                        try {
+//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+//                            userFragment.setBitmapImageView(bitmap);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//            });
     public void getInforUserHeader(NavigationView navigationView, Context context)
     {
         View headerView =navigationView.getHeaderView(0);

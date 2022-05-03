@@ -40,30 +40,7 @@ import java.util.concurrent.Executor;
 public class AccountDAO extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
-//    public boolean checkLogin(Activity activity,String username , String password)
-//    {
-//        DatabaseActivity.sqLiteDatabase= Database.initDatabase(activity,DatabaseActivity.DBName);
-//        Cursor cursor = DatabaseActivity.sqLiteDatabase.rawQuery("SELECT * FROM Account WHERE userName = ? and passWord= ?",new String[]{username,password});
-//        if(cursor.getCount() !=0)
-//        {
-//            return true;
-//        }
-//        return false;
-//    }
-//    public void addUser(Activity activity, String username, String password, String phoneNumber, String email)
-//    {
-//        // cach 3
-//        DatabaseActivity.sqLiteDatabase= Database.initDatabase(activity,DatabaseActivity.DBName);
-//        ContentValues row = new ContentValues();
-//        row.put("userName",username);
-//        row.put("passWord",password);
-//        row.put("phone",phoneNumber);
-//        row.put("email",email);
-//
-//        DatabaseActivity.sqLiteDatabase.insert("Account","userName,passWord,phone,email",row);
-//        // insert("Account","userName,passWord,phone,email",row);
-//
-//    }
+
 
     public void AddUserAuth( String email, String password)
     {
