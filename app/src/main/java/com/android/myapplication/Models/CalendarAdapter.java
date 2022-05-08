@@ -11,32 +11,29 @@ import com.android.myapplication.R;
 
 import java.util.ArrayList;
 
-public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
-{
+public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private final ArrayList<String> daysOfMonth;
     private final OnItemListener onItemListener;
 
-    public CalendarAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener)
-    {
+    public CalendarAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener) {
         this.daysOfMonth = daysOfMonth;
         this.onItemListener = onItemListener;
     }
 
     @NonNull
     @Override
-    public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
 
         layoutParams.height = (int) (parent.getHeight() * 0.09);// set kích thước layout
+
         return new CalendarViewHolder(view, onItemListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position)
-    {
+    public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         holder.dayOfMonth.setText(daysOfMonth.get(position));
     }
 
@@ -46,8 +43,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
         return daysOfMonth.size();
     }
 
-    public interface  OnItemListener
-    {
+    public interface  OnItemListener {
         void onItemClick(int position, String dayText);
     }
 }

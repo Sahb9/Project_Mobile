@@ -6,7 +6,6 @@ package com.android.myapplication.Others;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-
 public class DarkModePrefManager {
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -35,5 +34,4 @@ public class DarkModePrefManager {
     public boolean isNightMode() {
         return pref.getBoolean("IsNightMode", true);
     }
-
 }

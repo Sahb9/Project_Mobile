@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.android.myapplication.DAO.AccountDAO;
 import com.android.myapplication.Others.Login;
 import com.android.myapplication.R;
+import com.android.myapplication.callback.CallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -73,16 +74,29 @@ public class LoginActivity extends AppCompatActivity {
     void addEvents() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public synchronized void onClick(View view) {
-                String username= txtName.getText().toString().trim();
+            public void onClick(View view) {
+                String email= txtName.getText().toString().trim();
                 String password= txtPassword.getText().toString().trim();
 
-                SharedPreferences.Editor editor =  sharedPreferences.edit();
-                editor.putString("email",username);
-                editor.putString("password",password);
-                editor.commit();
+                accountDAO.SignIn(email, password, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean callback) {
+                        if(callback) {
+                            SharedPreferences.Editor editor =  sharedPreferences.edit();
+                            editor.putString("email", email);
+                            editor.putString("password", password);
+                            editor.commit();
 
-                accountDAO.SignIn(username, password, LoginActivity.this, MainActivity.class);
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(LoginActivity.this,"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            //finishAffinity();
+                        } else {
+                            Toast.makeText(LoginActivity.this,"Đăng nhập không thành công",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 

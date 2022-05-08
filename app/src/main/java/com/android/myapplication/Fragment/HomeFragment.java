@@ -38,9 +38,7 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
         this.context=context;
     }
-    public HomeFragment() {
-
-    }
+    public HomeFragment() {}
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -66,10 +64,10 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
+
     RelativeLayout layout_schedule,layout_fitness,layout_timeManagement,layout_Eating,layout_BMI,layout_reading;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,8 +77,8 @@ public class HomeFragment extends Fragment {
          addEvent();
          return view ;
     }
-    void addControl(View view)
-    {
+
+    void addControl(View view) {
         layout_schedule = view.findViewById(R.id.layout_schedule);
         layout_fitness = view.findViewById(R.id.layout_fitness);
         layout_timeManagement=view.findViewById(R.id.layout_timeManagement);
@@ -88,8 +86,8 @@ public class HomeFragment extends Fragment {
         layout_BMI = view.findViewById(R.id.layout_BMI);
         layout_reading = view.findViewById(R.id.layout_reading);
     }
-    void addEvent()
-    {
+
+    void addEvent() {
         layout_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +96,7 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         layout_BMI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

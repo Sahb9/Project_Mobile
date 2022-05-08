@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         //addEvent();
 
         replaceFragment(new HomeFragment(this));
-        xuLySchool();
+        hanhdleSchool();
     }
 
     void addControl() {
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    public void xuLySchool() {
+    public void hanhdleSchool() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -135,12 +135,12 @@ public class MainActivity extends AppCompatActivity
 
         bottomNavigationView.setSelectedItemId(R.id.navigationHome);
     }
+
     //school
     private BottomNavigationView bottomNavigationView;
 
     final private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -240,6 +240,7 @@ public class MainActivity extends AppCompatActivity
             changeStatusBar(1,window);
         }
     }
+
     public void changeStatusBar(int mode, Window window) {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -278,20 +279,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-                if(grantResults.length>0 && grantResults[0]== PackageManager.PERMISSION_GRANTED)//Nếu có sự cho phép
-                {
-                    openGallery();
-                    Intent intent =  new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
-                    activityOpenFolder.launch(intent);
-                }else {
-                    Toast.makeText(this, "Bạn không đồng ý cho mở folder", Toast.LENGTH_SHORT).show();
-                }
-
+        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openGallery();
+            Intent intent =  new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            activityOpenFolder.launch(intent);
+        } else {
+            Toast.makeText(this, "Bạn không đồng ý cho mở folder", Toast.LENGTH_SHORT).show();
+        }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
     public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -320,8 +319,8 @@ public class MainActivity extends AppCompatActivity
             });
 
     public static final int KITKAT_VALUE = 1002;
-    public void openMediaDocuments()
-    {
+
+    public void openMediaDocuments() {
         Intent intent;
         if (Build.VERSION.SDK_INT < 19) {
             intent = new Intent();
@@ -335,6 +334,7 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(intent, KITKAT_VALUE);
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -361,8 +361,8 @@ public class MainActivity extends AppCompatActivity
 //                    }
 //                }
 //            });
-    public void getInforUserHeader(NavigationView navigationView, Context context)
-    {
+
+    public void getInforUserHeader(NavigationView navigationView, Context context) {
         View headerView =navigationView.getHeaderView(0);
         ImageView ivHeaderPhoto = headerView.findViewById(R.id.imageViewAvatar);
         //   ivHeaderPhoto.setImageResource(R.drawable.anh_user1);
@@ -383,12 +383,11 @@ public class MainActivity extends AppCompatActivity
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
-            if(name ==null)
-            {
+            if(name == null) {
                 textName.setVisibility(View.GONE);
-            }
-            else
+            } else {
                 textName.setVisibility(View.VISIBLE);
+            }
 
             textName.setText("Name: "+name);
             textEmail.setText("Email: "+ email);

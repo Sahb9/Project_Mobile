@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Database {
-    public static SQLiteDatabase initDatabase(Activity activity, String databaseName){
+    public static SQLiteDatabase initDatabase(Activity activity, String databaseName) {
         try {
             String outFileName = activity.getApplicationInfo().dataDir + "/databases/" + databaseName;
             File f = new File(outFileName);

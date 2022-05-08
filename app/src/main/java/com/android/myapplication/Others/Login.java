@@ -18,43 +18,39 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
     CheckBox checkResult;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         //định vị
         Anhxa();
+
         //Xử lý
         sharedPreferences = getSharedPreferences("dataLogin",MODE_PRIVATE);
+
         //  lấy giá trị preference || Gán giá trị bth hoặc khi mới chạy sẽ mặc định là chuỗi rỗng hoặc check false
         txtName.setText(sharedPreferences.getString("taikhoan",""));
         txtPassword.setText(sharedPreferences.getString("matkhau",""));
         checkResult.setChecked(sharedPreferences.getBoolean("checked",false));
-
-
-        //
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username= txtName.getText().toString().trim();
                 String password= txtPassword.getText().toString().trim();
-                if(username.equals("anhtuan") && password.equals("1234"))
-                {
-
+                if(username.equals("anhtuan") && password.equals("1234")) {
                     Intent intent = new Intent(Login.this, DatePicker.class);
-                    if(checkResult.isChecked())
-                    {
+
+                    if(checkResult.isChecked()) {
                         Toast.makeText(Login.this,"Dăng nhập thành công",Toast.LENGTH_LONG).show();
                         SharedPreferences.Editor editor =  sharedPreferences.edit();
                         editor.putString("taikhoan",username);
                         editor.putString("matkhau",password);
                         editor.putBoolean("checked",true);
                         editor.commit();
-                    }
-                    else
-                    {
+                    } else {
                         //Toast.makeText(Login.this,"Dăng nhập thành công nhưng chưa remember",Toast.LENGTH_LONG).show();
 
                         SharedPreferences.Editor editor =  sharedPreferences.edit();
@@ -65,17 +61,15 @@ public class Login extends AppCompatActivity {
                         editor.commit();
                     }
                     startActivity(intent);
-
                 }
             }
         });
     }
-    void Anhxa()
-    {
+
+    void Anhxa() {
         txtName = (EditText) findViewById(R.id.editTextTextName);
         txtPassword = (EditText) findViewById(R.id.editTextTextPassword);
         btnLogin = (Button) findViewById(R.id.buttonLogin);
         checkResult = (CheckBox) findViewById(R.id.checkBoxResult);
-
     }
 }

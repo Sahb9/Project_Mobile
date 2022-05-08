@@ -22,6 +22,7 @@ import com.android.myapplication.Entity.Account;
 import com.android.myapplication.Models.DatabaseActivity;
 import com.android.myapplication.Models.Database;
 import com.android.myapplication.R;
+import com.android.myapplication.callback.CallBack;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,26 +43,17 @@ import java.util.concurrent.Executor;
 public class AccountDAO extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
-    public boolean AddUserAuth(String email, String password, Activity activity) {
-        FirebaseAuth auth;
-        auth =  FirebaseAuth.getInstance();
-
-        final boolean[] isSuccess = {false};
+    public void AddUserAuth(String email, String password, CallBack<Boolean> callBack) {
+        FirebaseAuth auth =  FirebaseAuth.getInstance();
 
         auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            Toast.makeText(activity, "Authentication success", Toast.LENGTH_SHORT).show();
-                            isSuccess[0] = true;
-                        } else {
-                            Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
+                        callBack.onCallBack(task.isSuccessful());
                     }
                 });
 
-        return isSuccess[0];
     }
 
     public void addInformationUser(String phone, String email, String username, String password) {
@@ -104,22 +96,14 @@ public class AccountDAO extends AppCompatActivity {
         });
     }
 
-    public void SignIn(String email, String password, Context context, Class<?> cls) {
+    public void SignIn(String email, String password, CallBack<Boolean> callBack) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(context,"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, cls);
-                        startActivity(intent);
-                        //finishAffinity();
-                    } else {
-                        Toast.makeText(context,"Đăng nhập không thành công",Toast.LENGTH_SHORT).show();
-                    }
+                    callBack.onCallBack(task.isSuccessful());
                 }
             });
     }

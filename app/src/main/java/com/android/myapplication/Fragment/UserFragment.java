@@ -115,14 +115,15 @@ public class UserFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
+
     ImageView imgUser;
     EditText edtEmail,edtName;
     TextView txtUserid,txtEmailVerified;
     Button btnUpdate,btnChangeUserPassword;
     AccountDAO accountDAO =new AccountDAO();
     DatabaseReference mDatabase;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -130,6 +131,7 @@ public class UserFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_user, container, false);
         mainActivity = (MainActivity) getActivity();
         progressDialog = new ProgressDialog(getActivity());
+
         addControl(view);
         addEvents();
         getInforUserPorfolio();
@@ -137,22 +139,23 @@ public class UserFragment extends Fragment {
         //get data to View
         return view;
     }
-    public void DialogLogin()
-    {
+
+    public void DialogLogin() {
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // phải để trước setContent View
         dialog.setContentView(R.layout.dialog_custom);
         Window window = dialog.getWindow();
-        if(window==null)
-        {
+
+        if(window == null) {
             return;
         }
+
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams windowAttribute = window.getAttributes();
         windowAttribute.gravity = Gravity.CENTER;
         window.setAttributes(windowAttribute);
-        //
+
         EditText edtOldPassword = dialog.findViewById(R.id.editTextOldPassword);
         EditText edtNewPassword = dialog.findViewById(R.id.editTextNewPassword);
         Button btnDongY = dialog.findViewById(R.id.buttonChange);
@@ -162,18 +165,18 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 progressDialog.show();
+
                 String newPassword = edtNewPassword.getText().toString().trim();
                 String oldPassword = edtOldPassword.getText().toString().trim();
-                //
                 String userId =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+
                 mDatabase = FirebaseDatabase.getInstance().getReference("Account").child(userId);
 
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String userIdofFireBase= (String) snapshot.child("passWord").getValue();
-                        if(userIdofFireBase.equals(oldPassword))
-                        {
+                        if(userIdofFireBase.equals(oldPassword)) {
                             // lưu trong authentication
                             sendNewPassword(newPassword);
                             // sau đó lưu trong real-time Database
@@ -182,9 +185,7 @@ public class UserFragment extends Fragment {
                             progressDialog.dismiss();
                             Toast.makeText(context, "Change your password successfully", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
-                        }
-                        else
-                        {
+                        } else {
                             progressDialog.dismiss();
                             Toast.makeText(context, "Cannot Change your password ", Toast.LENGTH_SHORT).show();
                         }
@@ -205,16 +206,19 @@ public class UserFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+
         dialog.show();
-//        dialog.setTitle("Thông báo");
-//
-//        dialog.setCanceledOnTouchOutside(false);//  Click bên ngoài có hủy luôn hay không
-//        EditText edtOldPassword = dialog.findViewById(R.id.editTextOldPassword);
-//        EditText edtNewPassword = dialog.findViewById(R.id.editTextNewPassword);
-//        Button btnDongY = dialog.findViewById(R.id.buttonDongY);
-//        Button btnhuy = dialog.findViewById(R.id.buttonHuy);
-//        dialog.show();
+
+        //        dialog.setTitle("Thông báo");
+        //
+        //        dialog.setCanceledOnTouchOutside(false);//  Click bên ngoài có hủy luôn hay không
+        //        EditText edtOldPassword = dialog.findViewById(R.id.editTextOldPassword);
+        //        EditText edtNewPassword = dialog.findViewById(R.id.editTextNewPassword);
+        //        Button btnDongY = dialog.findViewById(R.id.buttonDongY);
+        //        Button btnhuy = dialog.findViewById(R.id.buttonHuy);
+        //        dialog.show();
     }
+
     public void sendNewPassword(String password)
     {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -230,8 +234,8 @@ public class UserFragment extends Fragment {
                     }
                 });
     }
-    void addControl(View view)
-    {
+
+    void addControl(View view) {
         imgUser = view.findViewById(R.id.imageViewUser);
         edtEmail = view.findViewById(R.id.editTextEmailUser);
         edtName = view.findViewById(R.id.editTextNameUser);
@@ -240,8 +244,8 @@ public class UserFragment extends Fragment {
         txtEmailVerified=view.findViewById(R.id.textViewEmailVerify);
         btnChangeUserPassword = view.findViewById(R.id.buttonChangePasswordUser);
     }
-    void addEvents()
-    {
+
+    void addEvents() {
         imgUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -249,6 +253,7 @@ public class UserFragment extends Fragment {
                 updateUser();
             }
         });
+
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -260,6 +265,7 @@ public class UserFragment extends Fragment {
 //                mainActivity.getInforUserHeader(navigationView,getActivity());
             }
         });
+
         btnChangeUserPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -270,72 +276,61 @@ public class UserFragment extends Fragment {
     }
 
     private void updateUser() {
-
-        if(mainActivity==null)
+        if(mainActivity == null)
             return;
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-        {
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             mainActivity.openGallery();
             return;
         }
-        if(getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED)
-        {
+
+        if(getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             mainActivity.openGallery();
             mainActivity.openMediaDocuments();
-        }
-        else
-        {
+        } else {
             String [] permissions ={Manifest.permission.READ_EXTERNAL_STORAGE};
             getActivity().requestPermissions(permissions,MY_REQUEST_CODE);
-
         }
-
-        //
-
     }
 
-
-
-    public void getInforUserPorfolio()
-    {
+    public void getInforUserPorfolio() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // Name, email address, and profile photo Url
             String name = user.getDisplayName();
             String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
-
             // Check if user's email is verified
             boolean emailVerified = user.isEmailVerified();
-
             // The user's ID, unique to the Firebase project. Do NOT use this value to
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
-            //
+
             edtName.setText(name);
             edtEmail.setText(email);
             txtUserid.setText(uid);
-            if(emailVerified)
-            {
-                txtEmailVerified.setText("Yes");
-            }
-            else
-                txtEmailVerified.setText("No");
-            //nếu mà lỗi hoặc ko có thì set up hình mặc định
 
+            if(emailVerified) {
+                txtEmailVerified.setText("Yes");
+            } else {
+                txtEmailVerified.setText("No");
+            }
+
+            //nếu mà lỗi hoặc ko có thì set up hình mặc định
             Glide.with(this).load(photoUrl).error(R.drawable.user1).into(imgUser);
         }
     }
-    public void updateInforUser(String username,Uri uri)
-    {
+    public void updateInforUser(String username, Uri uri) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(username)
                 .setPhotoUri(uri)
                 .build();
+
         progressDialog.show();
+
         user.updateProfile(profileUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -347,8 +342,8 @@ public class UserFragment extends Fragment {
                     }
                 });
     }
-    public void setBitmapImageView (Bitmap bitmapImageView)
-    {
+
+    public void setBitmapImageView (Bitmap bitmapImageView) {
         imgUser.setImageBitmap(bitmapImageView);
     }
 }

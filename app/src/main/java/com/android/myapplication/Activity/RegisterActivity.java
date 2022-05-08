@@ -18,11 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.myapplication.DAO.AccountDAO;
 import com.android.myapplication.R;
+import com.android.myapplication.callback.CallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
 
 public class RegisterActivity extends AppCompatActivity {
     Button btnRegister;
@@ -66,14 +66,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Log.d("Register", "onClick: " + email);
 
-                boolean isAddUser = accountDAO.AddUserAuth(email, password, RegisterActivity.this);
+                accountDAO.AddUserAuth(email, password, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean callback) {
+                        if(callback) {
+                            accountDAO.addInformationUser(phoneNumber, email, username, password);
 
-                if(isAddUser) {
-                    accountDAO.addInformationUser(phoneNumber,email,username,password);
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                //Toast.makeText(RegisterActivity.this, "Dang ky thanh cong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Dang ky thanh cong", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
             }
         });
     }

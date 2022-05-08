@@ -15,9 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DatePicker extends AppCompatActivity {
-
     EditText editText;
     Button btnBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,18 +41,17 @@ public class DatePicker extends AppCompatActivity {
             }
         });
     }
-    private void ChonNgay()
-    {
+
+    private void ChonNgay() {
         // xóa khi bấm tiếp
         int length = editText.getText().length();
         if (length > 0) {
             //Xóa khi bấm tiếp
             editText.getText().delete(0, length);
         }
+
         //Select real-time
         Calendar calendar = Calendar.getInstance();
-
-        //
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
