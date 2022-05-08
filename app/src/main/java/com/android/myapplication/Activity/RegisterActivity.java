@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,35 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
         changeStatusBarColor();
         addControl();
         addEvent();
-
-
     }
 
-    private void addEvent() {
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String username = edtUSerName.getText().toString().trim();
-                String email = edtEmail.getText().toString().trim();
-                String phoneNumber = edtPhoneNumber.getText().toString().trim() ;
-                String password = edtPassword.getText().toString().trim();
-
-                accountDAO.AddUserAuth(email,password);
-                accountDAO.addInforUser(phoneNumber,email,username,password);
-
-
-                Toast.makeText(RegisterActivity.this, "Dang ky thanh cong", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-
-
-            }
-        });
-    }
-
-    public void addControl()
-    {
+    public void addControl() {
         btnRegister = findViewById(R.id.RegisterButton);
         edtUSerName = findViewById(R.id.editTextName);
         edtEmail = findViewById(R.id.editTextEmail);
@@ -71,23 +46,41 @@ public class RegisterActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.editTextPassword);
     }
 
-
-
-
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
+            //window.setStatusBarColor(Color.TRANSPARENT);
             window.setStatusBarColor(getResources().getColor(R.color.register_bk_color));
         }
     }
 
-    public void onLoginClick(View view){
-        startActivity(new Intent(this,LoginActivity.class));
-        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
+    private void addEvent() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = edtUSerName.getText().toString().trim();
+                String email = edtEmail.getText().toString().trim();
+                String phoneNumber = edtPhoneNumber.getText().toString().trim() ;
+                String password = edtPassword.getText().toString().trim();
 
+                Log.d("Register", "onClick: " + email);
+
+                boolean isAddUser = accountDAO.AddUserAuth(email, password, RegisterActivity.this);
+
+                if(isAddUser) {
+                    accountDAO.addInformationUser(phoneNumber,email,username,password);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                //Toast.makeText(RegisterActivity.this, "Dang ky thanh cong", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    public void onLoginClick(View view) {
+        startActivity(new Intent(this,LoginActivity.class));
+        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
+    }
 
 }

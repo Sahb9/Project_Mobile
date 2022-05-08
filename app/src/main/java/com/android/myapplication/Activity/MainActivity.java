@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -54,30 +55,34 @@ import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    TextView txtTime;
-    AccountDAO accountDAO = new AccountDAO();
-    ChangeDarkMode changeDarkMode;
+    private TextView txtTime;
+    private AccountDAO accountDAO = new AccountDAO();
+    private ChangeDarkMode changeDarkMode;
     private UserFragment userFragment = new UserFragment(this);
-    RelativeLayout layout_schedule,layout_fitness,layout_timeManagement,layout_Eating,layout_BMI,layout_reading;
+    private RelativeLayout layout_schedule,layout_fitness,layout_timeManagement,layout_Eating,layout_BMI,layout_reading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // bật dark mode
         //setDarkMode(getWindow());
-        //
         changeDarkMode = new ChangeDarkMode(this);
         changeDarkMode.setModeScreen();
 
-        //
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(firebaseUser != null)
+            Log.d("MainActivity", "onCreate: " + firebaseUser.getUid());
+
         setContentView(R.layout.activity_main);
+
         //addControl();
         //addEvent();
+
         replaceFragment(new HomeFragment(this));
         xuLySchool();
-
     }
-    void addControl()
-    {
+
+    void addControl() {
         layout_schedule = findViewById(R.id.layout_schedule);
         layout_fitness = findViewById(R.id.layout_fitness);
         layout_timeManagement=findViewById(R.id.layout_timeManagement);
@@ -85,8 +90,8 @@ public class MainActivity extends AppCompatActivity
         layout_BMI = findViewById(R.id.layout_BMI);
         layout_reading = findViewById(R.id.layout_reading);
     }
-    void addEvent()
-    {
+
+    void addEvent() {
         layout_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +100,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
         layout_BMI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,10 +110,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-    public void xuLySchool()
-    {
+
+    public void xuLySchool() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-  //      setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -118,29 +124,25 @@ public class MainActivity extends AppCompatActivity
         // set up hình ảnh và username
         //accountDAO.getInforUserHeader(navigationView,this);
         getInforUserHeader(navigationView,this);
-        //
+
         navigationView.setNavigationItemSelectedListener(this);
         // thanh bên dưới
         bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//
+
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigationView.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         bottomNavigationView.setSelectedItemId(R.id.navigationHome);
-
     }
     //school
-
     private BottomNavigationView bottomNavigationView;
-
 
     final private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
             switch (item.getItemId()) {
                 case R.id.navigationMyProfile:
                     replaceFragment(userFragment);
@@ -150,7 +152,6 @@ public class MainActivity extends AppCompatActivity
                     return true;
                 case R.id.navigationHome:
                     replaceFragment(new HomeFragment(MainActivity.this));
-
                     return true;
                 case  R.id.navigationSearch:
                     replaceFragment(new SearchFragment());
@@ -160,9 +161,11 @@ public class MainActivity extends AppCompatActivity
                     drawer.openDrawer(GravityCompat.START);
                     return true;
             }
+
             return false;
         }
     };
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -172,7 +175,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -197,74 +199,65 @@ public class MainActivity extends AppCompatActivity
 //            darkModePrefManager.setDarkMode(!darkModePrefManager.isNightMode());
 //            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //            recreate();
-            if(changeDarkMode.PRIVATE_MODE) // nếu đang là chế độ tối
-            {
+            if(changeDarkMode.PRIVATE_MODE) {
                 // thì chuyển sang chế độ sáng
-                changeDarkMode.PRIVATE_MODE=false;
+                changeDarkMode.PRIVATE_MODE = false;
                 changeDarkMode.modeNight();
             }// nếu đang là chế độ sáng
-            else
-            {
+            else {
                 // thì chuyển sang chế độ tối
-                changeDarkMode.PRIVATE_MODE=true;
+                changeDarkMode.PRIVATE_MODE = true;
                 changeDarkMode.modeDark();
             }
-
-
-        }
-        else if(id == R.id.nav_signOut)
-        {
-            if(changeDarkMode.PRIVATE_MODE) // nếu đang là chế độ tối
-            {
+        } else if(id == R.id.nav_signOut) {
+            if(changeDarkMode.PRIVATE_MODE) {
                 // nhưng đây là trg hợp đặc biệt nên cho cố định là nền tối
-                changeDarkMode.PRIVATE_MODE=false;
+                changeDarkMode.PRIVATE_MODE = false;
                 // thì chuyển sang chế độ sáng
                 changeDarkMode.modeNight();
-
-            }// nếu đang là chế độ sáng
+            }
+            // nếu đang là chế độ sáng
             FirebaseAuth.getInstance().signOut();
-            Intent intent =new Intent(MainActivity.this,LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
             finish();
             Toast.makeText(MainActivity.this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
     //create a seperate class file, if required in multiple activities
-    public void setDarkMode(Window window){
-        if(new DarkModePrefManager(this).isNightMode()){
+    public void setDarkMode(Window window) {
+        if(new DarkModePrefManager(this).isNightMode()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             changeStatusBar(0,window);
-        }else{
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             changeStatusBar(1,window);
         }
     }
-    public void changeStatusBar(int mode, Window window){
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+    public void changeStatusBar(int mode, Window window) {
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(this.getResources().getColor(R.color.contentBodyColor));
             //white mode
-            if(mode==1){
+            if(mode == 1) {
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
         }
     }
 
-    private void replaceFragment(Fragment fragment)
-    {
+    private void replaceFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction =  getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment_content_main,fragment);
         fragmentTransaction.commit();
     }
-    public void DungChoCalendar()
-    {
 
+    public void DungChoCalendar() {
 //        txtTime = findViewById(R.id.textViewTime);
 //        Calendar calendar = Calendar.getInstance();
 //        txtTime.setText(calendar.getTime() + "\n");
@@ -282,6 +275,7 @@ public class MainActivity extends AppCompatActivity
 //        SimpleDateFormat dinhDangGio = new SimpleDateFormat("hh:mm:ss ");
 //        txtTime.append(dinhDangGio.format(calendar.getTime()));
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -298,20 +292,21 @@ public class MainActivity extends AppCompatActivity
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-    public void openGallery()
-    {
-        Intent intent =new Intent();
+    public void openGallery() {
+        Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
+
         activityOpenFolder.launch(Intent.createChooser(intent,"Select Picture"));
     }
+
     ActivityResultLauncher<Intent> activityOpenFolder  = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     Intent intent = result.getData();
-                    if(intent!=null)
-                    {
+
+                    if(intent!=null) {
                         Uri uri = intent.getData();
                         userFragment.setUri(uri);
                         try {
@@ -320,10 +315,10 @@ public class MainActivity extends AppCompatActivity
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }
             });
+
     public static final int KITKAT_VALUE = 1002;
     public void openMediaDocuments()
     {

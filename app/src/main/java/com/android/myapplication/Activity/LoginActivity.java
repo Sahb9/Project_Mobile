@@ -40,9 +40,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //for changing status bar icon colors
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+
         setContentView(R.layout.activity_login_new);
         addControl();
         addEvents();
@@ -56,58 +57,44 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        },2000);
     }
-    void processEmailAndPassword()
-    {
+    void processEmailAndPassword() {
         sharedPreferences = getSharedPreferences("dataLogin",MODE_PRIVATE);
         //  lấy giá trị preference || Gán giá trị bth hoặc khi mới chạy sẽ mặc định là chuỗi rỗng
         txtName.setText(sharedPreferences.getString("email",""));
         txtPassword.setText(sharedPreferences.getString("password",""));
-
     }
-    void addControl()
-    {
+    void addControl() {
         txtName = findViewById(R.id.editTextName);
         txtPassword = findViewById(R.id.editTextPassword);
         btnLogin = findViewById(R.id.cirLoginButton);
         txtForget  = findViewById(R.id.textViewForgotPassWord);
     }
-    void addEvents()
-    {
+
+    void addEvents() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public synchronized void onClick(View view) {
                 String username= txtName.getText().toString().trim();
                 String password= txtPassword.getText().toString().trim();
 
-                if(accountDAO.SignIn(username,password))
-                {
-                    //lưu email and password
-                    SharedPreferences.Editor editor =  sharedPreferences.edit();
-                    editor.putString("email",username);
-                    editor.putString("password",password);
-                    editor.commit();
-                    //
-                    Toast.makeText(LoginActivity.this,"Đăng nhập thành công",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
-                else
-                {
-                    Toast.makeText(LoginActivity.this,"Đăng nhập không thành công",Toast.LENGTH_LONG).show();
+                SharedPreferences.Editor editor =  sharedPreferences.edit();
+                editor.putString("email",username);
+                editor.putString("password",password);
+                editor.commit();
 
-                }
+                accountDAO.SignIn(username, password, LoginActivity.this, MainActivity.class);
             }
         });
+
         txtForget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //qua trang forget
                 startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
                 overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
             }
         });
     }
-    //extension
+
     private void nextActivity() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -124,13 +111,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         finish();
     }
-    public void onLoginClick(View View){
+
+    public void onLoginClick(View View) {
         startActivity(new Intent(this, RegisterActivity.class));
         overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
 
     }
-
-
-
-
 }
