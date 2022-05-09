@@ -1,25 +1,34 @@
 package com.android.myapplication.Entity;
 
 public class History {
-    private String uid;
-    private String dataTime;
-    private String subject;
+    private String title, content, dataTime, subject;
+    private static History instance = null;
 
-    public History() {
+    private History() {
     }
 
-    public History(String uid, String dataTime, String subject) {
-        this.uid = uid;
-        this.dataTime = dataTime;
-        this.subject = subject;
+    public static History getInstance() {
+        if(instance == null) {
+            instance = new History();
+        }
+
+        return instance;
     }
 
-    public String getUid() {
-        return uid;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getDataTime() {

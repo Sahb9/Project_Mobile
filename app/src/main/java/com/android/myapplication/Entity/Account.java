@@ -1,7 +1,6 @@
 package com.android.myapplication.Entity;
 
 public class Account {
-
     private String phone;
     private String email;
     private String userName;
@@ -29,8 +28,6 @@ public class Account {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
 
     public String getUserName() {
         return userName;

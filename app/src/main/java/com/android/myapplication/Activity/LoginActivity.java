@@ -21,6 +21,7 @@ import com.android.myapplication.DAO.AccountDAO;
 import com.android.myapplication.Others.Login;
 import com.android.myapplication.R;
 import com.android.myapplication.callback.CallBack;
+import com.android.myapplication.utilities.Common;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -86,6 +87,12 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("email", email);
                             editor.putString("password", password);
                             editor.commit();
+
+                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                            if(firebaseUser != null) {
+                                Common.uID = firebaseUser.getUid();
+                            }
 
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(LoginActivity.this,"Đăng nhập thành công",Toast.LENGTH_SHORT).show();

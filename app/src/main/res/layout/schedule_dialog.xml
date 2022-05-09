@@ -18,43 +18,43 @@
         android:gravity="center" />
 
     <TextView
-        android:id="@+id/label_name_habit"
+        android:id="@+id/label_tile_habit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/title_habit"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Name"
+        android:text="Tile"
         android:textSize="26sp"
         android:textColor="#807F7F" />
 
     <EditText
-        android:id="@+id/edit_name_habit"
+        android:id="@+id/edit_tile_habit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/label_name_habit"
+        app:layout_constraintTop_toBottomOf="@+id/label_tile_habit"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Name"
+        android:hint="Tile"
         android:textSize="34sp"
         android:textColor="#131313"/>
 
     <TextView
-        android:id="@+id/label_context_habit"
+        android:id="@+id/label_content_habit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/edit_name_habit"
+        app:layout_constraintTop_toBottomOf="@+id/edit_tile_habit"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="context"
+        android:text="content"
         android:textSize="28sp"
         android:textColor="#807F7F"
         android:layout_marginTop="26dp" />
 
     <EditText
-        android:id="@+id/edit_context_habit"
+        android:id="@+id/edit_content_habit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/label_context_habit"
+        app:layout_constraintTop_toBottomOf="@+id/label_content_habit"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Context"
+        android:hint="Content"
         android:textSize="34sp"
         android:textColor="#131313" />
 
@@ -62,7 +62,7 @@
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/edit_context_habit"
+        app:layout_constraintTop_toBottomOf="@+id/edit_content_habit"
         app:layout_constraintRight_toLeftOf="@+id/btn_save"
         android:text="Cancel"
         android:textSize="22sp"
@@ -75,7 +75,7 @@
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/edit_context_habit"
+        app:layout_constraintTop_toBottomOf="@+id/edit_content_habit"
         app:layout_constraintRight_toRightOf="parent"
         android:text="save"
         android:textSize="22sp"

@@ -53,7 +53,6 @@ public class AccountDAO extends AppCompatActivity {
                         callBack.onCallBack(task.isSuccessful());
                     }
                 });
-
     }
 
     public void addInformationUser(String phone, String email, String username, String password) {

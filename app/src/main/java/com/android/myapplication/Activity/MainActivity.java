@@ -69,10 +69,6 @@ public class MainActivity extends AppCompatActivity
         changeDarkMode = new ChangeDarkMode(this);
         changeDarkMode.setModeScreen();
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUser != null)
-            Log.d("MainActivity", "onCreate: " + firebaseUser.getUid());
-
         setContentView(R.layout.activity_main);
 
         //addControl();
