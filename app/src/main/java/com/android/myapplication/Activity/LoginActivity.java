@@ -92,9 +92,22 @@ public class LoginActivity extends AppCompatActivity {
 
     void processEmailAndPassword() {
         sharedPreferences = getSharedPreferences("dataLogin",MODE_PRIVATE);
-        //  lấy giá trị preference || Gán giá trị bth hoặc khi mới chạy sẽ mặc định là chuỗi rỗng
-        txtName.setText(sharedPreferences.getString("email",""));
-        txtPassword.setText(sharedPreferences.getString("password",""));
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("data_Register");
+        if(bundle!=null)
+        {
+            String emailRegister = bundle.getString("email");
+            String passwordRegister = bundle.getString("password");
+            txtName.setText(emailRegister);
+            txtPassword.setText(passwordRegister);
+        }
+        else // nếu ko có dữ liệu từ bên đăng ký chuyển qua
+        {
+            //  lấy giá trị preference || Gán giá trị bth hoặc khi mới chạy sẽ mặc định là chuỗi rỗng
+            txtName.setText(sharedPreferences.getString("email",""));
+            txtPassword.setText(sharedPreferences.getString("password",""));
+        }
+
     }
 
     void addControl() {

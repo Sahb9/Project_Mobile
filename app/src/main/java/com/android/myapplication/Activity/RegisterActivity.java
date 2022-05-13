@@ -2,6 +2,7 @@ package com.android.myapplication.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -73,8 +74,14 @@ public class RegisterActivity extends AppCompatActivity {
                             accountDAO.addInformationUser(phoneNumber, email, username, password);
 
                             Toast.makeText(RegisterActivity.this, "Dang ky thanh cong", Toast.LENGTH_SHORT).show();
+                            // Chuyển dữ liệu qua bên login khi đk xong
+                            Bundle bundle = new Bundle();
+                            bundle.putString("email",email);
+                            bundle.putString("password",password);
 
+                            //intent data
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            intent.putExtra("data_Register",bundle);
                             startActivity(intent);
                         }
                     }
