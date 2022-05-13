@@ -18,14 +18,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.PathPermission;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -36,9 +33,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.myapplication.DAO.AccountDAO;
+import com.android.myapplication.Fragment.HabitsFragment;
 import com.android.myapplication.Fragment.HistoryFragment;
 import com.android.myapplication.Fragment.HomeFragment;
-import com.android.myapplication.Fragment.SearchFragment;
 import com.android.myapplication.Fragment.UserFragment;
 import com.android.myapplication.Others.BottomNavigationBehavior;
 import com.android.myapplication.Others.ChangeDarkMode;
@@ -51,7 +48,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -150,7 +146,7 @@ public class MainActivity extends AppCompatActivity
                     replaceFragment(new HomeFragment(MainActivity.this));
                     return true;
                 case  R.id.navigationSearch:
-                    replaceFragment(new SearchFragment());
+                    replaceFragment(new HabitsFragment());
                     return true;
                 case  R.id.navigationMenu:
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
