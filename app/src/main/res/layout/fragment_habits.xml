@@ -17,34 +17,27 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/title_habits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Habit List"
                 android:textSize="40sp"
                 style="@style/viewParent.headerText"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:layout_margin="10dp"
+                android:layout_weight="1"/>
 
             <!--app:backgroundTint="#11CFC5"-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add_habit"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="@drawable/shape_button_blue"
-                android:text="Add"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="#fff"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                android:background="@drawable/btn_cross_circle"
+                app:backgroundTint="#11CFC5" />
         </LinearLayout>
 
-        <ScrollView
+        <ListView
+            android:id="@+id/list_item_habit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-        </ScrollView>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 

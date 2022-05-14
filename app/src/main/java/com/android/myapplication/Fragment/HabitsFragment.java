@@ -4,11 +4,20 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
+import com.android.myapplication.entitys.HabitAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +34,10 @@ public class HabitsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ListView listViewHabit;
+    private ArrayList<Habit> habits;
+    private HabitAdapter habitAdapter;
 
     public HabitsFragment() {
         // Required empty public constructor
@@ -60,6 +73,30 @@ public class HabitsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_habits, container, false);
+        View view = inflater.inflate(R.layout.fragment_habits, container, false);
+        init(view);
+        setListView();
+
+        return view;
+    }
+
+    private void init(View view) {
+        this.listViewHabit = view.findViewById(R.id.list_item_habit);
+        this.habits = new ArrayList<>();
+
+        this.habits.add(new Habit("Mẫu list view cho habit"));
+        this.habits.add(new Habit("Kiểm tra giao diện UI"));
+        this.habits.add(new Habit("Chỉnh sửa item cho habit list"));
+        this.habits.add(new Habit("Kiểm tra lần nữa"));
+        this.habits.add(new Habit("Thêm thuộc tính cho lớp habit"));
+        this.habits.add(new Habit("Kiểm tra giao diện danh sách"));
+        this.habits.add(new Habit("Thêm các thông tin các trường hợp cho danh sách"));
+        this.habits.add(new Habit("Tạo dialog để thêm habit"));
+    }
+
+    private void setListView() {
+        this.habitAdapter = new HabitAdapter(getActivity(), R.layout.element_habit, this.habits);
+
+        this.listViewHabit.setAdapter(this.habitAdapter);
     }
 }

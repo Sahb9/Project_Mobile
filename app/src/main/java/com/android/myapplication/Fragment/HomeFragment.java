@@ -66,13 +66,13 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    RelativeLayout layout_schedule,layout_fitness,layout_timeManagement,layout_Eating,layout_BMI,layout_reading;
+    RelativeLayout layout_schedule, layout_fitness, layout_timeManagement, layout_Eating, layout_BMI, layout_reading;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         View view= inflater.inflate(R.layout.fragment_home, container, false);
+         View view = inflater.inflate(R.layout.fragment_home, container, false);
          addControl(view);
          addEvent();
          return view ;
@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
     void addControl(View view) {
         layout_schedule = view.findViewById(R.id.layout_schedule);
         layout_fitness = view.findViewById(R.id.layout_fitness);
-        layout_timeManagement=view.findViewById(R.id.layout_timeManagement);
+        layout_timeManagement = view.findViewById(R.id.layout_timeManagement);
         layout_Eating = view.findViewById(R.id.layout_eating);
         layout_BMI = view.findViewById(R.id.layout_BMI);
         layout_reading = view.findViewById(R.id.layout_reading);
