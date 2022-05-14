@@ -2,16 +2,13 @@ package com.android.myapplication.Activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +17,6 @@ import android.widget.Toast;
 import com.android.myapplication.DAO.HistoryDAO;
 import com.android.myapplication.Entity.History;
 import com.android.myapplication.Models.CalendarAdapter;
-import com.android.myapplication.Others.DarkModePrefManager;
 import com.android.myapplication.R;
 import com.android.myapplication.callback.CallBack;
 import com.android.myapplication.utilities.Common;
@@ -123,7 +119,7 @@ public class ScheduleActivity extends AppCompatActivity implements CalendarAdapt
         final Dialog dialog = new Dialog(ScheduleActivity.this);
         //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.schedule_dialog);
+        dialog.setContentView(R.layout.habit_add_dialog);
 
         EditText editTitle = dialog.findViewById(R.id.edit_tile_habit);
         EditText editContent = dialog.findViewById(R.id.edit_content_habit);

@@ -2,6 +2,7 @@ package com.android.myapplication.Fragment;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
@@ -35,6 +37,7 @@ public class HabitsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private AppCompatButton btnAdd;
     private ListView listViewHabit;
     private ArrayList<Habit> habits;
     private HabitAdapter habitAdapter;
@@ -76,12 +79,15 @@ public class HabitsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
         init(view);
         setListView();
+        addEvent();
 
         return view;
     }
 
     private void init(View view) {
         this.listViewHabit = view.findViewById(R.id.list_item_habit);
+        this.btnAdd = view.findViewById(R.id.btn_add_habit);
+
         this.habits = new ArrayList<>();
 
         this.habits.add(new Habit("Mẫu list view cho habit"));
@@ -98,5 +104,14 @@ public class HabitsFragment extends Fragment {
         this.habitAdapter = new HabitAdapter(getActivity(), R.layout.element_habit, this.habits);
 
         this.listViewHabit.setAdapter(this.habitAdapter);
+    }
+
+    private void addEvent() {
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Add habit", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
