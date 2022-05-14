@@ -121,8 +121,6 @@ public class ScheduleActivity extends AppCompatActivity implements CalendarAdapt
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.habit_add_dialog);
 
-        EditText editTitle = dialog.findViewById(R.id.edit_tile_habit);
-        EditText editContent = dialog.findViewById(R.id.edit_content_habit);
         Button btnCancel = dialog.findViewById(R.id.btn_cancel);
         Button btnSave = dialog.findViewById(R.id.btn_save);
 
@@ -140,8 +138,6 @@ public class ScheduleActivity extends AppCompatActivity implements CalendarAdapt
                 History history = History.getInstance();
                 HistoryDAO historyDAO = HistoryDAO.getInstance();
 
-                history.setTitle(editTitle.getText().toString().trim());
-                history.setContent(editContent.getText().toString().trim());
                 history.setDataTime(formatDateTime("dd/MM/yyyy", paramLocalDate));
                 history.setSubject(Common.SCHEDULE);
 

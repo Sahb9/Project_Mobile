@@ -1,7 +1,13 @@
 package com.android.myapplication.Fragment;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
@@ -9,17 +15,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
 import com.android.myapplication.entitys.HabitAdapter;
 
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +94,9 @@ public class HabitsFragment extends Fragment {
         setListView();
         addEvent();
 
+        // Lazy click show dialog
+        showDialog();
+
         return view;
     }
 
@@ -110,8 +126,145 @@ public class HabitsFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Add habit", Toast.LENGTH_SHORT).show();
+                showDialog();
             }
         });
+    }
+
+    private void handlePressed(AppCompatButton appCompatButton) {
+        appCompatButton.setSelected(!appCompatButton.isSelected());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void SelectRemind(TextView textView) {
+        Date date = new Date();
+
+        int day = date.getDate();
+        int month = date.getMonth();
+        int year = date.getYear();
+        int hour = date.getHours();
+        int minute = date.getMinutes();
+
+        Log.d("My debug", "SelectRemind: " + day + "/" + month + "/" + year + "/" + hour + "/" + minute);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                SimpleDateFormat simpleFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                date.setDate(day);
+                date.setMonth(month);
+                date.setYear(year);
+                date.setHours(i);
+                date.setMinutes(i1);
+
+                Log.d("My debug", "onTimeSet: " + day + "/" + month + "/" + year + "/" + i + "/" + i1);
+
+                textView.setText(simpleFormatter.format(date.getTime()));
+            }
+        }, hour, minute, true);
+
+        timePickerDialog.show();
+    }
+
+    private void showDialog() {
+        final Dialog dialog = new Dialog(getActivity());
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.habit_add_dialog);
+
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        AppCompatButton btnMon, btnTue, btnWed, btnThu, btnFri, btnSat, btnSun;
+
+        btnMon = dialog.findViewById(R.id.btn_mon);
+        btnTue = dialog.findViewById(R.id.btn_tue);
+        btnWed = dialog.findViewById(R.id.btn_wed);
+        btnThu = dialog.findViewById(R.id.btn_thu);
+        btnFri = dialog.findViewById(R.id.btn_fri);
+        btnSat = dialog.findViewById(R.id.btn_sat);
+        btnSun = dialog.findViewById(R.id.btn_sun);
+        TextView txtTimePicker = dialog.findViewById(R.id.reminder_habit);
+        Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+        Button btnSave = dialog.findViewById(R.id.btn_save);
+
+        btnMon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handlePressed(btnMon);
+            }
+        });
+
+        btnTue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handlePressed(btnTue);
+            }
+        });
+
+        btnWed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handlePressed(btnWed);
+            }
+        });
+
+        btnThu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handlePressed(btnThu);
+            }
+        });
+
+        btnFri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handlePressed(btnFri);
+            }
+        });
+
+        btnSat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handlePressed(btnSat);
+            }
+        });
+
+        btnSun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handlePressed(btnSun);
+            }
+        });
+
+        txtTimePicker.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                SelectRemind(txtTimePicker);
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Save habit", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

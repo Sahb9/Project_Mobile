@@ -18,4 +18,9 @@
     <dimen name="headerMoreTextSize">18sp</dimen>
     <dimen name="card_margin">5dp</dimen>
     <dimen name="frutorial_title">15sp</dimen>
+    <dimen name="width_btn_dialog">45dp</dimen>
+    <dimen name="height_btn_dialog">40dp</dimen>
+    <dimen name="txt_size_dialog">14sp</dimen>
+    <dimen name="txt_label_dialog">22sp</dimen>
+    <dimen name="edit_habit_dialog">34sp</dimen>
 </resources>

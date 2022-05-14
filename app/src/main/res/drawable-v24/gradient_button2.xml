@@ -7,10 +7,14 @@
                 android:startColor="#64b3f4"
                 android:endColor="#c2e59c"
                 android:type="linear"/>
+
             <size
                 android:width="40dp"
                 android:height="40dp" />
-        </shape>
 
+            <corners
+                android:radius="10dp"
+                />
+        </shape>
     </item>
 </selector>

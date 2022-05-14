@@ -47,12 +47,15 @@
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/menu/master_bottom_navigation.xml" value="0.25" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.137" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable-v24/gradient_button2.xml" value="0.188" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable-v24/home_gradient_schedule.xml" value="0.188" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable-v24/ic_home.xml" value="0.179" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable-v24/side_nav_bar.xml" value="0.179" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable/button_add.xml" value="0.179" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable/button_background_blue.xml" value="0.179" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable/button_circle_add.xml" value="0.179" />
+        <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable/button_habit_schedule.xml" value="0.188" />
+        <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable/dialog_radius_10dp.xml" value="0.188" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable/gradient_button1.xml" value="0.179" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable/gradient_button3.xml" value="0.179" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/drawable/ic_add_img.xml" value="0.179" />
@@ -80,6 +83,7 @@
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/layout/fragment_menu.xml" value="0.1796875" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/layout/fragment_search.xml" value="0.1796875" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/layout/fragment_user.xml" value="0.1796875" />
+        <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/layout/habit_add_dialog.xml" value="0.1796875" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/layout/item_habit.xml" value="0.22" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/layout/nav_header_main.xml" value="0.1796875" />
         <entry key="..\:/Workspace/Android_project/Project_Mobile/app/src/main/res/layout/schedule_dialog.xml" value="0.1796875" />
