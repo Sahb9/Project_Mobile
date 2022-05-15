@@ -1,7 +1,11 @@
 package com.android.myapplication.Fragment;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -11,7 +15,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,20 +28,19 @@ import android.widget.Toast;
 
 import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
+import com.android.myapplication.service.AlarmReceiver;
 import com.android.myapplication.entitys.HabitAdapter;
 
-
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HabitsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+@RequiresApi(api = Build.VERSION_CODES.Q)
 public class HabitsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,12 +92,10 @@ public class HabitsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
+
         init(view);
         setListView();
         addEvent();
-
-        // Lazy click show dialog
-        showDialog();
 
         return view;
     }
@@ -137,29 +137,29 @@ public class HabitsFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void SelectRemind(TextView textView) {
-        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DATE);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
 
-        int day = date.getDate();
-        int month = date.getMonth();
-        int year = date.getYear();
-        int hour = date.getHours();
-        int minute = date.getMinutes();
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
-        Log.d("My debug", "SelectRemind: " + day + "/" + month + "/" + year + "/" + hour + "/" + minute);
+        Intent intent = new Intent(getActivity(), AlarmReceiver.class);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 SimpleDateFormat simpleFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                date.setDate(day);
-                date.setMonth(month);
-                date.setYear(year);
-                date.setHours(i);
-                date.setMinutes(i1);
+                calendar.set(year, month, day, i, i1);
 
-                Log.d("My debug", "onTimeSet: " + day + "/" + month + "/" + year + "/" + i + "/" + i1);
+                textView.setText(simpleFormatter.format(calendar.getTime()));
 
-                textView.setText(simpleFormatter.format(date.getTime()));
+                PendingIntent pendingIntent =
+                        PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             }
         }, hour, minute, true);
 
