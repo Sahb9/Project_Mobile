@@ -1,5 +1,8 @@
 package com.android.myapplication.utilities;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 public class Common {
     public static final String ACCOUNT = "Account";
     public static final String HISTORY = "History";
@@ -7,4 +10,9 @@ public class Common {
     public static final String TAG_LOG = "My debug";
 
     public static String uID = "";
+    public static Month MONTH;
+    public static int DAY ;
+    public static int YEAR;
+
+
 }
