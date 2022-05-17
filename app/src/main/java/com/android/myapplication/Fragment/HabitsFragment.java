@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
 import com.android.myapplication.service.AlarmReceiver;
 import com.android.myapplication.entitys.HabitAdapter;
+import com.android.myapplication.utilities.Common;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -97,6 +99,9 @@ public class HabitsFragment extends Fragment {
         setListView();
         addEvent();
 
+        //Lazy dialog
+        showDialog();
+
         return view;
     }
 
@@ -155,6 +160,8 @@ public class HabitsFragment extends Fragment {
                 calendar.set(year, month, day, i, i1);
 
                 textView.setText(simpleFormatter.format(calendar.getTime()));
+
+                Log.d("" + Common.TAG_LOG, "onTimeSet: " + calendar.getTime());
 
                 PendingIntent pendingIntent =
                         PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

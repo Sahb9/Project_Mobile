@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <receiver android:name=".service.AlarmReceiver" />
-        <service android:name=".service.Music"
+        <service android:name=".service.AlarmService"
             android:enabled="true" />
     </application>
 
