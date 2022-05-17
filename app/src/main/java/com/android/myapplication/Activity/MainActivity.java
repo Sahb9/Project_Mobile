@@ -64,43 +64,9 @@ public class MainActivity extends AppCompatActivity
         //setDarkMode(getWindow());
         changeDarkMode = new ChangeDarkMode(this);
         changeDarkMode.setModeScreen();
-
         setContentView(R.layout.activity_main);
-
-        //addControl();
-        //addEvent();
-
         replaceFragment(new HomeFragment(this));
         hanhdleSchool();
-    }
-
-    void addControl() {
-        layout_schedule = findViewById(R.id.layout_schedule);
-        layout_fitness = findViewById(R.id.layout_fitness);
-        layout_timeManagement=findViewById(R.id.layout_timeManagement);
-        layout_Eating = findViewById(R.id.layout_eating);
-        layout_BMI = findViewById(R.id.layout_BMI);
-        layout_reading = findViewById(R.id.layout_reading);
-    }
-
-    void addEvent() {
-        layout_schedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
-                Toast.makeText(MainActivity.this, "Schedule", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-            }
-        });
-
-        layout_BMI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, BMIActivity.class);
-                Toast.makeText(MainActivity.this,"Dăng nhập thành công",Toast.LENGTH_LONG).show();
-                startActivity(intent);
-            }
-        });
     }
 
     public void hanhdleSchool() {
