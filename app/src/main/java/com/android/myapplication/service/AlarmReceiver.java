@@ -12,7 +12,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d("" + Common.TAG_LOG, "onReceive: OK");
 
-        Intent myIntent = new Intent(context, Music.class);
+        Intent myIntent = new Intent(context, AlarmService.class);
         context.startService(myIntent);
     }
 }
