@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         changeDarkMode = new ChangeDarkMode(this);
         changeDarkMode.setModeScreen();
         setContentView(R.layout.activity_main);
-        replaceFragment(new HomeFragment(this));
+        //replaceFragment(new HomeFragment(this));
         hanhdleSchool();
     }
 
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity
 
     final private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity
                     replaceFragment(new HistoryFragment(MainActivity.this));
                     return true;
                 case R.id.navigationHome:
-                    replaceFragment(new HomeFragment(MainActivity.this));
+                    //replaceFragment(new HomeFragment(MainActivity.this));
                     return true;
                 case  R.id.navigationSearch:
                     replaceFragment(new HabitsFragment());
