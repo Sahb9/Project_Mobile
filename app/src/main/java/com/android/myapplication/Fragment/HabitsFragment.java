@@ -22,20 +22,29 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.myapplication.Activity.MainActivity;
+import com.android.myapplication.DAO.HabitDAO;
+import com.android.myapplication.Entity.Alarm;
 import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
+import com.android.myapplication.callback.CallBack;
 import com.android.myapplication.service.AlarmReceiver;
 import com.android.myapplication.entitys.HabitAdapter;
 import com.android.myapplication.utilities.Common;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +67,7 @@ public class HabitsFragment extends Fragment {
     private ListView listViewHabit;
     private ArrayList<Habit> habits;
     private HabitAdapter habitAdapter;
+    private Intent intent;
 
     public HabitsFragment() {
         // Required empty public constructor
@@ -127,46 +137,82 @@ public class HabitsFragment extends Fragment {
         this.listViewHabit.setAdapter(this.habitAdapter);
     }
 
-    private void addEvent() {
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
-        });
+    public Intent getMyIntent(Context context, Class<?> cls) {
+        if (this.intent == null) {
+            this.intent = new Intent(context, cls);
+        }
+        return this.intent;
     }
 
-    private void handlePressed(AppCompatButton appCompatButton) {
+    private String FormatDate(String format, Date date) {
+        return new SimpleDateFormat(format).format(date);
+    }
+
+    private PendingIntent handlePendingIntent(Context context, Intent intent) {
+        return PendingIntent.getBroadcast(context, 1, intent, 0);
+    }
+
+    private void updateUI(Calendar calendar, TextView textView) {
+        String dateText = FormatDate("dd/MM/yyyy HH:mm:ss", calendar.getTime());
+        textView.setText(dateText);
+    }
+
+    private void handlePressed(AppCompatButton appCompatButton, CallBack<Boolean> callBack) {
         appCompatButton.setSelected(!appCompatButton.isSelected());
+        callBack.onCallBack(appCompatButton.isSelected());
+
+        Log.d(Common.TAG_LOG, "handlePressed: " + appCompatButton.isSelected());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void SelectRemind(TextView textView) {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void starAlarm(Calendar calendar) {
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = null;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            pendingIntent = handlePendingIntent(getActivity(),
+                    getMyIntent(getActivity(), AlarmReceiver.class));
+        }
+
+        //Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
+
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    }
+
+    private void handleSetTime(Alarm alarm, TextView textView) {
         Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DATE);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
+
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-
-        Intent intent = new Intent(getActivity(), AlarmReceiver.class);
-
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                SimpleDateFormat simpleFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                calendar.set(year, month, day, i, i1);
+                calendar.set(Calendar.HOUR_OF_DAY, i);
+                calendar.set(Calendar.MINUTE, i1);
+                calendar.set(Calendar.SECOND, 0);
 
-                textView.setText(simpleFormatter.format(calendar.getTime()));
+                String dateText = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    dateText = FormatDate("dd/MM/yyyy HH:mm:ss", calendar.getTime());
+                }
 
-                Log.d("" + Common.TAG_LOG, "onTimeSet: " + calendar.getTime());
+                Log.d(Common.TAG_LOG, "onTimeSet: " + dateText);
 
-                PendingIntent pendingIntent =
-                        PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    updateUI(calendar, textView);
+                }
+                //starAlarm(calendar);
+                alarm.setId(new Random().nextInt(Integer.MAX_VALUE));
+                alarm.setHour(calendar.get(Calendar.HOUR_OF_DAY));
+                alarm.setMinute(calendar.get(Calendar.MINUTE));
 
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                alarm.handleAlarm(getActivity(), calendar);
             }
         }, hour, minute, true);
 
@@ -188,6 +234,10 @@ public class HabitsFragment extends Fragment {
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        Alarm alarm = new Alarm();
         AppCompatButton btnMon, btnTue, btnWed, btnThu, btnFri, btnSat, btnSun;
 
         btnMon = dialog.findViewById(R.id.btn_mon);
@@ -197,6 +247,8 @@ public class HabitsFragment extends Fragment {
         btnFri = dialog.findViewById(R.id.btn_fri);
         btnSat = dialog.findViewById(R.id.btn_sat);
         btnSun = dialog.findViewById(R.id.btn_sun);
+        EditText editTextNameHabit = dialog.findViewById(R.id.edit_name_habit);
+        EditText editTextTargetHabit = dialog.findViewById(R.id.edit_target_habit);
         TextView txtTimePicker = dialog.findViewById(R.id.reminder_habit);
         Button btnCancel = dialog.findViewById(R.id.btn_cancel);
         Button btnSave = dialog.findViewById(R.id.btn_save);
@@ -204,49 +256,84 @@ public class HabitsFragment extends Fragment {
         btnMon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handlePressed(btnMon);
+                handlePressed(btnMon, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean value) {
+                        alarm.setMonday(value);
+                    }
+                });
             }
         });
 
         btnTue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handlePressed(btnTue);
+                handlePressed(btnTue, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean value) {
+                        alarm.setTuesday(value);
+                    }
+                });
             }
         });
 
         btnWed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handlePressed(btnWed);
+                handlePressed(btnWed, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean value) {
+                        alarm.setWednesday(value);
+                    }
+                });
             }
         });
 
         btnThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handlePressed(btnThu);
+                handlePressed(btnThu, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean value) {
+                        alarm.setThursday(value);
+                    }
+                });
             }
         });
 
         btnFri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handlePressed(btnFri);
+                handlePressed(btnFri, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean value) {
+                        alarm.setFriday(value);
+                    }
+                });
             }
         });
 
         btnSat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handlePressed(btnSat);
+                handlePressed(btnSat, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean value) {
+                        alarm.setSaturday(value);
+                    }
+                });
             }
         });
 
         btnSun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handlePressed(btnSun);
+                handlePressed(btnSun, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean value) {
+                        alarm.setSunday(value);
+                    }
+                });
             }
         });
 
@@ -254,14 +341,9 @@ public class HabitsFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                SelectRemind(txtTimePicker);
-            }
-        });
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "Save habit", Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    handleSetTime(alarm, txtTimePicker);
+                }
             }
         });
 
@@ -272,6 +354,49 @@ public class HabitsFragment extends Fragment {
             }
         });
 
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HabitDAO habitDAO = HabitDAO.getInstance();
+                Habit habit = new Habit();
+
+                habit.setName(editTextNameHabit.getText().toString());
+
+                int numTarget = Integer.parseInt(editTextTargetHabit.getText().toString());
+
+                Log.d(Common.TAG_LOG, "onClick: Dialog add habit target-" + numTarget);
+
+                habit.setTarget(numTarget);
+                habit.setAlarm(alarm);
+
+                Log.d(Common.TAG_LOG, "onClick: Dialog add habit / id-" + Common.uID);
+
+                habitDAO.addHabit(Common.uID, habit, new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean callback) {
+                        if (callback) {
+                            Toast.makeText(getActivity(), "Save habit is success", Toast.LENGTH_SHORT).show();
+
+                            Log.d(Common.TAG_LOG, "onClick: " + alarm.isMonday() + "/hour: " + alarm.getHour());
+                        } else {
+                            Toast.makeText(getActivity(), "Save habit is fail", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                dialog.cancel();
+            }
+        });
+
         dialog.show();
+    }
+
+    private void addEvent() {
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
     }
 }

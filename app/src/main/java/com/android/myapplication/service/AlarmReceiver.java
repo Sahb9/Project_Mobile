@@ -10,9 +10,9 @@ import com.android.myapplication.utilities.Common;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("" + Common.TAG_LOG, "onReceive: OK");
-
-        Intent myIntent = new Intent(context, AlarmService.class);
+        Intent myIntent = new Intent(context, SoundAlarmService.class);
         context.startService(myIntent);
+
+        Log.d(Common.TAG_LOG, "onReceive: AlarmReceiver");
     }
 }
