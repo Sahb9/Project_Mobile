@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"  tools:ignore="ProtectedPermissions"/>
+
     <application
 
         android:allowBackup="true"
@@ -20,13 +21,14 @@
             android:name=".Activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".Activity.ScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.EatingActivity"
             android:exported="false" /> <!-- <activity -->
         <!-- android:name=".Login" -->
         <!-- android:exported="false" /> -->
+
         <activity
             android:name=".Activity.RegisterActivity"
             android:exported="false" />
@@ -37,7 +39,7 @@
             android:name=".Activity.BMIActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.ScheduleActivity"
+            android:name=".Activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

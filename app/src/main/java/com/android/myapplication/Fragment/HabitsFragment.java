@@ -123,7 +123,6 @@ public class HabitsFragment extends Fragment {
 
     private void setListView() {
         this.habitAdapter = new HabitAdapter(getActivity(), R.layout.element_habit, this.habits);
-
         this.listViewHabit.setAdapter(this.habitAdapter);
     }
 

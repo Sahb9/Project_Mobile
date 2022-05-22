@@ -18,47 +18,36 @@ import com.android.myapplication.utilities.Common;
 
 import java.util.ArrayList;
 
-public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
+public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
 
     private final ArrayList<String> daysOfMonth;
-    // private final OnItemListener onItemListener;
+    private final OnItemListener onItemListener;
     public Context context;
 
 
-    public CalendarAdapter(ArrayList<String> daysOfMonth, Context context) {
+    public CalendarAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener) {
         this.daysOfMonth = daysOfMonth;
-        this.context = context;
+        this.onItemListener = onItemListener;
+
 
     }
 
-    //@NonNull
-    //@Override
+    @NonNull
+    @Override
     public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight() * 0.09);// set kích thước layout
 
-        return new CalendarViewHolder(view);
+        return new CalendarViewHolder(view, onItemListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         holder.dayOfMonth.setText(daysOfMonth.get(position));
-        holder.getAdapterPosition();
-        holder.layoutSchedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // if(!dayText.equals("")) {
 
-                String message = "Selected Date " + holder.getAdapterPosition() + "  "+Common.MONTH +"  "+ Common.YEAR + " ";
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-
-                // handleDialog(this.selectedDate);
-                //  }
-            }
-        });
 
 
     }
@@ -70,21 +59,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     }
 
 
-    public class CalendarViewHolder extends RecyclerView.ViewHolder  {
-        public final TextView dayOfMonth;
-        ConstraintLayout layoutSchedule;
 
-
-        public CalendarViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            layoutSchedule = itemView.findViewById(R.id.layout_schedule_test);
-            dayOfMonth = itemView.findViewById(R.id.cellDayText);
-
-
-        }
-
-
+    public interface  OnItemListener
+    {
+        void onItemClick(int position, String dayText);
     }
-
 }

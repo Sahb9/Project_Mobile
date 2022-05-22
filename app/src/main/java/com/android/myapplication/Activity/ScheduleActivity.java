@@ -29,7 +29,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class ScheduleActivity extends AppCompatActivity {
+public class ScheduleActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView,items_habit;
     HabitHomeItemsAdapter habitHomeItemsAdapter;
@@ -65,7 +65,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(this.selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(this.selectedDate);
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,ScheduleActivity.this );
+        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth,this );
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
 
         calendarRecyclerView.setLayoutManager(layoutManager);
@@ -163,4 +163,14 @@ public class ScheduleActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
+    @Override
+    public void onItemClick(int position, String dayText) {
+        if(!dayText.equals(""))
+        {
+            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
 }
