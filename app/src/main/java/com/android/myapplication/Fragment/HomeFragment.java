@@ -3,6 +3,7 @@ package com.android.myapplication.Fragment;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.myapplication.Activity.MainActivity;
+import com.android.myapplication.DAO.HabitDAO;
 import com.android.myapplication.DAO.HistoryDAO;
+import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.Entity.History;
 import com.android.myapplication.Models.CalendarAdapter;
 import com.android.myapplication.R;
@@ -59,6 +62,18 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         initWidgets(view);
         setUpSchedule();
         setUpItemsHabit();
+
+        ArrayList<Habit> habitArrayList = new ArrayList<>();
+        HabitDAO habitDAO = HabitDAO.getInstance();
+
+        habitDAO.getHabits(Common.uID, new CallBack<Habit>() {
+            @Override
+            public void onCallBack(Habit callback) {
+                habitArrayList.add(callback);
+            }
+        });
+
+        habitArrayList.forEach(habit -> Log.d(Common.TAG_LOG, "onCreate: " + habit.toString() + "\'"));
     }
     private void setUpSchedule()
     {

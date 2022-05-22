@@ -10,6 +10,7 @@ public class Common {
     public static final String HABIT = "Habits";
     public static final String TAG_LOG = "My debug";
     public static final String MUSIC = "Music";
+    public static final String SIZE = "Size";
 
     public static String uID = "";
     public static Month MONTH;

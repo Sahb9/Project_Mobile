@@ -367,6 +367,7 @@ public class HabitsFragment extends Fragment {
 
                 habit.setTarget(numTarget);
                 habit.setAlarm(alarm);
+                habit.setStartDate(FormatDate("dd/MM/yyyy", new Date()));
 
                 Log.d(Common.TAG_LOG, "onClick: Dialog add habit / id-" + Common.uID);
 
@@ -380,10 +381,10 @@ public class HabitsFragment extends Fragment {
                         } else {
                             Toast.makeText(getActivity(), "Save habit is fail", Toast.LENGTH_SHORT).show();
                         }
+
+                        dialog.cancel();
                     }
                 });
-
-                dialog.cancel();
             }
         });
 

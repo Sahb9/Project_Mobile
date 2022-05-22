@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.android.myapplication.DAO.AccountDAO;
+import com.android.myapplication.DAO.HabitDAO;
+import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.Others.Login;
 import com.android.myapplication.R;
 import com.android.myapplication.callback.CallBack;
@@ -27,11 +29,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 
 public class LoginActivity extends AppCompatActivity {
     //
     SharedPreferences sharedPreferences;
-    EditText txtName,txtPassword;
+    EditText txtName, txtPassword;
     Button btnLogin;
     TextView txtForget;
     AccountDAO accountDAO = new AccountDAO();
@@ -41,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //for changing status bar icon colors
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
@@ -49,6 +53,38 @@ public class LoginActivity extends AppCompatActivity {
         addControl();
         addEvents();
         processEmailAndPassword();
+
+        // Lazy login
+        String email = txtName.getText().toString().trim();
+        String password = txtPassword.getText().toString().trim();
+
+        accountDAO.SignIn(email, password, new CallBack<Boolean>() {
+            @Override
+            public void onCallBack(Boolean callback) {
+                if (callback) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("email", email);
+                    editor.putString("password", password);
+                    editor.commit();
+
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                    if (firebaseUser != null) {
+                        Common.uID = firebaseUser.getUid();
+
+                        Log.d(Common.TAG_LOG, "onCallBack: Login id-" + Common.uID);
+                    }
+
+                    // Sign in success, update UI with the signed-in user's information
+                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    //finishAffinity();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable() {
@@ -60,21 +96,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void processEmailAndPassword() {
-        sharedPreferences = getSharedPreferences("dataLogin",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("data_Register");
-        if(bundle!=null)
-        {
+        if (bundle != null) {
             String emailRegister = bundle.getString("email");
             String passwordRegister = bundle.getString("password");
             txtName.setText(emailRegister);
             txtPassword.setText(passwordRegister);
-        }
-        else // nếu ko có dữ liệu từ bên đăng ký chuyển qua
+        } else // nếu ko có dữ liệu từ bên đăng ký chuyển qua
         {
             //  lấy giá trị preference || Gán giá trị bth hoặc khi mới chạy sẽ mặc định là chuỗi rỗng
-            txtName.setText(sharedPreferences.getString("email",""));
-            txtPassword.setText(sharedPreferences.getString("password",""));
+            txtName.setText(sharedPreferences.getString("email", ""));
+            txtPassword.setText(sharedPreferences.getString("password", ""));
         }
 
     }
@@ -83,38 +117,38 @@ public class LoginActivity extends AppCompatActivity {
         txtName = findViewById(R.id.editTextName);
         txtPassword = findViewById(R.id.editTextPassword);
         btnLogin = findViewById(R.id.cirLoginButton);
-        txtForget  = findViewById(R.id.textViewForgotPassWord);
+        txtForget = findViewById(R.id.textViewForgotPassWord);
     }
 
     void addEvents() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email= txtName.getText().toString().trim();
-                String password= txtPassword.getText().toString().trim();
+                String email = txtName.getText().toString().trim();
+                String password = txtPassword.getText().toString().trim();
 
                 accountDAO.SignIn(email, password, new CallBack<Boolean>() {
                     @Override
                     public void onCallBack(Boolean callback) {
-                        if(callback) {
-                            SharedPreferences.Editor editor =  sharedPreferences.edit();
+                        if (callback) {
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("email", email);
                             editor.putString("password", password);
                             editor.commit();
 
                             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                            if(firebaseUser != null) {
+                            if (firebaseUser != null) {
                                 Common.uID = firebaseUser.getUid();
                             }
 
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(LoginActivity.this,"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             //finishAffinity();
                         } else {
-                            Toast.makeText(LoginActivity.this,"Đăng nhập không thành công",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -125,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
-                overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
             }
         });
     }
@@ -136,11 +170,11 @@ public class LoginActivity extends AppCompatActivity {
             // User is signed in
             Toast.makeText(this, "Dang nhap thanh cong", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else {
             // No user is signed in
-            Intent intent = new Intent(this,RegisterActivity.class);//Main dùng tạm để đăng nhập
+            Intent intent = new Intent(this, RegisterActivity.class);//Main dùng tạm để đăng nhập
             startActivity(intent);
             //Toast.makeText(this, "Dang xuat thanh cong", Toast.LENGTH_SHORT).show();
         }
@@ -149,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginClick(View View) {
         startActivity(new Intent(this, RegisterActivity.class));
-        overridePendingTransition(R.anim.slide_in_right,R.anim.stay);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
 
     }
 }

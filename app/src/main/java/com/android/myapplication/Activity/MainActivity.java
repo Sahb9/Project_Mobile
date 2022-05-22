@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -34,6 +35,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.myapplication.DAO.AccountDAO;
+import com.android.myapplication.DAO.HabitDAO;
+import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.Fragment.HabitsFragment;
 import com.android.myapplication.Fragment.HistoryFragment;
 import com.android.myapplication.Fragment.HomeFragment;
@@ -42,6 +45,8 @@ import com.android.myapplication.Others.BottomNavigationBehavior;
 import com.android.myapplication.Others.ChangeDarkMode;
 import com.android.myapplication.Others.DarkModePrefManager;
 import com.android.myapplication.R;
+import com.android.myapplication.callback.CallBack;
+import com.android.myapplication.utilities.Common;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -49,6 +54,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
