@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="580dp"
     android:background="@drawable/gradient_user"
             android:orientation="vertical"
             android:weightSum="10"
@@ -120,24 +120,31 @@
                 android:layout_height="wrap_content"
                 android:text="User id " />
         </LinearLayout>
+
         <Button
-            android:textColor="@color/black"
-            android:background="@drawable/gradient_button1"
             android:id="@+id/buttonUpdateUser"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Update" />
+            android:backgroundTint="@drawable/gradient_button2"
+
+            android:radius="10dp"
+            android:text="Update"
+            android:textColor="@color/black" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="28dp" />
+
         <Button
-            android:textColor="@color/black"
-            android:background="@drawable/gradient_button2"
             android:id="@+id/buttonChangePasswordUser"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Change Password" />
+            android:backgroundTint="@drawable/gradient_button2"
+
+            android:radius="10dp"
+            android:text="Change Password"
+            android:textColor="@color/black" />
     </LinearLayout>
 </LinearLayout>

@@ -13,8 +13,11 @@
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable-v24/indicator_bmi.xml" value="0.2075" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable-v24/side_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable-v24/timeManagement_gradient_schedule.xml" value="0.16" />
+        <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable/button_background_blue.xml" value="0.133" />
+        <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable/button_habit_schedule.xml" value="0.133" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable/drawable2.xml" value="0.1" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable/gradient_button1.xml" value="0.153" />
+        <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable/gradient_button3.xml" value="0.133" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable/gradient_user.xml" value="0.151" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable/ic_add_img.xml" value="0.176" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
@@ -37,11 +40,13 @@
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/card_popular_courses.xml" value="0.16259057971014493" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/content_main.xml" value="0.25" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/element_habit.xml" value="0.2" />
+        <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/fragment_habits.xml" value="0.16354166666666667" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/fragment_history.xml" value="0.2" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/fragment_menu.xml" value="0.2" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/fragment_search.xml" value="0.2" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/fragment_user.xml" value="0.25" />
+        <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/item_habit.xml" value="0.15052083333333333" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/nav_header_main.xml" value="0.25" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/layout/view_habit.xml" value="0.25" />
         <entry key="..\:/Users/ASUS.LAPTOP-LD7KLDC7/Desktop/Mobile_App_new/Project_CuoiKy/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />

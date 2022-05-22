@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity
     private AccountDAO accountDAO = new AccountDAO();
     private ChangeDarkMode changeDarkMode;
     private UserFragment userFragment = new UserFragment(this);
-    private RelativeLayout layout_schedule,layout_fitness,layout_timeManagement,layout_Eating,layout_BMI,layout_reading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         changeDarkMode = new ChangeDarkMode(this);
         changeDarkMode.setModeScreen();
         setContentView(R.layout.activity_main);
-        //replaceFragment(new HomeFragment(this));
+        replaceFragment(new HomeFragment());
         hanhdleSchool();
     }
 
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity
                     replaceFragment(new HistoryFragment(MainActivity.this));
                     return true;
                 case R.id.navigationHome:
-                    //replaceFragment(new HomeFragment(MainActivity.this));
+                    replaceFragment(new HomeFragment());
                     return true;
                 case  R.id.navigationSearch:
                     replaceFragment(new HabitsFragment());
