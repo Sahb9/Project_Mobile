@@ -1,11 +1,7 @@
 package com.android.myapplication.Fragment;
 
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -28,17 +24,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.myapplication.Activity.MainActivity;
 import com.android.myapplication.DAO.HabitDAO;
 import com.android.myapplication.Entity.Alarm;
 import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
 import com.android.myapplication.callback.CallBack;
-import com.android.myapplication.service.AlarmReceiver;
 import com.android.myapplication.entitys.HabitAdapter;
 import com.android.myapplication.utilities.Common;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,11 +55,11 @@ public class HabitsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private final String CLASS_NAME = HabitsFragment.class.getSimpleName();
     private AppCompatButton btnAdd;
     private ListView listViewHabit;
-    private ArrayList<Habit> habits;
+    private ArrayList<Habit> habitArrayList;
     private HabitAdapter habitAdapter;
-    private Intent intent;
 
     public HabitsFragment() {
         // Required empty public constructor
@@ -106,11 +98,12 @@ public class HabitsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_habits, container, false);
 
         init(view);
-        setListView();
+        initListView();
+        setListView(this.habitArrayList, this.habitAdapter);
         addEvent();
 
         //Lazy dialog
-        showDialog();
+        //showDialog();
 
         return view;
     }
@@ -119,36 +112,28 @@ public class HabitsFragment extends Fragment {
         this.listViewHabit = view.findViewById(R.id.list_item_habit);
         this.btnAdd = view.findViewById(R.id.btn_add_habit);
 
-        this.habits = new ArrayList<>();
-
-        this.habits.add(new Habit("Mẫu list view cho habit"));
-        this.habits.add(new Habit("Kiểm tra giao diện UI"));
-        this.habits.add(new Habit("Chỉnh sửa item cho habit list"));
-        this.habits.add(new Habit("Kiểm tra lần nữa"));
-        this.habits.add(new Habit("Thêm thuộc tính cho lớp habit"));
-        this.habits.add(new Habit("Kiểm tra giao diện danh sách"));
-        this.habits.add(new Habit("Thêm các thông tin các trường hợp cho danh sách"));
-        this.habits.add(new Habit("Tạo dialog để thêm habit"));
+        this.habitArrayList = new ArrayList<>();
     }
 
-    private void setListView() {
-        this.habitAdapter = new HabitAdapter(getActivity(), R.layout.element_habit, this.habits);
+    private void initListView() {
+        this.habitAdapter = new HabitAdapter(getActivity(), R.layout.element_habit, this.habitArrayList);
         this.listViewHabit.setAdapter(this.habitAdapter);
     }
 
-    public Intent getMyIntent(Context context, Class<?> cls) {
-        if (this.intent == null) {
-            this.intent = new Intent(context, cls);
-        }
-        return this.intent;
+    private void setListView(ArrayList<Habit> habitsParam, HabitAdapter habitAdapterParam) {
+        HabitDAO habitDAO = HabitDAO.getInstance();
+
+        habitDAO.getHabits(Common.uID, new CallBack<Habit>() {
+            @Override
+            public void onCallBack(Habit callback) {
+                habitsParam.add(callback);
+                habitAdapterParam.notifyDataSetChanged();
+            }
+        });
     }
 
     private String FormatDate(String format, Date date) {
         return new SimpleDateFormat(format).format(date);
-    }
-
-    private PendingIntent handlePendingIntent(Context context, Intent intent) {
-        return PendingIntent.getBroadcast(context, 1, intent, 0);
     }
 
     private void updateUI(Calendar calendar, TextView textView) {
@@ -159,27 +144,6 @@ public class HabitsFragment extends Fragment {
     private void handlePressed(AppCompatButton appCompatButton, CallBack<Boolean> callBack) {
         appCompatButton.setSelected(!appCompatButton.isSelected());
         callBack.onCallBack(appCompatButton.isSelected());
-
-        Log.d(Common.TAG_LOG, "handlePressed: " + appCompatButton.isSelected());
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void starAlarm(Calendar calendar) {
-        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = null;
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            pendingIntent = handlePendingIntent(getActivity(),
-                    getMyIntent(getActivity(), AlarmReceiver.class));
-        }
-
-        //Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
-
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1);
-        }
-
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
     private void handleSetTime(Alarm alarm, TextView textView) {
@@ -206,7 +170,7 @@ public class HabitsFragment extends Fragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     updateUI(calendar, textView);
                 }
-                //starAlarm(calendar);
+
                 alarm.setId(new Random().nextInt(Integer.MAX_VALUE));
                 alarm.setHour(calendar.get(Calendar.HOUR_OF_DAY));
                 alarm.setMinute(calendar.get(Calendar.MINUTE));
@@ -233,9 +197,6 @@ public class HabitsFragment extends Fragment {
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference();
-
         Alarm alarm = new Alarm();
         AppCompatButton btnMon, btnTue, btnWed, btnThu, btnFri, btnSat, btnSun;
 
@@ -246,6 +207,7 @@ public class HabitsFragment extends Fragment {
         btnFri = dialog.findViewById(R.id.btn_fri);
         btnSat = dialog.findViewById(R.id.btn_sat);
         btnSun = dialog.findViewById(R.id.btn_sun);
+
         EditText editTextNameHabit = dialog.findViewById(R.id.edit_name_habit);
         EditText editTextTargetHabit = dialog.findViewById(R.id.edit_target_habit);
         TextView txtTimePicker = dialog.findViewById(R.id.reminder_habit);
@@ -363,21 +325,15 @@ public class HabitsFragment extends Fragment {
 
                 int numTarget = Integer.parseInt(editTextTargetHabit.getText().toString());
 
-                Log.d(Common.TAG_LOG, "onClick: Dialog add habit target-" + numTarget);
-
                 habit.setTarget(numTarget);
                 habit.setAlarm(alarm);
                 habit.setStartDate(FormatDate("dd/MM/yyyy", new Date()));
-
-                Log.d(Common.TAG_LOG, "onClick: Dialog add habit / id-" + Common.uID);
 
                 habitDAO.addHabit(Common.uID, habit, new CallBack<Boolean>() {
                     @Override
                     public void onCallBack(Boolean callback) {
                         if (callback) {
                             Toast.makeText(getActivity(), "Save habit is success", Toast.LENGTH_SHORT).show();
-
-                            Log.d(Common.TAG_LOG, "onClick: " + alarm.isMonday() + "/hour: " + alarm.getHour());
                         } else {
                             Toast.makeText(getActivity(), "Save habit is fail", Toast.LENGTH_SHORT).show();
                         }

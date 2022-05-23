@@ -37,17 +37,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements CalendarAdapter.OnItemListener {
+    private final String CLASS_NAME = HomeFragment.class.getSimpleName();
     private TextView monthYearText;
-    private RecyclerView calendarRecyclerView,items_habit;
+    private RecyclerView calendarRecyclerView, items_habit;
     HabitHomeItemsAdapter habitHomeItemsAdapter;
-    private MainActivity mainActivity ;
+    private MainActivity mainActivity;
     private LocalDate selectedDate;
-    Button btnprevious,btnnext;
+    Button btnprevious, btnnext;
+
     public HomeFragment() {
 
     }
-
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,16 +70,17 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             @Override
             public void onCallBack(Habit callback) {
                 habitArrayList.add(callback);
+                habitArrayList.forEach(habit -> Log.d(Common.TAG_LOG + "/" + CLASS_NAME, "onCreate: " + habit.toString() + "\'"));
             }
         });
 
-        habitArrayList.forEach(habit -> Log.d(Common.TAG_LOG, "onCreate: " + habit.toString() + "\'"));
     }
-    private void setUpSchedule()
-    {
+
+    private void setUpSchedule() {
         this.selectedDate = LocalDate.now();
         setMonthView();
     }
+
     private void initWidgets(View view) {
         calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView_home);
         monthYearText = view.findViewById(R.id.monthYearTV_home);
@@ -87,8 +88,8 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         btnprevious = view.findViewById(R.id.btn_fragmenthome_previous);
         btnnext = view.findViewById(R.id.btn_fragmenthome_next);
     }
-    private void setUpItemsHabit()
-    {
+
+    private void setUpItemsHabit() {
         habitHomeItemsAdapter = new HabitHomeItemsAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 //        items_habit.setLayoutManager(linearLayoutManager);
@@ -107,6 +108,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             }
         });
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(this.selectedDate));
@@ -117,8 +119,8 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             public void onItemClick(int position, String dayText) {
                 //String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
                 int valueDate = Integer.parseInt(dayText);
-                int val = DateService.findDayofWeek(valueDate,Common.MONTH,Common.YEAR);
-                Toast.makeText(mainActivity,"-" +val, Toast.LENGTH_LONG).show();
+                int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
+                Toast.makeText(mainActivity, "-" + val, Toast.LENGTH_LONG).show();
             }
         });
         //
@@ -140,15 +142,15 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
         Common.MONTH = yearMonth.getMonth();
         Common.YEAR = yearMonth.getYear();
-        for(int i = 1; i <= 42; i++) {
-            if(i <= dayOfWeek || i > daysInMonth + dayOfWeek) {
+        for (int i = 1; i <= 42; i++) {
+            if (i <= dayOfWeek || i > daysInMonth + dayOfWeek) {
                 daysInMonthArray.add("");
             } else {
                 daysInMonthArray.add(String.valueOf(i - dayOfWeek));
             }
         }
 
-        return  daysInMonthArray;
+        return daysInMonthArray;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -156,19 +158,20 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         return date.format(formatter);
     }
+
     // nút tăng thêm tháng
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousMonthAction_home(View view) {
         this.selectedDate = this.selectedDate.minusMonths(1);
         setMonthView();
     }
+
     // nút trừ thêm tháng
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextMonthAction(View view) {
         this.selectedDate = this.selectedDate.plusMonths(1);
         setMonthView();
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -221,12 +224,10 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
     @Override
     public void onItemClick(int position, String dayText) {
-        if(!dayText.equals(""))
-        {
+        if (!dayText.equals("")) {
 
         }
     }
-
 
 
 }

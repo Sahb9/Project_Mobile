@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,212 +8,214 @@
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
     android:background="@drawable/dialog_radius_10dp">
-
-    <TextView
-        android:id="@+id/title_habit"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Add Habit"
-        android:textSize="34sp"
-        android:textColor="#4FB6D6"
-        android:gravity="center" />
+        android:layout_height="match_parent" >
+        <TextView
+            android:id="@+id/title_habit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Add Habit"
+            android:textSize="34sp"
+            android:textColor="#4FB6D6"
+            android:gravity="center" />
 
-    <TextView
-        android:id="@+id/label_name_habit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/title_habit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Name"
-        android:textSize="@dimen/txt_label_dialog"
-        android:textColor="#807F7F"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/label_name_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/title_habit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Name"
+            android:textSize="@dimen/txt_label_dialog"
+            android:textColor="#807F7F"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/edit_name_habit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/label_name_habit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:hint="Name"
-        android:textSize="@dimen/edit_habit_dialog"
-        android:textColor="#131313"/>
+        <EditText
+            android:id="@+id/edit_name_habit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/label_name_habit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="Name"
+            android:textSize="@dimen/edit_habit_dialog"
+            android:textColor="#131313"/>
 
-    <TextView
-        android:id="@+id/label_schedule_habit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/edit_name_habit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Schedule"
-        android:textSize="@dimen/txt_label_dialog"
-        android:textColor="#807F7F"
-        android:textStyle="bold"
-        android:layout_marginTop="26dp"
-        android:paddingBottom="10dp" />
+        <TextView
+            android:id="@+id/label_schedule_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/edit_name_habit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Schedule"
+            android:textSize="@dimen/txt_label_dialog"
+            android:textColor="#807F7F"
+            android:textStyle="bold"
+            android:layout_marginTop="26dp"
+            android:paddingBottom="10dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_mon"
-        android:layout_height="@dimen/height_btn_dialog"
-        android:layout_width="@dimen/width_btn_dialog"
-        android:text="mon"
-        android:textSize="@dimen/txt_size_dialog"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/button_habit_schedule"
-        app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_mon"
+            android:layout_height="@dimen/height_btn_dialog"
+            android:layout_width="@dimen/width_btn_dialog"
+            android:text="mon"
+            android:textSize="@dimen/txt_size_dialog"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_habit_schedule"
+            app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_tue"
-        android:layout_height="@dimen/height_btn_dialog"
-        android:layout_width="@dimen/width_btn_dialog"
-        android:text="tue"
-        android:textSize="@dimen/txt_size_dialog"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/button_habit_schedule"
-        android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
-        app:layout_constraintLeft_toRightOf="@id/btn_mon" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_tue"
+            android:layout_height="@dimen/height_btn_dialog"
+            android:layout_width="@dimen/width_btn_dialog"
+            android:text="tue"
+            android:textSize="@dimen/txt_size_dialog"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_habit_schedule"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
+            app:layout_constraintLeft_toRightOf="@id/btn_mon" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_wed"
-        android:layout_height="@dimen/height_btn_dialog"
-        android:layout_width="@dimen/width_btn_dialog"
-        android:text="wed"
-        android:textSize="@dimen/txt_size_dialog"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/button_habit_schedule"
-        android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
-        app:layout_constraintLeft_toRightOf="@id/btn_tue" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_wed"
+            android:layout_height="@dimen/height_btn_dialog"
+            android:layout_width="@dimen/width_btn_dialog"
+            android:text="wed"
+            android:textSize="@dimen/txt_size_dialog"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_habit_schedule"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
+            app:layout_constraintLeft_toRightOf="@id/btn_tue" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_thu"
-        android:layout_height="@dimen/height_btn_dialog"
-        android:layout_width="@dimen/width_btn_dialog"
-        android:text="thu"
-        android:textSize="@dimen/txt_size_dialog"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/button_habit_schedule"
-        android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
-        app:layout_constraintLeft_toRightOf="@id/btn_wed" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_thu"
+            android:layout_height="@dimen/height_btn_dialog"
+            android:layout_width="@dimen/width_btn_dialog"
+            android:text="thu"
+            android:textSize="@dimen/txt_size_dialog"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_habit_schedule"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
+            app:layout_constraintLeft_toRightOf="@id/btn_wed" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_fri"
-        android:layout_height="@dimen/height_btn_dialog"
-        android:layout_width="@dimen/width_btn_dialog"
-        android:text="fri"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/button_habit_schedule"
-        android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
-        app:layout_constraintLeft_toRightOf="@id/btn_thu" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_fri"
+            android:layout_height="@dimen/height_btn_dialog"
+            android:layout_width="@dimen/width_btn_dialog"
+            android:text="fri"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_habit_schedule"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
+            app:layout_constraintLeft_toRightOf="@id/btn_thu" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_sat"
-        android:layout_height="@dimen/height_btn_dialog"
-        android:layout_width="@dimen/width_btn_dialog"
-        android:text="sat"
-        android:textSize="@dimen/txt_size_dialog"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/button_habit_schedule"
-        android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
-        app:layout_constraintLeft_toRightOf="@id/btn_fri" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_sat"
+            android:layout_height="@dimen/height_btn_dialog"
+            android:layout_width="@dimen/width_btn_dialog"
+            android:text="sat"
+            android:textSize="@dimen/txt_size_dialog"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_habit_schedule"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
+            app:layout_constraintLeft_toRightOf="@id/btn_fri" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_sun"
-        android:layout_height="@dimen/height_btn_dialog"
-        android:layout_width="@dimen/width_btn_dialog"
-        android:text="sun"
-        android:textSize="@dimen/txt_size_dialog"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/button_habit_schedule"
-        android:layout_marginLeft="5dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
-        app:layout_constraintLeft_toRightOf="@id/btn_sat" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_sun"
+            android:layout_height="@dimen/height_btn_dialog"
+            android:layout_width="@dimen/width_btn_dialog"
+            android:text="sun"
+            android:textSize="@dimen/txt_size_dialog"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_habit_schedule"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_schedule_habit"
+            app:layout_constraintLeft_toRightOf="@id/btn_sat" />
 
-    <TextView
-        android:id="@+id/label_target_habit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btn_mon"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Target"
-        android:textSize="@dimen/txt_label_dialog"
-        android:textColor="#807F7F"
-        android:textStyle="bold"
-        android:layout_marginTop="26dp" />
+        <TextView
+            android:id="@+id/label_target_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/btn_mon"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Target"
+            android:textSize="@dimen/txt_label_dialog"
+            android:textColor="#807F7F"
+            android:textStyle="bold"
+            android:layout_marginTop="26dp" />
 
-    <EditText
-        android:id="@+id/edit_target_habit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/label_target_habit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:hint="Target"
-        android:inputType="numberDecimal"
-        android:textSize="@dimen/edit_habit_dialog"
-        android:textColor="#131313"/>
+        <EditText
+            android:id="@+id/edit_target_habit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/label_target_habit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="Target"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/edit_habit_dialog"
+            android:textColor="#131313"/>
 
-    <TextView
-        android:id="@+id/label_reminder_habit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/edit_target_habit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Reminder"
-        android:textSize="@dimen/txt_label_dialog"
-        android:textColor="#807F7F"
-        android:textStyle="bold"
-        android:layout_marginTop="26dp" />
+        <TextView
+            android:id="@+id/label_reminder_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/edit_target_habit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Reminder"
+            android:textSize="@dimen/txt_label_dialog"
+            android:textColor="#807F7F"
+            android:textStyle="bold"
+            android:layout_marginTop="26dp" />
 
-    <TextView
-        android:id="@+id/reminder_habit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:text="Time picker"
-        android:textColor="#807F7F"
-        android:textSize="@dimen/txt_label_dialog"
-        android:layout_marginLeft="40dp"
-        app:layout_constraintLeft_toRightOf="@+id/label_reminder_habit"
-        app:layout_constraintTop_toBottomOf="@+id/edit_target_habit" />
+        <TextView
+            android:id="@+id/reminder_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:text="Time picker"
+            android:textColor="#807F7F"
+            android:textSize="@dimen/txt_label_dialog"
+            android:layout_marginLeft="40dp"
+            app:layout_constraintLeft_toRightOf="@+id/label_reminder_habit"
+            app:layout_constraintTop_toBottomOf="@+id/edit_target_habit" />
 
-    <Button
-        android:id="@+id/btn_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/label_reminder_habit"
-        app:layout_constraintRight_toLeftOf="@+id/btn_save"
-        android:text="Cancel"
-        android:textSize="22sp"
-        android:textColor="#4FB6D6"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp" />
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/label_reminder_habit"
+            app:layout_constraintRight_toLeftOf="@+id/btn_save"
+            android:text="Cancel"
+            android:textSize="22sp"
+            android:textColor="#4FB6D6"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp" />
 
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/label_reminder_habit"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="save"
-        android:textSize="22sp"
-        android:textColor="#4FB6D6"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginTop="20dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/label_reminder_habit"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="save"
+            android:textSize="22sp"
+            android:textColor="#4FB6D6"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_marginTop="20dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

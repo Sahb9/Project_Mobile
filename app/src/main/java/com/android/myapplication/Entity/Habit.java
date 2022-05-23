@@ -1,6 +1,7 @@
 package com.android.myapplication.Entity;
 
 public class Habit {
+    private String idHabit;
     private String name;
     private int target;
     private int current;
@@ -8,6 +9,14 @@ public class Habit {
     private Alarm alarm;
 
     public Habit() {
+    }
+
+    public String getIdHabit() {
+        return idHabit;
+    }
+
+    public void setIdHabit(String idHabit) {
+        this.idHabit = idHabit;
     }
 
     public Habit(String name) {

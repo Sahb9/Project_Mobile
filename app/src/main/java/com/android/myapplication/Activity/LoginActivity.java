@@ -71,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (firebaseUser != null) {
                         Common.uID = firebaseUser.getUid();
-
-                        Log.d(Common.TAG_LOG, "onCallBack: Login id-" + Common.uID);
                     }
 
                     // Sign in success, update UI with the signed-in user's information
