@@ -23,7 +23,7 @@ public class HabitDAO {
     private ArrayList<Habit> habitList;
     private static  HabitDAO instance = null;
 
-    private HabitDAO() {
+    public HabitDAO() {
         this.firebaseDatabase = FirebaseDatabase.getInstance();
         this.habitList = new ArrayList<Habit>();
     }
