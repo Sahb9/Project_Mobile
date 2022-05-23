@@ -10,7 +10,7 @@ public class HabitAdapterHolder {
     public TextView textViewProgress;
     public ProgressBar progressBarHabit;
     public int position;
-    public byte progress;
+    public int progress;
 
     public HabitAdapterHolder() {
     }

@@ -57,7 +57,6 @@ public class HabitDAO {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Habit habit = snapshot.getValue(Habit.class);
-
                 callBack.onCallBack(habit);
             }
 

@@ -43,11 +43,10 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     private MainActivity mainActivity ;
     private LocalDate selectedDate;
     Button btnprevious,btnnext;
+
     public HomeFragment() {
 
     }
-
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,10 +69,10 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             @Override
             public void onCallBack(Habit callback) {
                 habitArrayList.add(callback);
+                habitArrayList.forEach(habit -> Log.d(Common.TAG_LOG, "onCreate: " + habit.toString() + "\'"));
             }
         });
 
-        habitArrayList.forEach(habit -> Log.d(Common.TAG_LOG, "onCreate: " + habit.toString() + "\'"));
     }
     private void setUpSchedule()
     {
