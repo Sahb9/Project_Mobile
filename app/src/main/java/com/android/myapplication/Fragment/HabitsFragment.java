@@ -55,6 +55,7 @@ public class HabitsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private final String CLASS_NAME = HabitsFragment.class.getSimpleName();
     private AppCompatButton btnAdd;
     private ListView listViewHabit;
     private ArrayList<Habit> habitArrayList;

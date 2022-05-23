@@ -67,8 +67,6 @@ public class HabitAdapter extends BaseAdapter {
 
             habitAdapterHolder.progress = (int) progressResult;
 
-            Log.d(Common.TAG_LOG, "getView: " + i + "-progressResult:" + progressResult);
-
             view.setTag(habitAdapterHolder);
         } else {
             habitAdapterHolder = (HabitAdapterHolder) view.getTag();
