@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.android.myapplication.Entity.History;
 import com.android.myapplication.Models.CalendarAdapter;
 import com.android.myapplication.R;
 import com.android.myapplication.callback.CallBack;
+import com.android.myapplication.entitys.HabitAdapter;
 import com.android.myapplication.entitys.HabitHomeItemsAdapter;
 import com.android.myapplication.service.DateService;
 import com.android.myapplication.utilities.Common;
@@ -35,27 +37,21 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends Fragment implements CalendarAdapter.OnItemListener {
     private final String CLASS_NAME = HomeFragment.class.getSimpleName();
-
     private TextView monthYearText;
-    private RecyclerView calendarRecyclerView, items_habit;
+    private RecyclerView calendarRecyclerView;
     HabitHomeItemsAdapter habitHomeItemsAdapter;
     private MainActivity mainActivity;
     private LocalDate selectedDate;
     Button btnprevious, btnnext;
-    private List<Habit> habitList = new ArrayList<>();
+    private ListView listViewHabit;
+    private ArrayList<Habit> habitArrayList;
+    private HabitHomeItemsAdapter habitAdapter;
 
     public HomeFragment() {
 
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainActivity = (MainActivity) getActivity();
-        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -66,64 +62,64 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         setUpSchedule();
         setUpItemsHabit();
     }
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view =inflater.inflate(R.layout.fragment_home, container, false);
+        mainActivity = (MainActivity) getActivity();
+        init(view);
+        initListView();
+        //setListView(this.habitArrayList, this.habitAdapter);
+        //Set theo ngày
 
-    private boolean allowAddHabit(Habit habit, int dayOfWeek) {
-        switch (dayOfWeek) {
-            case 1:
-                return habit.getAlarm().isMonday();
-            case 2:
-                return habit.getAlarm().isTuesday();
-            case 3:
-                return habit.getAlarm().isWednesday();
-            case 4:
-                return habit.getAlarm().isThursday();
-            case 5:
-                return habit.getAlarm().isFriday();
-            case 6:
-                return habit.getAlarm().isSaturday();
-            case 7:
-                return habit.getAlarm().isSunday();
-            default:
-                return false;
-        }
+        setListViewByDayOfWeek(this.habitArrayList, this.habitAdapter,2);
+        return view;
+    }
+    private void init(View view) {
+        this.listViewHabit = view.findViewById(R.id.items_habit);
+        this.habitArrayList = new ArrayList<>();
     }
 
-    private void setListDayOfWeek(HabitHomeItemsAdapter habitHomeAdapterParam, List<Habit> habitListParam, int dayOfWeek) {
+    private void initListView() {
+        this.habitAdapter = new HabitHomeItemsAdapter(getActivity(),  this.habitArrayList);
+        this.listViewHabit.setAdapter(this.habitAdapter);
+    }
+
+    private void setListView(ArrayList<Habit> habitsParam, HabitHomeItemsAdapter habitAdapterParam) {
         HabitDAO habitDAO = HabitDAO.getInstance();
 
         habitDAO.getHabits(Common.uID, new CallBack<Habit>() {
             @Override
             public void onCallBack(Habit callback) {
-                if (allowAddHabit(callback, dayOfWeek)) {
-                    habitListParam.add(callback);
-                    habitHomeAdapterParam.notifyDataSetChanged();
-                }
+                habitsParam.add(callback);
+                habitAdapterParam.notifyDataSetChanged();
             }
         });
     }
+    private void setListViewByDayOfWeek(ArrayList<Habit> habitsParam, HabitHomeItemsAdapter habitAdapterParam,int valueDay) {
+        HabitDAO habitDAO = HabitDAO.getInstance();
 
+        habitDAO.getHabitsByDayOfWeek(Common.uID, new CallBack<Habit>() {
+            @Override
+            public void onCallBack(Habit callback) {
+                habitsParam.add(callback);
+                habitAdapterParam.notifyDataSetChanged();
+            }
+        },valueDay);
+    }
     private void setUpSchedule() {
         this.selectedDate = LocalDate.now();
-        setMonthView(this.habitHomeItemsAdapter);
+
+        setMonthView();
     }
 
     private void initWidgets(View view) {
         calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView_home);
         monthYearText = view.findViewById(R.id.monthYearTV_home);
-        items_habit = view.findViewById(R.id.items_habit);
         btnprevious = view.findViewById(R.id.btn_fragmenthome_previous);
         btnnext = view.findViewById(R.id.btn_fragmenthome_next);
-
-        this.items_habit.setLayoutManager(new LinearLayoutManager(getContext()));
-        this.habitHomeItemsAdapter = new HabitHomeItemsAdapter(getLayoutInflater(), this.habitList);
-        this.items_habit.setAdapter(this.habitHomeItemsAdapter);
     }
 
     private void setUpItemsHabit() {
-        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        //items_habit.setLayoutManager(linearLayoutManager);
-        //items_habit.setFocusable(false);
-        //items_habit.setNestedScrollingEnabled(false);
 
         btnprevious.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,27 +136,22 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void setMonthView(HabitHomeItemsAdapter habitHomeAdapterParam) {
+    private void setMonthView() {
         monthYearText.setText(monthYearFromDate(this.selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(this.selectedDate);
-
+        //
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, new CalendarAdapter.OnItemListener() {
             @Override
             public void onItemClick(int position, String dayText) {
-                habitList.clear();
-                habitHomeAdapterParam.notifyDataSetChanged();
-
                 //String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-                if (!dayText.equals("")) {
-                    int valueDate = Integer.parseInt(dayText);
-                    int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
-
-                    setListDayOfWeek(habitHomeAdapterParam, habitList, val);
-                    Toast.makeText(mainActivity, "-" + val, Toast.LENGTH_LONG).show();
-                }
+                int valueDate = Integer.parseInt(dayText);
+                int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
+                Toast.makeText(mainActivity, ":" + val+":", Toast.LENGTH_LONG).show();
+                habitArrayList.clear();
+                setListViewByDayOfWeek(habitArrayList, habitAdapter,val);
             }
         });
-
+        //
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
@@ -200,14 +191,14 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousMonthAction_home(View view) {
         this.selectedDate = this.selectedDate.minusMonths(1);
-        setMonthView(this.habitHomeItemsAdapter);
+        setMonthView();
     }
 
     // nút trừ thêm tháng
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextMonthAction(View view) {
         this.selectedDate = this.selectedDate.plusMonths(1);
-        setMonthView(this.habitHomeItemsAdapter);
+        setMonthView();
     }
 
 
@@ -265,4 +256,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
         }
     }
+
+
 }

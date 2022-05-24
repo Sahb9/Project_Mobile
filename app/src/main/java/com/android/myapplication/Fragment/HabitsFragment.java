@@ -111,7 +111,6 @@ public class HabitsFragment extends Fragment {
     private void init(View view) {
         this.listViewHabit = view.findViewById(R.id.list_item_habit);
         this.btnAdd = view.findViewById(R.id.btn_add_habit);
-
         this.habitArrayList = new ArrayList<>();
     }
 

@@ -55,34 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         processEmailAndPassword();
 
         // Lazy login
-        String email = txtName.getText().toString().trim();
-        String password = txtPassword.getText().toString().trim();
 
-        accountDAO.SignIn(email, password, new CallBack<Boolean>() {
-            @Override
-            public void onCallBack(Boolean callback) {
-                if (callback) {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("email", email);
-                    editor.putString("password", password);
-                    editor.commit();
-
-                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-                    if (firebaseUser != null) {
-                        Common.uID = firebaseUser.getUid();
-                    }
-
-                    // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    //finishAffinity();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
 //        Handler handler = new Handler();
 //        handler.postDelayed(new Runnable() {
@@ -92,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        },2000);
     }
+
 
     void processEmailAndPassword() {
         sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
@@ -124,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = txtName.getText().toString().trim();
                 String password = txtPassword.getText().toString().trim();
-
                 accountDAO.SignIn(email, password, new CallBack<Boolean>() {
                     @Override
                     public void onCallBack(Boolean callback) {
