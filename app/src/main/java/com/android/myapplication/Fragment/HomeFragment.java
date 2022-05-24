@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.android.myapplication.Entity.History;
 import com.android.myapplication.Models.CalendarAdapter;
 import com.android.myapplication.R;
 import com.android.myapplication.callback.CallBack;
+import com.android.myapplication.entitys.HabitAdapter;
 import com.android.myapplication.entitys.HabitHomeItemsAdapter;
 import com.android.myapplication.service.DateService;
 import com.android.myapplication.utilities.Common;
@@ -39,20 +41,17 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements CalendarAdapter.OnItemListener {
     private final String CLASS_NAME = HomeFragment.class.getSimpleName();
     private TextView monthYearText;
-    private RecyclerView calendarRecyclerView, items_habit;
+    private RecyclerView calendarRecyclerView;
     HabitHomeItemsAdapter habitHomeItemsAdapter;
     private MainActivity mainActivity;
     private LocalDate selectedDate;
     Button btnprevious, btnnext;
+    private ListView listViewHabit;
+    private ArrayList<Habit> habitArrayList;
+    private HabitHomeItemsAdapter habitAdapter;
 
     public HomeFragment() {
 
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainActivity = (MainActivity) getActivity();
-        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -62,39 +61,66 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         initWidgets(view);
         setUpSchedule();
         setUpItemsHabit();
+    }
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view =inflater.inflate(R.layout.fragment_home, container, false);
+        mainActivity = (MainActivity) getActivity();
+        init(view);
+        initListView();
+        //setListView(this.habitArrayList, this.habitAdapter);
+        //Set theo ngày
 
-        ArrayList<Habit> habitArrayList = new ArrayList<>();
+        setListViewByDayOfWeek(this.habitArrayList, this.habitAdapter,2);
+        return view;
+    }
+    private void init(View view) {
+        this.listViewHabit = view.findViewById(R.id.items_habit);
+        this.habitArrayList = new ArrayList<>();
+    }
+
+    private void initListView() {
+        this.habitAdapter = new HabitHomeItemsAdapter(getActivity(),  this.habitArrayList);
+        this.listViewHabit.setAdapter(this.habitAdapter);
+    }
+
+    private void setListView(ArrayList<Habit> habitsParam, HabitHomeItemsAdapter habitAdapterParam) {
         HabitDAO habitDAO = HabitDAO.getInstance();
 
         habitDAO.getHabits(Common.uID, new CallBack<Habit>() {
             @Override
             public void onCallBack(Habit callback) {
-                habitArrayList.add(callback);
-                habitArrayList.forEach(habit -> Log.d(Common.TAG_LOG + "/" + CLASS_NAME, "onCreate: " + habit.toString() + "\'"));
+                habitsParam.add(callback);
+                habitAdapterParam.notifyDataSetChanged();
             }
         });
-
     }
+    private void setListViewByDayOfWeek(ArrayList<Habit> habitsParam, HabitHomeItemsAdapter habitAdapterParam,int valueDay) {
+        HabitDAO habitDAO = HabitDAO.getInstance();
 
+        habitDAO.getHabitsByDayOfWeek(Common.uID, new CallBack<Habit>() {
+            @Override
+            public void onCallBack(Habit callback) {
+                habitsParam.add(callback);
+                habitAdapterParam.notifyDataSetChanged();
+            }
+        },valueDay);
+    }
     private void setUpSchedule() {
         this.selectedDate = LocalDate.now();
+
         setMonthView();
     }
 
     private void initWidgets(View view) {
         calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView_home);
         monthYearText = view.findViewById(R.id.monthYearTV_home);
-        items_habit = view.findViewById(R.id.items_habit);
         btnprevious = view.findViewById(R.id.btn_fragmenthome_previous);
         btnnext = view.findViewById(R.id.btn_fragmenthome_next);
     }
 
     private void setUpItemsHabit() {
-        habitHomeItemsAdapter = new HabitHomeItemsAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-//        items_habit.setLayoutManager(linearLayoutManager);
-//        items_habit.setFocusable(false);
-//        items_habit.setNestedScrollingEnabled(false);
+
         btnprevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +146,9 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
                 //String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
                 int valueDate = Integer.parseInt(dayText);
                 int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
-                Toast.makeText(mainActivity, "-" + val, Toast.LENGTH_LONG).show();
+                Toast.makeText(mainActivity, ":" + val+":", Toast.LENGTH_LONG).show();
+                habitArrayList.clear();
+                setListViewByDayOfWeek(habitArrayList, habitAdapter,val);
             }
         });
         //

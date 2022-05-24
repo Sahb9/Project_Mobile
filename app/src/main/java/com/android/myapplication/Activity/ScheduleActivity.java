@@ -55,7 +55,7 @@ public class ScheduleActivity extends AppCompatActivity implements CalendarAdapt
     }
     private void setUpItemsHabit()
     {
-        habitHomeItemsAdapter = new HabitHomeItemsAdapter();
+       // habitHomeItemsAdapter = new HabitHomeItemsAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         items_habit.setLayoutManager(linearLayoutManager);
         items_habit.setFocusable(false);
