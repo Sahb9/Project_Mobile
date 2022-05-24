@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Random;
 
 public class HabitHomeItemsAdapter extends BaseAdapter {
-
-
     private Context context;
 
     private List<Habit> habitList;
@@ -35,25 +33,23 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
         this.context = context;
         this.habitList = habitList;
     }
-    public HabitHomeItemsAdapter()
-    {
+
+    public HabitHomeItemsAdapter() {
 
     }
+
     // Remember method getCount, that important
     // Adapter know many item to render
     @Override
     public int getCount() {
-        if(this.habitList!=null && this.habitList.size()>0)
-        {
+        if (this.habitList != null && this.habitList.size() > 0) {
             return this.habitList.size();
-
         }
         return 0;
     }
 
     @Override
     public Object getItem(int i) {
-
         return this.habitList.get(i);
     }
 
@@ -61,13 +57,11 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
     public long getItemId(int i) {
         return i;
     }
+
     public class HabitHomeAdapterHolder {
         ImageView img_items;
         TextView txtTitle;
-
     }
-
-
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -79,13 +73,9 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.view_habit, null); //items
             habitAdapterHolder = new HabitHomeAdapterHolder();
-            //
+
             habitAdapterHolder.txtTitle = view.findViewById(R.id.textHabitTitle);
             habitAdapterHolder.img_items = view.findViewById(R.id.textHabitImage);
-            //
-
-
-
 
             view.setTag(habitAdapterHolder);
         } else {
@@ -95,7 +85,6 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
         habitAdapterHolder.img_items.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 habitAdapterHolder.img_items.setImageResource(R.drawable.check);
             }
         });
