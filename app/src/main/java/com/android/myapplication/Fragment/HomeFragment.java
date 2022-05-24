@@ -98,8 +98,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
                     habitListParam.add(callback);
                     habitHomeAdapterParam.notifyDataSetChanged();
                 }
-
-                Log.d(Common.TAG_LOG + " " + CLASS_NAME, "onCallBack: " + habitListParam);
             }
         });
     }
@@ -150,7 +148,8 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             @Override
             public void onItemClick(int position, String dayText) {
                 habitList.clear();
-                Log.d(Common.TAG_LOG + " " + CLASS_NAME, "onItemClick: " + habitList);
+                habitHomeAdapterParam.notifyDataSetChanged();
+
                 //String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
                 if (!dayText.equals("")) {
                     int valueDate = Integer.parseInt(dayText);
@@ -161,7 +160,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
                 }
             }
         });
-        //
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
