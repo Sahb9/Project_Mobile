@@ -25,7 +25,7 @@ public class HabitDAO {
     private FirebaseDatabase firebaseDatabase;
     private static HabitDAO instance = null;
 
-    public HabitDAO() {
+    private HabitDAO() {
         this.firebaseDatabase = FirebaseDatabase.getInstance();
     }
 
