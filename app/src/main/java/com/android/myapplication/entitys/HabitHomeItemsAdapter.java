@@ -1,5 +1,6 @@
 package com.android.myapplication.entitys;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +15,25 @@ import com.android.myapplication.DAO.HabitDAO;
 import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
 
-public class HabitHomeItemsAdapter extends RecyclerView.Adapter<HabitHomeItemsAdapter.HabitHomeItemsAdapterViewHolder>{
+import java.util.List;
 
-    HabitDAO habitDAO;
-    public HabitHomeItemsAdapter()
-    {
-        habitDAO = new HabitDAO();
+public class HabitHomeItemsAdapter extends RecyclerView.Adapter<HabitHomeItemsAdapter.HabitHomeItemsAdapterViewHolder> {
+    private LayoutInflater layoutInflater;
+    private List<Habit> habitList;
+
+    public HabitHomeItemsAdapter() {}
+
+    public HabitHomeItemsAdapter(LayoutInflater layoutInflater, List<Habit> habitList) {
+        this.layoutInflater = layoutInflater;
+        this.habitList = habitList;
     }
+
     @Override
     public void onBindViewHolder(@NonNull HabitHomeItemsAdapterViewHolder holder, int position) {
-        //
+        Habit habit = this.habitList.get(position);
 
+        holder.txtName.setText(habit.getName());
 
-        //
         holder.txtHinhAnh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,30 +44,28 @@ public class HabitHomeItemsAdapter extends RecyclerView.Adapter<HabitHomeItemsAd
 
     @Override
     public int getItemCount() {
-
-        return habitDAO.getHabitList().size();
+        return this.habitList.size();
     }
 
 
     @NonNull
     @Override
     public HabitHomeItemsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_habit,parent,false);
+        View view = layoutInflater.inflate(R.layout.view_habit, parent, false);
 
         return new HabitHomeItemsAdapterViewHolder(view);
     }
 
-    public class HabitHomeItemsAdapterViewHolder extends RecyclerView.ViewHolder
-    {
-        TextView txtNgay;
+    public class HabitHomeItemsAdapterViewHolder extends RecyclerView.ViewHolder {
+        TextView txtName;
         ImageView txtHinhAnh;
+
         public HabitHomeItemsAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txtNgay =itemView.findViewById(R.id.textHabitTitle);
+            txtName = itemView.findViewById(R.id.textHabitTitle);
             txtHinhAnh = itemView.findViewById(R.id.texthabitimg);
 
         }
     }
-
 }
