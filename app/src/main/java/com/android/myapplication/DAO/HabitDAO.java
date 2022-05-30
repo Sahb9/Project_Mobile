@@ -90,6 +90,7 @@ public class HabitDAO {
     public void getHabitsByDayOfWeek(String uId, CallBack<Habit> callBack, int valueDay) {
         Boolean[] boolArray = new Boolean[9];
         Arrays.fill(boolArray, Boolean.FALSE);
+
         this.firebaseDatabase.getReference(Common.HABIT).child(uId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -102,6 +103,7 @@ public class HabitDAO {
                     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                     firebaseDatabase.getReference(Common.HABIT).child(uId).child(snapshot.getKey()).setValue(habit);
                 }
+
                 boolean[] boolArray = new boolean[9];
                 boolArray[1] = habit.getAlarm().isMonday();
                 boolArray[2] = habit.getAlarm().isTuesday();
@@ -110,6 +112,7 @@ public class HabitDAO {
                 boolArray[5] = habit.getAlarm().isFriday();
                 boolArray[6] = habit.getAlarm().isSaturday();
                 boolArray[7] = habit.getAlarm().isSunday();
+
                 if (boolArray[valueDay] == true) {
                     callBack.onCallBack(habit);
                 }

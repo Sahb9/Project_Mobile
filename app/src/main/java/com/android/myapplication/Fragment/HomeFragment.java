@@ -143,19 +143,25 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(this.selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(this.selectedDate);
-        //
+
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, new CalendarAdapter.OnItemListener() {
             @Override
             public void onItemClick(int position, String dayText) {
                 //String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-                int valueDate = Integer.parseInt(dayText);
-                int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
-                Toast.makeText(mainActivity, ":" + val + ":", Toast.LENGTH_LONG).show();
-                habitArrayList.clear();
-                setListViewByDayOfWeek(habitArrayList, habitAdapter, val);
+                if (!dayText.equals("")) {
+                    int valueDate = Integer.parseInt(dayText);
+                    int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
+
+                    Toast.makeText(mainActivity, ":" + val + ":", Toast.LENGTH_LONG).show();
+
+                    habitArrayList.clear();
+                    habitAdapter.notifyDataSetChanged();
+
+                    setListViewByDayOfWeek(habitArrayList, habitAdapter, val);
+                }
             }
         });
-        //
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
@@ -170,7 +176,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         int daysInMonth = yearMonth.lengthOfMonth();
         LocalDate firstOfMonth = this.selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-        //set vào common
+
 
         Common.MONTH = yearMonth.getMonth();
         Common.YEAR = yearMonth.getYear();
