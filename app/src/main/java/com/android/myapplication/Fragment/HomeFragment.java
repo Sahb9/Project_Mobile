@@ -112,7 +112,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
     private void setUpSchedule() {
         this.selectedDate = LocalDate.now();
-
         setMonthView();
     }
 

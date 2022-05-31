@@ -55,7 +55,7 @@ public class HabitDAO {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Habit habit = snapshot.getValue(Habit.class);
 
-                if (habit.getIdHabit() == null) {
+                if (habit.getIdHabit().equals("")) {
                     habit.setIdHabit(snapshot.getKey());
 
                     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

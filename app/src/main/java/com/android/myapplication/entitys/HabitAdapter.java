@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
@@ -51,7 +54,9 @@ public class HabitAdapter extends BaseAdapter {
         HabitAdapterHolder habitAdapterHolder;
         Habit habit = this.habitList.get(i);
 
-        if (view == null) {
+        Log.d(Common.TAG_LOG, "getView: [sizeViewGroup:" + viewGroup.getChildCount() + "]");
+
+        /*if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(this.layout, null);
 
@@ -66,6 +71,7 @@ public class HabitAdapter extends BaseAdapter {
             float progressResult = ((float) habit.getCurrent() / habit.getTarget()) * 100;
 
             habitAdapterHolder.progress = (int) progressResult;
+            habitAdapterHolder.index = i;
 
             view.setTag(habitAdapterHolder);
         } else {
@@ -76,7 +82,26 @@ public class HabitAdapter extends BaseAdapter {
         habitAdapterHolder.textViewName.setText(habit.getName());
 
         habitAdapterHolder.textViewProgress.setText(habitAdapterHolder.progress + "%");
-        habitAdapterHolder.progressBarHabit.setProgress(habitAdapterHolder.progress);
+        habitAdapterHolder.progressBarHabit.setProgress(habitAdapterHolder.progress);*/
+
+        LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = layoutInflater.inflate(this.layout, null);
+
+        LinearLayout linearLayout = view.findViewById(R.id.habit_item);
+        TextView textViewName = view.findViewById(R.id.habit_name);
+        TextView textViewProgress = view.findViewById(R.id.txt_habit_progress);
+        ProgressBar progressBarHabit = view.findViewById(R.id.progress_circular);
+
+        int position = this.random.nextInt(3);
+        float progressResult = ((float) habit.getCurrent() / habit.getTarget()) * 100;
+        int progress = (int) progressResult;
+        String progressText = "";
+        progressText = progress + "%";
+
+        linearLayout.setBackgroundResource(R.drawable.gradient_button2);
+        textViewName.setText(habit.getName());
+        textViewProgress.setText(progressText);
+        progressBarHabit.setProgress(progress);
 
         return view;
     }
