@@ -62,25 +62,27 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         setUpSchedule();
         setUpItemsHabit();
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         mainActivity = (MainActivity) getActivity();
         init(view);
         initListView();
         //setListView(this.habitArrayList, this.habitAdapter);
         //Set theo ngày
 
-        setListViewByDayOfWeek(this.habitArrayList, this.habitAdapter,2);
+        setListViewByDayOfWeek(this.habitArrayList, this.habitAdapter, 2);
         return view;
     }
+
     private void init(View view) {
         this.listViewHabit = view.findViewById(R.id.items_habit);
         this.habitArrayList = new ArrayList<>();
     }
 
     private void initListView() {
-        this.habitAdapter = new HabitHomeItemsAdapter(getActivity(),  this.habitArrayList);
+        this.habitAdapter = new HabitHomeItemsAdapter(getActivity(), this.habitArrayList);
         this.listViewHabit.setAdapter(this.habitAdapter);
     }
 
@@ -95,7 +97,8 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             }
         });
     }
-    private void setListViewByDayOfWeek(ArrayList<Habit> habitsParam, HabitHomeItemsAdapter habitAdapterParam,int valueDay) {
+
+    private void setListViewByDayOfWeek(ArrayList<Habit> habitsParam, HabitHomeItemsAdapter habitAdapterParam, int valueDay) {
         HabitDAO habitDAO = HabitDAO.getInstance();
 
         habitDAO.getHabitsByDayOfWeek(Common.uID, new CallBack<Habit>() {
@@ -104,8 +107,9 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
                 habitsParam.add(callback);
                 habitAdapterParam.notifyDataSetChanged();
             }
-        },valueDay);
+        }, valueDay);
     }
+
     private void setUpSchedule() {
         this.selectedDate = LocalDate.now();
 
@@ -139,19 +143,25 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(this.selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(this.selectedDate);
-        //
+
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, new CalendarAdapter.OnItemListener() {
             @Override
             public void onItemClick(int position, String dayText) {
                 //String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-                int valueDate = Integer.parseInt(dayText);
-                int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
-                Toast.makeText(mainActivity, ":" + val+":", Toast.LENGTH_LONG).show();
-                habitArrayList.clear();
-                setListViewByDayOfWeek(habitArrayList, habitAdapter,val);
+                if (!dayText.equals("")) {
+                    int valueDate = Integer.parseInt(dayText);
+                    int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
+
+                    Toast.makeText(mainActivity, ":" + val + ":", Toast.LENGTH_LONG).show();
+
+                    habitArrayList.clear();
+                    habitAdapter.notifyDataSetChanged();
+
+                    setListViewByDayOfWeek(habitArrayList, habitAdapter, val);
+                }
             }
         });
-        //
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
@@ -166,7 +176,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         int daysInMonth = yearMonth.lengthOfMonth();
         LocalDate firstOfMonth = this.selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-        //set vào common
+
 
         Common.MONTH = yearMonth.getMonth();
         Common.YEAR = yearMonth.getYear();
