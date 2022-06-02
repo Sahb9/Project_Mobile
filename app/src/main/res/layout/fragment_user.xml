@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@drawable/gradient_button2"
-
+            android:layout_margin="5dp"
             android:radius="10dp"
             android:text="Update"
             android:textColor="@color/black" />
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@drawable/gradient_button2"
-
+            android:layout_margin="5dp"
             android:radius="10dp"
             android:text="Change Password"
             android:textColor="@color/black" />

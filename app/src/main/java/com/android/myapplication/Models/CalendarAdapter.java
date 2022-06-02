@@ -39,7 +39,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = (int) (parent.getHeight() * 0.09);// set kích thước layout
+        layoutParams.height = (int) (parent.getHeight() * 0.15);// set kích thước layout
 
         return new CalendarViewHolder(view, onItemListener);
     }

@@ -189,7 +189,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
                 daysInMonthArray.add(String.valueOf(i - dayOfWeek));
             }
         }
-
         return daysInMonthArray;
     }
 

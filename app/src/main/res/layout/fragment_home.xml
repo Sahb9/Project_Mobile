@@ -138,7 +138,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView_home"
         android:layout_width="match_parent"
-        android:layout_height="228dp" />
+        android:layout_height="228dp"
+        />
 
     <ListView
         android:id="@+id/items_habit"
