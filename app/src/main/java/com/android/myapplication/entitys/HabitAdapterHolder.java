@@ -11,6 +11,7 @@ public class HabitAdapterHolder {
     public ProgressBar progressBarHabit;
     public int position;
     public int progress;
+    public int index;
 
     public HabitAdapterHolder() {
     }
