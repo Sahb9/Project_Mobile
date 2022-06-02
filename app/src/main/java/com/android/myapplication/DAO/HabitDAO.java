@@ -140,6 +140,7 @@ public class HabitDAO {
             }
         });
     }
+
     public void updateHabit(String uId, Habit habit, CallBack<Boolean> callBack) {
         this.firebaseDatabase.getReference(Common.HABIT).child(uId).child(habit.getIdHabit()).setValue(habit)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -150,13 +151,18 @@ public class HabitDAO {
                 });
     }
 
-    public void deleteHabit(String uId, Habit habit, CallBack<Void> callBack) {
-        this.firebaseDatabase.getReference(Common.HABIT).child(uId).child(habit.getIdHabit()).removeValue(new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                callBack.onCallBack(null);
-            }
-        });
+    public void deleteHabit(String uId, Habit habit, CallBack<Boolean> callBack) {
+        this.firebaseDatabase
+                .getReference(Common.HABIT)
+                .child(uId)
+                .child(habit.getIdHabit())
+                .removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        callBack.onCallBack(task.isSuccessful());
+                    }
+                });
     }
 
 
