@@ -7,46 +7,77 @@
     app:cardBackgroundColor="#ff9a9e"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginRight="10dp">
+    android:layout_marginRight="10dp"
+    app:cardCornerRadius="10dp"
+
+    >
 
     <LinearLayout
         android:layout_margin="6dp"
-
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:background="@drawable/gradient_button2"
         android:orientation="horizontal"
         android:weightSum="10">
+        <TableLayout
+            android:layout_marginTop="10dp"
+            android:stretchColumns="*"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow>
+                <TextView
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/textHabitTitle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:padding="6dp"
-                android:textColor="@color/black"
-                android:text="ten chu de "
-                android:textSize="16sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/textHabitImage"
-                android:src="@drawable/exclamationmark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="6dp"
-                android:textSize="16sp" />
-        </LinearLayout>
+                    android:id="@+id/textHabitTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:textColor="@color/black"
+                    android:text="ten chu de "
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+                <ImageView
+                    android:id="@+id/textHabitImage"
+                    android:src="@drawable/exclamationmark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:padding="6dp"
+                    android:textSize="16sp" />
+            </TableRow>
+
+        </TableLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="3"-->
+<!--            android:orientation="vertical">-->
+<!--            <TextView-->
+<!--                android:id="@+id/textHabitTitle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:padding="6dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:text="ten chu de "-->
+<!--                android:textSize="16sp" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="7"-->
+<!--            android:orientation="horizontal">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/textHabitImage"-->
+<!--                android:src="@drawable/exclamationmark"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:padding="6dp"-->
+<!--                android:textSize="16sp" />-->
+<!--        </LinearLayout>-->
 
     </LinearLayout>
 

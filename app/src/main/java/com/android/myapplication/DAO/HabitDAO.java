@@ -140,7 +140,6 @@ public class HabitDAO {
             }
         });
     }
-
     public void updateHabit(String uId, Habit habit, CallBack<Boolean> callBack) {
         this.firebaseDatabase.getReference(Common.HABIT).child(uId).child(habit.getIdHabit()).setValue(habit)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -159,4 +158,6 @@ public class HabitDAO {
             }
         });
     }
+
+
 }

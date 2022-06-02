@@ -7,13 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.myapplication.DAO.HabitDAO;
+import com.android.myapplication.DAO.HistoryDAO;
 import com.android.myapplication.Entity.Habit;
+import com.android.myapplication.Entity.History;
 import com.android.myapplication.R;
 import com.android.myapplication.callback.CallBack;
 import com.android.myapplication.utilities.Common;
@@ -26,8 +29,7 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
     private Context context;
 
     private List<Habit> habitList;
-    private int[] themes = {R.drawable.gradient_button1, R.drawable.gradient_button2, R.drawable.gradient_button3};
-    private Random random = new Random();
+
 
     public HabitHomeItemsAdapter(Context context, List<Habit> habitList) {
         this.context = context;
@@ -82,10 +84,40 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
             habitAdapterHolder = (HabitHomeAdapterHolder) view.getTag();
         }
         habitAdapterHolder.txtTitle.setText(habit.getName());
+
+        //Press Signal
         habitAdapterHolder.img_items.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 habitAdapterHolder.img_items.setImageResource(R.drawable.check);
+                HabitDAO habitDAO = HabitDAO.getInstance();
+                habit.setCurrent(habit.getCurrent() +1);
+                //Habit
+                habitDAO.updateHabit(Common.uID,habit ,new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean callback) {
+                       if(callback)
+                       {
+                           Toast.makeText(context, "Check thanh cong", Toast.LENGTH_SHORT).show();
+                       }
+                    }
+                });
+                //History
+                HistoryDAO historyDAO = HistoryDAO.getInstance();
+                History history = new History();
+                String dateHistory = Common.DAY_OF_MONTH+ "/" + Common.MONTH_OF_YEAR + "/"+ Common.YEAR;
+                history.setSubject(habit.getName());
+                history.setDataTime(dateHistory);
+                history.setCurrent(habit.getCurrent());
+                historyDAO.addHistory(Common.uID,history,new CallBack<Boolean>() {
+                    @Override
+                    public void onCallBack(Boolean callback) {
+                        if(callback)
+                        {
+                            //Toast.makeText(context, "Check thanh cong", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
         return view;

@@ -36,6 +36,7 @@ import com.android.myapplication.utilities.Common;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements CalendarAdapter.OnItemListener {
@@ -71,7 +72,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         initListView();
         //setListView(this.habitArrayList, this.habitAdapter);
         //Set theo ngày
-
         setListViewByDayOfWeek(this.habitArrayList, this.habitAdapter, 2);
         return view;
     }
@@ -112,7 +112,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
     private void setUpSchedule() {
         this.selectedDate = LocalDate.now();
-
         setMonthView();
     }
 
@@ -145,19 +144,19 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         ArrayList<String> daysInMonth = daysInMonthArray(this.selectedDate);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, new CalendarAdapter.OnItemListener() {
+            // Press certain dates
             @Override
             public void onItemClick(int position, String dayText) {
                 //String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
                 if (!dayText.equals("")) {
-                    int valueDate = Integer.parseInt(dayText);
-                    int val = DateService.findDayofWeek(valueDate, Common.MONTH, Common.YEAR);
-
-                    Toast.makeText(mainActivity, ":" + val + ":", Toast.LENGTH_LONG).show();
-
+                    int valueDateOf = Integer.parseInt(dayText);
+                    int val = DateService.findDayofWeek(valueDateOf, Common.MONTH, Common.YEAR);
+                    Common.DAY_OF_WEEK = val;
+                    Common.DAY_OF_MONTH = valueDateOf;
                     habitArrayList.clear();
                     habitAdapter.notifyDataSetChanged();
-
                     setListViewByDayOfWeek(habitArrayList, habitAdapter, val);
+                    //Toast.makeText(mainActivity, Common.DAY+ "/" + Common.MONTH + "/"+ Common.YEAR, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -176,9 +175,9 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         int daysInMonth = yearMonth.lengthOfMonth();
         LocalDate firstOfMonth = this.selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-
-        Common.MONTH = yearMonth.getMonth();
+        Common.DAY_OF_MONTH = this.selectedDate.getDayOfMonth();
+        Common.MONTH_OF_YEAR = yearMonth.get(ChronoField.MONTH_OF_YEAR);
+        Common.MONTH = yearMonth.getMonth(); // get month by String (Month)
         Common.YEAR = yearMonth.getYear();
         for (int i = 1; i <= 42; i++) {
             if (i <= dayOfWeek || i > daysInMonth + dayOfWeek) {

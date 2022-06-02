@@ -1,10 +1,12 @@
 package com.android.myapplication.Entity;
 
 public class History {
-    private String title, content, dataTime, subject;
+    private String  dataTime, subject;
     private static History instance = null;
+    private int current;
 
-    private History() {
+
+    public History() {
     }
 
     public static History getInstance() {
@@ -14,23 +16,6 @@ public class History {
 
         return instance;
     }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getDataTime() {
         return dataTime;
     }
@@ -46,4 +31,12 @@ public class History {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+    public int getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
+    }
+
 }

@@ -82,7 +82,7 @@ public class ScheduleActivity extends AppCompatActivity implements CalendarAdapt
         LocalDate firstOfMonth = this.selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
         //set vào common
-        Common.DAY = this.selectedDate.getDayOfMonth();
+        //Common.DAY = this.selectedDate.getDayOfMonth();
         Common.MONTH = yearMonth.getMonth();
         Common.YEAR = yearMonth.getYear();
         for(int i = 1; i <= 42; i++) {

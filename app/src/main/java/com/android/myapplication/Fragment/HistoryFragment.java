@@ -10,64 +10,61 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.android.myapplication.Activity.MainActivity;
+import com.android.myapplication.DAO.HabitDAO;
+import com.android.myapplication.DAO.HistoryDAO;
+import com.android.myapplication.Entity.Habit;
+import com.android.myapplication.Entity.History;
 import com.android.myapplication.R;
+import com.android.myapplication.callback.CallBack;
+import com.android.myapplication.entitys.HabitAdapter;
+import com.android.myapplication.entitys.HabitHomeItemsAdapter;
+import com.android.myapplication.entitys.HistoryAdapter;
+import com.android.myapplication.utilities.Common;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HistoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 
 public class HistoryFragment extends Fragment {
     public Context context;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public HistoryFragment() {
-        // Required empty public constructor
-    }
+    private MainActivity mainActivity;
+    private ListView listViewHistory;
+    private ArrayList<History> historyArrayList;
+    private HistoryAdapter historyAdapter;
     public HistoryFragment(Context context) {
-        // Required empty public constructor
-        this.context=context;
-    }
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HistoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HistoryFragment newInstance(String param1, String param2) {
-        HistoryFragment fragment = new HistoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        this.context = context;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View view= inflater.inflate(R.layout.fragment_history, container, false);
+        mainActivity = (MainActivity) getActivity();
+        init(view);
+        initListView();
+        setListView(this.historyArrayList,this.historyAdapter);
+
+        return view;
+    }
+    private void init(View view) {
+        this.listViewHistory = view.findViewById(R.id.items_history);
+        this.historyArrayList = new ArrayList<>();
+    }
+    private void initListView() {
+        this.historyAdapter = new HistoryAdapter(getActivity(), this.historyArrayList);
+        this.listViewHistory.setAdapter(this.historyAdapter);
+    }
+    private void setListView(ArrayList<History> historyArrayList, HistoryAdapter historyAdapter) {
+        HistoryDAO historyDAO = HistoryDAO.getInstance();
+
+        historyDAO.getHistory(Common.uID, new CallBack<History>() {
+            @Override
+            public void onCallBack(History callback) {
+                historyArrayList.add(callback);
+                historyAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

@@ -14,7 +14,10 @@ public class Common {
 
     public static String uID = "";
     public static Month MONTH;
-    public static int DAY;
+    public static int MONTH_OF_YEAR;
+    public static int DAY_OF_WEEK;
+    public static int DAY_OF_MONTH;
+
     public static int YEAR;
 
     public static String CONTENT_NOTIFY = "ON REMINDER";
