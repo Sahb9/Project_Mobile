@@ -113,7 +113,7 @@ public class HabitDAO {
                 boolArray[6] = habit.getAlarm().isSaturday();
                 boolArray[7] = habit.getAlarm().isSunday();
 
-                if (boolArray[valueDay] == true) {
+                if (boolArray[valueDay] == true && habit.getCurrent() < habit.getTarget() ) {
                     callBack.onCallBack(habit);
                 }
                 // callBack.onCallBack(habit);

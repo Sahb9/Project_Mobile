@@ -31,14 +31,14 @@ public class HistoryFragment extends Fragment {
     public Context context;
     private MainActivity mainActivity;
     private ListView listViewHistory;
-    private ArrayList<History> historyArrayList;
+    public ArrayList<History> historyArrayList;
     private HistoryAdapter historyAdapter;
     public HistoryFragment(Context context) {
         this.context = context;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflg4ater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_history, container, false);
         mainActivity = (MainActivity) getActivity();

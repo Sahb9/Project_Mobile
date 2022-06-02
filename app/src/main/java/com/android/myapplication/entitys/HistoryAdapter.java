@@ -64,7 +64,7 @@ public class HistoryAdapter extends BaseAdapter {
         }
         historyAdapterHolder.txtSubject.setText(history.getSubject());
         historyAdapterHolder.txtDate.setText(history.getDataTime());
-        historyAdapterHolder.txtCurrentTimes.setText(String.valueOf(history.getCurrent()) );
+        historyAdapterHolder.txtCurrentTimes.setText(String.valueOf(history.getCurrent())  );
 
         return view;
     }

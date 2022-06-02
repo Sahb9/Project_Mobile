@@ -48,13 +48,14 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     private LocalDate selectedDate;
     Button btnprevious, btnnext;
     private ListView listViewHabit;
-    private ArrayList<Habit> habitArrayList;
+    public ArrayList<Habit> habitArrayList;
     private HabitHomeItemsAdapter habitAdapter;
 
     public HomeFragment() {
 
     }
 
+    //cái này chạy trc
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         setUpSchedule();
         setUpItemsHabit();
     }
-
+    //cái này chạy sau
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -72,7 +73,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
         initListView();
         //setListView(this.habitArrayList, this.habitAdapter);
         //Set theo ngày
-        setListViewByDayOfWeek(this.habitArrayList, this.habitAdapter, 2);
+        setListViewByDayOfWeek(this.habitArrayList, this.habitAdapter,Common.DAY_OF_WEEK );
         return view;
     }
 
@@ -112,6 +113,8 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
     private void setUpSchedule() {
         this.selectedDate = LocalDate.now();
+        //Save for the first time presenting screen
+        Common.DAY_OF_WEEK= this.selectedDate.getDayOfWeek().getValue();
         setMonthView();
     }
 
