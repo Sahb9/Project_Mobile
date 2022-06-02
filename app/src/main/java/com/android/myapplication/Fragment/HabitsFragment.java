@@ -325,6 +325,7 @@ public class HabitsFragment extends Fragment {
 
                 int numTarget = Integer.parseInt(editTextTargetHabit.getText().toString());
 
+                habit.setIdHabit("");
                 habit.setTarget(numTarget);
                 habit.setAlarm(alarm);
                 habit.setStartDate(FormatDate("dd/MM/yyyy", new Date()));

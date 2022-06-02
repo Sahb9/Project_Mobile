@@ -1,17 +1,23 @@
 package com.android.myapplication.entitys;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.myapplication.DAO.HabitDAO;
 import com.android.myapplication.Entity.Habit;
 import com.android.myapplication.R;
+import com.android.myapplication.callback.CallBack;
 import com.android.myapplication.utilities.Common;
 
 import java.util.Arrays;
@@ -23,8 +29,7 @@ public class HabitAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private List<Habit> habitList;
-    private int[] themes = {R.drawable.gradient_button1, R.drawable.gradient_button2, R.drawable.gradient_button3};
-    private Random random = new Random();
+    private int index;
 
     public HabitAdapter(Context context, int layout, List<Habit> habitList) {
         this.context = context;
@@ -51,57 +56,72 @@ public class HabitAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        HabitAdapterHolder habitAdapterHolder;
-        Habit habit = this.habitList.get(i);
-
-        Log.d(Common.TAG_LOG, "getView: [sizeViewGroup:" + viewGroup.getChildCount() + "]");
-
-        /*if (view == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(this.layout, null);
-
-            habitAdapterHolder = new HabitAdapterHolder();
-
-            habitAdapterHolder.linearLayout = view.findViewById(R.id.habit_item);
-            habitAdapterHolder.textViewName = view.findViewById(R.id.habit_name);
-            habitAdapterHolder.textViewProgress = view.findViewById(R.id.txt_habit_progress);
-            habitAdapterHolder.progressBarHabit = view.findViewById(R.id.progress_circular);
-            habitAdapterHolder.position = this.random.nextInt(3);
-
-            float progressResult = ((float) habit.getCurrent() / habit.getTarget()) * 100;
-
-            habitAdapterHolder.progress = (int) progressResult;
-            habitAdapterHolder.index = i;
-
-            view.setTag(habitAdapterHolder);
-        } else {
-            habitAdapterHolder = (HabitAdapterHolder) view.getTag();
-        }
-
-        habitAdapterHolder.linearLayout.setBackgroundResource(this.themes[habitAdapterHolder.position]);
-        habitAdapterHolder.textViewName.setText(habit.getName());
-
-        habitAdapterHolder.textViewProgress.setText(habitAdapterHolder.progress + "%");
-        habitAdapterHolder.progressBarHabit.setProgress(habitAdapterHolder.progress);*/
+        this.index = i;
+        Habit habit = this.habitList.get(this.index);
+        HabitAdapter _this = this;
 
         LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = layoutInflater.inflate(this.layout, null);
 
-        LinearLayout linearLayout = view.findViewById(R.id.habit_item);
         TextView textViewName = view.findViewById(R.id.habit_name);
         TextView textViewProgress = view.findViewById(R.id.txt_habit_progress);
         ProgressBar progressBarHabit = view.findViewById(R.id.progress_circular);
+        ImageButton btnDelete = view.findViewById(R.id.btn_delete);
 
-        int position = this.random.nextInt(3);
         float progressResult = ((float) habit.getCurrent() / habit.getTarget()) * 100;
         int progress = (int) progressResult;
+
         String progressText = "";
         progressText = progress + "%";
 
-        linearLayout.setBackgroundResource(R.drawable.gradient_button2);
         textViewName.setText(habit.getName());
         textViewProgress.setText(progressText);
         progressBarHabit.setProgress(progress);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+                final String DIALOG_TITLE = "Are you sure?";
+                final String POSITIVE_BTN_TEXT = "Delete";
+                final String NEGATIVE_BTN_TEXT = "Dismiss";
+                final String SUCCESS = "Delete ";
+                final String FAILURE = "Some thing wrong";
+
+                alertDialogBuilder.setTitle(DIALOG_TITLE);
+
+                alertDialogBuilder.setPositiveButton(POSITIVE_BTN_TEXT, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        HabitDAO habitDAO = HabitDAO.getInstance();
+
+                        habitDAO.deleteHabit(Common.uID, habit, new CallBack<Boolean>() {
+                            @Override
+                            public void onCallBack(Boolean callback) {
+                                if (callback) {
+                                    habitList.remove(index);
+                                    _this.notifyDataSetChanged();
+                                    Toast.makeText(view.getContext(), SUCCESS + habit.getName(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(view.getContext(), FAILURE, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton(NEGATIVE_BTN_TEXT, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                alertDialogBuilder.create();
+                alertDialogBuilder.show();
+            }
+        });
 
         return view;
     }
