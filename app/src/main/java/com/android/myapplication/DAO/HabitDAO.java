@@ -87,7 +87,7 @@ public class HabitDAO {
         });
     }
 
-    public void getHabitsByDayOfWeek(String uId, CallBack<Habit> callBack, int valueDay) {
+    public void getHabitsByDayOfWeek(String uId, CallBack<Habit> callBack, int valueDay ,int kt) {
         Boolean[] boolArray = new Boolean[9];
         Arrays.fill(boolArray, Boolean.FALSE);
 
@@ -113,7 +113,7 @@ public class HabitDAO {
                 boolArray[6] = habit.getAlarm().isSaturday();
                 boolArray[7] = habit.getAlarm().isSunday();
 
-                if (boolArray[valueDay] == true && habit.getCurrent() < habit.getTarget() ) {
+                if (boolArray[valueDay] == true && habit.getCurrent() < habit.getTarget() && kt==1) {
                     callBack.onCallBack(habit);
                 }
                 // callBack.onCallBack(habit);

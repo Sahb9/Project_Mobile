@@ -58,7 +58,6 @@ public class HistoryFragment extends Fragment {
     }
     private void setListView(ArrayList<History> historyArrayList, HistoryAdapter historyAdapter) {
         HistoryDAO historyDAO = HistoryDAO.getInstance();
-
         historyDAO.getHistory(Common.uID, new CallBack<History>() {
             @Override
             public void onCallBack(History callback) {

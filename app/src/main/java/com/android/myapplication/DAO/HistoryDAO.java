@@ -44,9 +44,9 @@ public class HistoryDAO {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 History history = snapshot.getValue(History.class);
-
-
+                //System.out.println(history.getSubject());
                 callBack.onCallBack(history);
+
             }
 
             @Override

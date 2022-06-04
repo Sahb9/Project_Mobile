@@ -29,11 +29,13 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
     private Context context;
 
     private List<Habit> habitList;
+    private List<History> historyList;
 
 
-    public HabitHomeItemsAdapter(Context context, List<Habit> habitList) {
+    public HabitHomeItemsAdapter(Context context, List<Habit> habitList,List<History> historyList) {
         this.context = context;
         this.habitList = habitList;
+        this.historyList = historyList;
     }
 
     public HabitHomeItemsAdapter() {
@@ -83,6 +85,7 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
         } else {
             habitAdapterHolder = (HabitHomeAdapterHolder) view.getTag();
         }
+
         habitAdapterHolder.txtTitle.setText(habit.getName());
 
         //Press Signal
