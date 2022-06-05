@@ -33,6 +33,10 @@ import com.android.myapplication.entitys.HabitHomeItemsAdapter;
 import com.android.myapplication.entitys.HistoryAdapter;
 import com.android.myapplication.service.DateService;
 import com.android.myapplication.utilities.Common;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -95,21 +99,43 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     //check 1 element
     private void getListHisory(ArrayList<History> historyArrayList) {
         HistoryDAO historyDAO = HistoryDAO.getInstance();
-
-        historyDAO.getHistory(Common.uID, new CallBack<History>() {
+//
+//        historyDAO.getHistory(Common.uID, new CallBack<History>() {
+//            @Override
+//            public void onCallBack(History callback) {
+//                //System.out.println(callback.getSubject());
+//
+//                historyArrayList.add(callback);
+//                //System.out.println(historyArrayList);
+//
+//                System.out.println(historyArrayList.size());
+//
+//               // System.out.println(historyArrayList.get(0));
+//            }
+//        });
+//        System.out.println("size of his "+historyDAO.historyList.size());
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.getReference(Common.HISTORY).child(Common.uID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onCallBack(History callback) {
-                //System.out.println(callback.getSubject());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot temp : snapshot.getChildren()) {
+                    History history = temp.getValue(History.class);
+                    historyArrayList.add(history);
+                    System.out.println("size of DAO "+ historyArrayList.size());
 
-                historyArrayList.add(callback);
-                //System.out.println(historyArrayList);
+                }
+               // System.out.println("size of after DAO "+ historyArrayList.size());
 
-                System.out.println(historyArrayList.size());
+               // return historyArrayList;
+            }
 
-               // System.out.println(historyArrayList.get(0));
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
-        System.out.println("fsafsaaaaaaaaaaaaafsaaaaaaaaaaaaaafsafasfasfsafsaf"+historyArrayList.size());
+        System.out.println("size of after DAO "+ historyArrayList.size());
+
     }
     private void setListView(ArrayList<Habit> habitsParam, HabitHomeItemsAdapter habitAdapterParam) {
         HabitDAO habitDAO = HabitDAO.getInstance();
@@ -290,7 +316,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             public void onClick(View view) {
                 History history = History.getInstance();
                 HistoryDAO historyDAO = HistoryDAO.getInstance();
-
                 history.setDataTime(formatDateTime("dd/MM/yyyy", paramLocalDate));
                 history.setSubject(Common.SCHEDULE);
 
