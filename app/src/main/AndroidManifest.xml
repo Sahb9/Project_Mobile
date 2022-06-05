@@ -20,12 +20,6 @@
         <activity
             android:name="com.habitdark.myapplication.Activity.MainActivity"
             android:exported="false" />
-        <activity
-            android:name="com.habitdark.myapplication.Activity.ScheduleActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.habitdark.myapplication.Activity.EatingActivity"
-            android:exported="false" />
         <!-- <activity -->
         <!-- android:name=".Login" -->
         <!-- android:exported="false" /> -->

@@ -23,10 +23,10 @@ import com.habitdark.myapplication.DAO.HabitDAO;
 import com.habitdark.myapplication.DAO.HistoryDAO;
 import com.habitdark.myapplication.Entity.Habit;
 import com.habitdark.myapplication.Entity.History;
-import com.habitdark.myapplication.Models.CalendarAdapter;
+import com.habitdark.myapplication.Adapter.CalendarAdapter;
 import com.habitdark.myapplication.R;
 import com.habitdark.myapplication.callback.CallBack;
-import com.habitdark.myapplication.entitys.HabitHomeItemsAdapter;
+import com.habitdark.myapplication.Adapter.HabitHomeItemsAdapter;
 import com.habitdark.myapplication.service.DateService;
 import com.habitdark.myapplication.utilities.Common;
 import com.google.firebase.database.DataSnapshot;
@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mainActivity = (MainActivity) getActivity();
+        //getListHisory(historyArrayList);
         initWidgets(view);
         setUpSchedule();
         setUpItemsHabit();
@@ -101,7 +102,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
                 for (DataSnapshot temp : snapshot.getChildren()) {
                     History history = temp.getValue(History.class);
                     historyArrayList.add(history);
-                    System.out.println("size of DAO "+ historyArrayList.size());
+                   //System.out.println("size of DAO "+ historyArrayList.size());
 
                 }
             }
@@ -111,7 +112,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
 
             }
         });
-        System.out.println("size of after DAO "+ historyArrayList.size());
+       // System.out.println("size of after DAO "+ historyArrayList.size());
 
     }
     private void setListView(ArrayList<Habit> habitsParam, HabitHomeItemsAdapter habitAdapterParam) {
@@ -191,7 +192,6 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
             // Press certain dates
             @Override
             public void onItemClick(int position, String dayText) {
-                //String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
                 if (!dayText.equals("")) {
                     int valueDateOf = Integer.parseInt(dayText);
                     int val = DateService.findDayofWeek(valueDateOf, Common.MONTH, Common.YEAR);
@@ -199,9 +199,7 @@ public class HomeFragment extends Fragment implements CalendarAdapter.OnItemList
                     Common.DAY_OF_MONTH = valueDateOf;
                     habitArrayList.clear();
                     habitAdapter.notifyDataSetChanged();
-
                     setListViewByDayOfWeek(habitArrayList, habitAdapter);
-                    //Toast.makeText(mainActivity, Common.DAY+ "/" + Common.MONTH + "/"+ Common.YEAR, Toast.LENGTH_LONG).show();
                 }
             }
         });

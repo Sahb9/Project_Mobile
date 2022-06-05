@@ -300,25 +300,7 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
-//    ActivityResultLauncher<Intent> activityOpenFolder  = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-//            new ActivityResultCallback<ActivityResult>() {
-//                @Override
-//                public void onActivityResult(ActivityResult result) {
-//                    Intent intent = result.getData();
-//                    if(intent!=null)
-//                    {
-//                        Uri uri = intent.getData();
-//                        userFragment.setUri(uri);
-//                        try {
-//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
-//                            userFragment.setBitmapImageView(bitmap);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
 //
-//                    }
-//                }
-//            });
 
     public void getInforUserHeader(NavigationView navigationView, Context context) {
         View headerView =navigationView.getHeaderView(0);

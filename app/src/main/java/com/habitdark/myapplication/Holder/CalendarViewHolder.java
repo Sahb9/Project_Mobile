@@ -1,4 +1,4 @@
-package com.habitdark.myapplication.Models;
+package com.habitdark.myapplication.Holder;
 
 import android.view.View;
 import android.widget.TextView;
@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.habitdark.myapplication.Adapter.CalendarAdapter;
 import com.habitdark.myapplication.R;
 
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -2,6 +2,7 @@ package com.habitdark.myapplication.Others;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -49,5 +50,10 @@ public class ChangeDarkMode {
         editor.commit();
 
         return false;
+    }
+
+    public static class DatabaseActivity  {
+        public static final String DBName="trackinghabit.sqlite";
+        public static SQLiteDatabase sqLiteDatabase;
     }
 }

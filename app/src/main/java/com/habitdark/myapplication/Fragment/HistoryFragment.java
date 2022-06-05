@@ -15,7 +15,7 @@ import com.habitdark.myapplication.DAO.HistoryDAO;
 import com.habitdark.myapplication.Entity.History;
 import com.habitdark.myapplication.R;
 import com.habitdark.myapplication.callback.CallBack;
-import com.habitdark.myapplication.entitys.HistoryAdapter;
+import com.habitdark.myapplication.Adapter.HistoryAdapter;
 import com.habitdark.myapplication.utilities.Common;
 
 import java.util.ArrayList;

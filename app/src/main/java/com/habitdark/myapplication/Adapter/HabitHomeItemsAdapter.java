@@ -1,4 +1,4 @@
-package com.habitdark.myapplication.entitys;
+package com.habitdark.myapplication.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.habitdark.myapplication.Activity.MainActivity;
 import com.habitdark.myapplication.DAO.HabitDAO;
 import com.habitdark.myapplication.DAO.HistoryDAO;
 import com.habitdark.myapplication.Entity.Habit;
@@ -93,7 +92,7 @@ public class HabitHomeItemsAdapter extends BaseAdapter {
                 boolean isAfter = dateGetFromView.isAfter(dateRealtime);// nếu ngày tích mà lớn hơn ngày hôm nay
                 if(isAfter) // nếu đúng thì sẽ ko cho add vào history
                 {
-                    Toast.makeText((MainActivity) context, "Invalid Date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText( context, "Invalid Date", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
