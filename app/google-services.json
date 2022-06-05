@@ -15,6 +15,67 @@
       },
       "oauth_client": [
         {
+          "client_id": "944586476994-l2iqsing6na3k8s0g8d3panbcdg6verr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.myapplication",
+            "certificate_hash": "ac12d466ea5ff027fff0d8f57400a802cb0db9af"
+          }
+        },
+        {
+          "client_id": "944586476994-o9c4lir1lf0gdjps1t83hms425q8on32.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.myapplication",
+            "certificate_hash": "65ccf8636b972ea92f747348d37889e04f7af972"
+          }
+        },
+        {
+          "client_id": "944586476994-85u38i29o9h081h0gkoqqs5eog4lfn89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtqu65aNx2ZBrjbLkrgv-_pDLy8_opKzQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944586476994-85u38i29o9h081h0gkoqqs5eog4lfn89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944586476994:android:7838b6833af2555c199a5b",
+        "android_client_info": {
+          "package_name": "com.habitdark.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944586476994-57aki06iudml3kp5p933qi9j3r6sdht6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.habitdark.myapplication",
+            "certificate_hash": "ac12d466ea5ff027fff0d8f57400a802cb0db9af"
+          }
+        },
+        {
+          "client_id": "944586476994-vst7m2409vfc6j47lq95fhbs4gg73qn2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.habitdark.myapplication",
+            "certificate_hash": "65ccf8636b972ea92f747348d37889e04f7af972"
+          }
+        },
+        {
           "client_id": "944586476994-85u38i29o9h081h0gkoqqs5eog4lfn89.apps.googleusercontent.com",
           "client_type": 3
         }
